@@ -8,7 +8,7 @@ services:
     container_name: ruoyi-mysql
     restart: unless-stopped
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: ry_vue
       TZ: Asia/Shanghai
     command: >
@@ -22,7 +22,7 @@ services:
       # Tự động import schema + seed vào ry_vue ở lần khởi động ĐẦU TIÊN
       - ./sql:/docker-entrypoint-initdb.d:ro
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
       interval: 5s
       timeout: 5s
       retries: 20
