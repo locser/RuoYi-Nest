@@ -91,7 +91,7 @@ class RuoYiServletInitializer {
     app.setBaseViewsDir([join(__dirname, 'ruoyi-generator', 'resources', 'vm')]);
     app.setViewEngine('hbs');
 
-    await app.listen(process.env.PORT ?? 3000);
+    await app.listen(process.env.PORT ?? 19130);
     RuoYiAdminModule.bootstrap();
     return app;
   }

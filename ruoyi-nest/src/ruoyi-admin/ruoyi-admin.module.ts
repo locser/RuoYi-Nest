@@ -139,7 +139,7 @@ export class RuoYiAdminModule{
         " ''-'   `'-'    `-..-'              \n" +
         "\n" +
         `服务器启动成功: \n` +
-        `- Local:   http://localhost:${process.env.PORT ?? 3000}\n` +
+        `- Local:   http://localhost:${process.env.PORT ?? 19130}\n` +
         // `- Network: ${serverUrl}${apiPrefix}\n` +
         // `- Swagger: ${swaggerUrl}\n` +
         // `- 运行环境: ${env}\n` +

@@ -18,7 +18,7 @@ ruoyi:
 
 # 开发环境配置
 server:
-  # 服务器的HTTP端口（LƯU Ý: cổng thực do PORT env quyết định = 3000, giá trị này không dùng）
+  # 服务器的HTTP端口（LƯU Ý: cổng thực do PORT env quyết định = 19130, giá trị này không dùng）
   port: 8080
   servlet:
     # 应用的访问路径

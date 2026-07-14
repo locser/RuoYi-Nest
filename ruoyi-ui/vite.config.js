@@ -92,7 +92,7 @@ export default defineConfig(({ mode }) => {
             cors: true, // 允许跨域
             proxy: {
                 [env.VITE_APP_BASE_API]: {
-                    target: `http://localhost:3000`,
+                    target: `http://localhost:19130`,
                     changeOrigin: true,
                     configure: (proxy, options) => {
                         proxy.on('proxyReq', (proxyReq, req, res) => {

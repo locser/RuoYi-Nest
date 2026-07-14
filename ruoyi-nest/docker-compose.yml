@@ -54,10 +54,10 @@ services:
       redis:
         condition: service_healthy
     environment:
-      PORT: 3000
+      PORT: 19130
       TZ: Asia/Shanghai
     ports:
-      - "3000:3000"          # FE (Windows) gọi vào http://<mac-ip>:3000
+      - "19130:19130"        # FE (Windows) gọi vào http://<mac-ip>:19130
     volumes:
       # Đè config trỏ tới service name mysql/redis (KHÔNG sửa source gốc)
       - ./docker/config/application-druid.yml:/app/dist/ruoyi-admin/resources/application-druid.yml:ro
