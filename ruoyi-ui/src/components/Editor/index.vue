@@ -27,7 +27,7 @@ import { getToken } from "@/utils/auth";
 export default {
   name: "Editor",
   props: {
-    /* 编辑器的内容 */
+    /* 编辑器的Nội dung */
     value: {
       type: String,
       default: "",
@@ -52,7 +52,7 @@ export default {
       type: Number,
       default: 5,
     },
-    /* 类型（base64格式、url格式） */
+    /* Loại（base64格式、url格式） */
     type: {
       type: String,
       default: "url",
@@ -73,7 +73,7 @@ export default {
         modules: {
           // 工具栏配置
           toolbar: [
-            ["bold", "italic", "underline", "strike"],       // 加粗 斜体 下划线 删除线
+            ["bold", "italic", "underline", "strike"],       // 加粗 斜体 下划线 Xóa线
             ["blockquote", "code-block"],                    // 引用  代码块
             [{ list: "ordered" }, { list: "bullet" }],       // 有序、无序列表
             [{ indent: "-1" }, { indent: "+1" }],            // 缩进
@@ -85,7 +85,7 @@ export default {
             ["link", "image", "video"]                       // 链接、图片、视频
           ],
         },
-        placeholder: "请输入内容",
+        placeholder: "Vui lòng nhập nội dung",
         readOnly: this.readOnly,
       },
     };
@@ -175,22 +175,22 @@ export default {
       return true;
     },
     handleUploadSuccess(res, file) {
-      // 如果上传成功
+      // 如果上传Thành công
       if (res.code == 200) {
         // 获取富文本组件实例
         let quill = this.Quill;
         // 获取光标所在位置
         let length = quill.getSelection().index;
-        // 插入图片  res.url为服务器返回的图片地址
+        // 插入图片  res.url为服务器Quay lại的图片地址
         quill.insertEmbed(length, "image", import.meta.env.VITE_APP_BASE_API + res.fileName);
         // 调整光标到最后
         quill.setSelection(length + 1);
       } else {
-        this.$message.error("图片插入失败");
+        this.$message.error("图片插入Thất bại");
       }
     },
     handleUploadError() {
-      this.$message.error("图片插入失败");
+      this.$message.error("图片插入Thất bại");
     },
   },
 };
@@ -205,15 +205,15 @@ export default {
   display: none;
 }
 .ql-snow .ql-tooltip[data-mode="link"]::before {
-  content: "请输入链接地址:";
+  content: "Vui lòng nhập链接地址:";
 }
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
   border-right: 0px;
-  content: "保存";
+  content: "Lưu";
   padding-right: 0px;
 }
 .ql-snow .ql-tooltip[data-mode="video"]::before {
-  content: "请输入视频地址:";
+  content: "Vui lòng nhập视频地址:";
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {

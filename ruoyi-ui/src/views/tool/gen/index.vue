@@ -4,7 +4,7 @@
       <el-form-item label="表名称" prop="tableName">
         <el-input
           v-model="queryParams.tableName"
-          placeholder="请输入表名称"
+          placeholder="Vui lòng nhập表名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -12,25 +12,25 @@
       <el-form-item label="表描述" prop="tableComment">
         <el-input
           v-model="queryParams.tableComment"
-          placeholder="请输入表描述"
+          placeholder="Vui lòng nhập表描述"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="创建时间">
+      <el-form-item label="Ngày tạo">
         <el-date-picker
           v-model="dateRange"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Từ ngày"
+          end-placeholder="Đến ngày"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -64,7 +64,7 @@
           size="mini"
           @click="openImportTable"
           v-hasPermi="['tool:gen:import']"
-        >导入</el-button>
+        >Nhập file</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -75,7 +75,7 @@
           :disabled="single"
           @click="handleEditTable"
           v-hasPermi="['tool:gen:edit']"
-        >修改</el-button>
+        >Sửa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -86,7 +86,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['tool:gen:remove']"
-        >删除</el-button>
+        >Xóa</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -119,9 +119,9 @@
         :show-overflow-tooltip="true"
         width="120"
       />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="160" />
+      <el-table-column label="Ngày tạo" align="center" prop="createTime" width="160" />
       <el-table-column label="更新时间" align="center" prop="updateTime" width="160" />
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             type="text"
@@ -143,7 +143,7 @@
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['tool:gen:remove']"
-          >删除</el-button>
+          >Xóa</el-button>
           <el-button
             type="text"
             size="small"
@@ -221,7 +221,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
@@ -267,36 +267,36 @@ export default {
         }
       );
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 生成代码操作 */
+    /** 生成代码Thao tác */
     handleGenTable(row) {
       const tableNames = row.tableName || this.tableNames;
       if (tableNames == "") {
-        this.$modal.msgError("请选择要生成的数据");
+        this.$modal.msgError("Vui lòng chọn要生成的数据");
         return;
       }
       if(row.genType === "1") {
         genCode(row.tableName).then(response => {
-          this.$modal.msgSuccess("成功生成到自定义路径：" + row.genPath);
+          this.$modal.msgSuccess("Thành công生成到自定义路径：" + row.genPath);
         });
       } else {
         this.$download.zip("/tool/gen/batchGenCode?tables=" + tableNames, "ruoyi.zip");
       }
     },
-    /** 同步数据库操作 */
+    /** 同步数据库Thao tác */
     handleSynchDb(row) {
       const tableName = row.tableName;
-      this.$modal.confirm('确认要强制同步"' + tableName + '"表结构吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn强制同步"' + tableName + '"表结构吗？').then(function() {
         return synchDb(tableName);
       }).then(() => {
-        this.$modal.msgSuccess("同步成功");
+        this.$modal.msgSuccess("同步Thành công");
       }).catch(() => {});
     },
-    /** 打开导入表弹窗 */
+    /** 打开Nhập file表弹窗 */
     openImportTable() {
       this.$refs.import.show();
     },
@@ -304,13 +304,13 @@ export default {
     openCreateTable() {
       this.$refs.create.show();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 预览按钮 */
+    /** 预览Nút bấm */
     handlePreview(row) {
       previewTable(row.tableId).then(response => {
         this.preview.data = response.data;
@@ -318,16 +318,16 @@ export default {
         this.preview.activeName = "entity.ts";
       });
     },
-    /** 高亮显示 */
+    /** 高亮Hiển thị */
     highlightedCode(code, key) {
       const vmName = key.substring(key.lastIndexOf("/") + 1, key.indexOf(".hbs"));
       var language = vmName.substring(vmName.indexOf(".") + 1, vmName.length);
       const result = hljs.highlight(language, code || "", true);
       return result.value || '&nbsp;';
     },
-    /** 复制代码成功 */
+    /** 复制代码Thành công */
     clipboardSuccess() {
-      this.$modal.msgSuccess("复制成功");
+      this.$modal.msgSuccess("复制Thành công");
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -336,21 +336,21 @@ export default {
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    /** 修改按钮操作 */
+    /** SửaNút bấmThao tác */
     handleEditTable(row) {
       const tableId = row.tableId || this.ids[0];
       const tableName = row.tableName || this.tableNames[0];
       const params = { pageNum: this.queryParams.pageNum };
-      this.$tab.openPage("修改[" + tableName + "]生成配置", '/tool/gen-edit/index/' + tableId, params);
+      this.$tab.openPage("Sửa[" + tableName + "]生成配置", '/tool/gen-edit/index/' + tableId, params);
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const tableIds = row.tableId || this.ids;
-      this.$modal.confirm('是否确认删除表编号为"' + tableIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa表编号为"' + tableIds + '" không?').then(function() {
         return delTable(tableIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     }
   }

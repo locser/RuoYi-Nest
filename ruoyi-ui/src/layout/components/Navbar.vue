@@ -32,7 +32,7 @@
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/user/profile">
-            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item>Trang cá nhân</el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="setting = true">
             <span>布局设置</span>
@@ -96,9 +96,9 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      this.$confirm('确定注销并退出系统吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Xác nhận注销并退出系统吗？', 'Gợi ý', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning'
       }).then(() => {
         this.$store.dispatch('LogOut').then(() => {

@@ -49,7 +49,7 @@ export default {
 	name: 'crontab-hour',
 	props: ['check', 'cron'],
 	methods: {
-		// 单选按钮值变化时
+		// 单选Nút bấm值变化时
 		radioChange() {
 			if (this.cron.min === '*') {
 			    this.$emit('update', 'min', '0', 'hour');

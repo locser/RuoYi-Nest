@@ -4,25 +4,25 @@
       <el-form-item label="登录地址" prop="ipaddr">
         <el-input
           v-model="queryParams.ipaddr"
-          placeholder="请输入登录地址"
+          placeholder="Vui lòng nhập登录地址"
           clearable
           style="width: 240px;"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="用户名称" prop="userName">
+      <el-form-item label="Tên đăng nhập" prop="userName">
         <el-input
           v-model="queryParams.userName"
-          placeholder="请输入用户名称"
+          placeholder="Vui lòng nhập tên đăng nhập"
           clearable
           style="width: 240px;"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
+      <el-form-item label="Trạng thái" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="登录状态"
+          placeholder="登录Trạng thái"
           clearable
           style="width: 240px"
         >
@@ -41,14 +41,14 @@
           value-format="yyyy-MM-dd HH:mm:ss"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Từ ngày"
+          end-placeholder="Đến ngày"
           :default-time="['00:00:00', '23:59:59']"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -62,7 +62,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['monitor:logininfor:remove']"
-        >删除</el-button>
+        >Xóa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -72,7 +72,7 @@
           size="mini"
           @click="handleClean"
           v-hasPermi="['monitor:logininfor:remove']"
-        >清空</el-button>
+        >Xóa sạch</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -93,7 +93,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['monitor:logininfor:export']"
-        >导出</el-button>
+        >Xuất file</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -101,17 +101,17 @@
     <el-table ref="tables" v-loading="loading" :data="list" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="访问编号" align="center" prop="infoId" />
-      <el-table-column label="用户名称" align="center" prop="userName" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']" />
+      <el-table-column label="Tên đăng nhập" align="center" prop="userName" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']" />
       <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
       <el-table-column label="登录地点" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
       <el-table-column label="浏览器" align="center" prop="browser" :show-overflow-tooltip="true" />
-      <el-table-column label="操作系统" align="center" prop="os" />
-      <el-table-column label="登录状态" align="center" prop="status">
+      <el-table-column label="Thao tác系统" align="center" prop="os" />
+      <el-table-column label="登录Trạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="操作信息" align="center" prop="msg" :show-overflow-tooltip="true" />
+      <el-table-column label="Thao tác信息" align="center" prop="msg" :show-overflow-tooltip="true" />
       <el-table-column label="登录日期" align="center" prop="loginTime" sortable="custom" :sort-orders="['descending', 'ascending']" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
@@ -147,7 +147,7 @@ export default {
       multiple: true,
       // 选择用户名
       selectName: "",
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
@@ -155,7 +155,7 @@ export default {
       list: [],
       // 日期范围
       dateRange: [],
-      // 默认排序
+      // 默认Sắp xếp
       defaultSort: {prop: 'loginTime', order: 'descending'},
       // 查询参数
       queryParams: {
@@ -181,12 +181,12 @@ export default {
         }
       );
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
@@ -200,41 +200,41 @@ export default {
       this.multiple = !selection.length
       this.selectName = selection.map(item => item.userName);
     },
-    /** 排序触发事件 */
+    /** Sắp xếp触发事件 */
     handleSortChange(column, prop, order) {
       this.queryParams.orderByColumn = column.prop;
       this.queryParams.isAsc = column.order;
       this.getList();
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const infoIds = row.infoId || this.ids;
-      this.$modal.confirm('是否确认删除访问编号为"' + infoIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa访问编号为"' + infoIds + '" không?').then(function() {
         return delLogininfor(infoIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     },
-    /** 清空按钮操作 */
+    /** Xóa sạchNút bấmThao tác */
     handleClean() {
-      this.$modal.confirm('是否确认清空所有登录日志数据项？').then(function() {
+      this.$modal.confirm('CóKhông确认Xóa sạch所有登录日志数据项？').then(function() {
         return cleanLogininfor();
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("清空成功");
+        this.$modal.msgSuccess("Xóa sạch thành công");
       }).catch(() => {});
     },
-    /** 解锁按钮操作 */
+    /** 解锁Nút bấmThao tác */
     handleUnlock() {
       const username = this.selectName;
-      this.$modal.confirm('是否确认解锁用户"' + username + '"数据项?').then(function() {
+      this.$modal.confirm('CóKhông确认解锁用户"' + username + '"数据项?').then(function() {
         return unlockLogininfor(username);
       }).then(() => {
-        this.$modal.msgSuccess("用户" + username + "解锁成功");
+        this.$modal.msgSuccess("用户" + username + "解锁Thành công");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
+    /** Xuất fileNút bấmThao tác */
     handleExport() {
       this.download('monitor/logininfor/export', {
         ...this.queryParams

@@ -57,7 +57,7 @@ export default {
 	name: 'crontab-year',
 	props: ['check', 'month', 'cron'],
 	methods: {
-		// 单选按钮值变化时
+		// 单选Nút bấm值变化时
 		radioChange() {
 			switch (this.radioValue) {
 				case 1:

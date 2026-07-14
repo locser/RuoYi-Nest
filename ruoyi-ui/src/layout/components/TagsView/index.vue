@@ -19,11 +19,11 @@
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh-right"></i> 刷新页面</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i> 关闭当前</li>
-      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> 关闭其他</li>
-      <li v-if="!isFirstView()" @click="closeLeftTags"><i class="el-icon-back"></i> 关闭左侧</li>
-      <li v-if="!isLastView()" @click="closeRightTags"><i class="el-icon-right"></i> 关闭右侧</li>
-      <li @click="closeAllTags(selectedTag)"><i class="el-icon-circle-close"></i> 全部关闭</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i> Đóng当前</li>
+      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> Đóng其他</li>
+      <li v-if="!isFirstView()" @click="closeLeftTags"><i class="el-icon-back"></i> Đóng左侧</li>
+      <li v-if="!isLastView()" @click="closeRightTags"><i class="el-icon-right"></i> Đóng右侧</li>
+      <li @click="closeAllTags(selectedTag)"><i class="el-icon-circle-close"></i> 全部Đóng</li>
     </ul>
   </div>
 </template>

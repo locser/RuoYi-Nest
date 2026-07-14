@@ -20,7 +20,7 @@
       <i class="el-icon-plus"></i>
     </el-upload>
 
-    <!-- 上传提示 -->
+    <!-- 上传Gợi ý -->
     <div class="el-upload__tip" slot="tip" v-if="showTip">
       请上传
       <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
@@ -59,12 +59,12 @@ export default {
        type: Number,
       default: 5,
     },
-    // 文件类型, 例如['png', 'jpg', 'jpeg']
+    // 文件Loại, 例如['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
       default: () => ["png", "jpg", "jpeg"],
     },
-    // 是否显示提示
+    // CóKhôngHiển thịGợi ý
     isShowTip: {
       type: Boolean,
       default: true
@@ -112,7 +112,7 @@ export default {
     }
   },
   computed: {
-    // 是否显示提示
+    // CóKhôngHiển thịGợi ý
     showTip() {
       return this.isShowTip && (this.fileType || this.fileSize);
     },
@@ -157,7 +157,7 @@ export default {
     handleExceed() {
       this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
     },
-    // 上传成功回调
+    // 上传Thành công回调
     handleUploadSuccess(res, file) {
       if (res.code === 200) {
         this.uploadList.push({ name: res.fileName, url: res.fileName });
@@ -170,7 +170,7 @@ export default {
         this.uploadedSuccessfully();
       }
     },
-    // 删除图片
+    // Xóa图片
     handleDelete(file) {
       const findex = this.fileList.map(f => f.name).indexOf(file.name);
       if (findex > -1) {
@@ -178,9 +178,9 @@ export default {
         this.$emit("input", this.listToString(this.fileList));
       }
     },
-    // 上传失败
+    // 上传Thất bại
     handleUploadError() {
-      this.$modal.msgError("上传图片失败，请重试");
+      this.$modal.msgError("上传图片Thất bại，请重试");
       this.$modal.closeLoading();
     },
     // 上传结束处理

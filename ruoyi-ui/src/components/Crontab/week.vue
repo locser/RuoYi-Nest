@@ -115,7 +115,7 @@ export default {
 	name: 'crontab-week',
 	props: ['check', 'cron'],
 	methods: {
-		// 单选按钮值变化时
+		// 单选Nút bấm值变化时
 		radioChange() {
 			if (this.radioValue !== 2 && this.cron.day !== '?') {
 				this.$emit('update', 'day', '?', 'week');

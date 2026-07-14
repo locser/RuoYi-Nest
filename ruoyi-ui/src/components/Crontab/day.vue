@@ -69,7 +69,7 @@ export default {
 	name: 'crontab-day',
 	props: ['check', 'cron'],
 	methods: {
-		// 单选按钮值变化时
+		// 单选Nút bấm值变化时
 		radioChange() {
 			('day rachange');
 			if (this.radioValue !== 2 && this.cron.week !== '?') {

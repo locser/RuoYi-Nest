@@ -79,13 +79,13 @@
     <div class="center-board">
       <div class="action-bar">
         <el-button icon="el-icon-download" type="text" @click="download">
-          导出vue文件
+          Xuất filevue文件
         </el-button>
         <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
           复制代码
         </el-button>
         <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
-          清空
+          Xóa sạch
         </el-button>
       </div>
       <el-scrollbar class="center-scrollbar">
@@ -127,7 +127,7 @@
 
     <code-type-dialog
       :visible.sync="dialogVisible"
-      title="选择生成类型"
+      title="选择生成Loại"
       :show-file-name="showFileName"
       @confirm="generate"
     />
@@ -213,7 +213,7 @@ export default {
       text: trigger => {
         const codeStr = this.generateCode()
         this.$notify({
-          title: '成功',
+          title: 'Thành công',
           message: '代码已复制到剪切板，可粘贴。',
           type: 'success'
         })
@@ -221,7 +221,7 @@ export default {
       }
     })
     clipboard.on('error', e => {
-      this.$message.error('代码复制失败')
+      this.$message.error('代码复制Thất bại')
     })
   },
   methods: {
@@ -282,7 +282,7 @@ export default {
       document.getElementById('copyNode').click()
     },
     empty() {
-      this.$confirm('确定要清空所有组件吗？', '提示', { type: 'warning' }).then(
+      this.$confirm('Xác nhận要Xóa sạch所有组件吗？', 'Gợi ý', { type: 'warning' }).then(
         () => {
           this.drawingList = []
         }

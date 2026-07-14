@@ -26,7 +26,7 @@ export default {
 		// 表达式值变化时，开始去计算结果
 		expressionChange() {
 
-			// 计算开始-隐藏结果
+			// 计算开始-Ẩn结果
 			this.isShow = false;
 			// 获取规则数组[0秒、1分、2时、3日、4月、5星期、6年]
 			let ruleArr = this.$options.propsData.ex.split(' ');
@@ -64,7 +64,7 @@ export default {
 			let DIdx = this.getIndex(DDate, nDay);
 			let MIdx = this.getIndex(MDate, nMonth);
 			let YIdx = this.getIndex(YDate, nYear);
-			// 重置月日时分秒的函数(后面用的比较多)
+			// Đặt lại月日时分秒的函数(后面用的比较多)
 			const resetSecond = function () {
 				sIdx = 0;
 				nSecond = sDate[sIdx]
@@ -152,14 +152,14 @@ export default {
 							continue;
 						}
 
-						// 判断日期的合法性，不合法的话也是跳出当前循环
+						// 判断日期的合法性，不合法的话也Có跳出当前循环
 						if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true && this.dayRule !== 'workDay' && this.dayRule !== 'lastWeek' && this.dayRule !== 'lastDay') {
 							resetDay();
 							continue goMonth;
 						}
 						// 如果日期规则中有值时
 						if (this.dayRule == 'lastDay') {
-							// 如果不是合法日期则需要将前将日期调到合法日期即月末最后一天
+							// 如果不Có合法日期则需要将前将日期调到合法日期即月末最后一天
 
 							if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 								while (DD > 0 && this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
@@ -169,26 +169,26 @@ export default {
 								}
 							}
 						} else if (this.dayRule == 'workDay') {
-							// 校验并调整如果是2月30号这种日期传进来时需调整至正常月底
+							// 校验并调整如果Có2月30号这种日期传进来时需调整至Bình thường月底
 							if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 								while (DD > 0 && this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 									DD--;
 									thisDD = DD < 10 ? '0' + DD : DD;
 								}
 							}
-							// 获取达到条件的日期是星期X
+							// 获取达到条件的日期Có星期X
 							let thisWeek = this.formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
 							// 当星期日时
 							if (thisWeek == 1) {
-								// 先找下一个日，并判断是否为月底
+								// 先找下一个日，并判断CóKhông为月底
 								DD++;
 								thisDD = DD < 10 ? '0' + DD : DD;
-								// 判断下一日已经不是合法日期
+								// 判断下一日已经不Có合法日期
 								if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 									DD -= 3;
 								}
 							} else if (thisWeek == 7) {
-								// 当星期6时只需判断不是1号就可进行操作
+								// 当星期6时只需判断不Có1号就可进行Thao tác
 								if (this.dayRuleSup !== 1) {
 									DD--;
 								} else {
@@ -196,10 +196,10 @@ export default {
 								}
 							}
 						} else if (this.dayRule == 'weekDay') {
-							// 如果指定了是星期几
-							// 获取当前日期是属于星期几
+							// 如果指定了Có星期几
+							// 获取当前日期Có属于星期几
 							let thisWeek = this.formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
-							// 校验当前星期是否在星期池（dayRuleSup）中
+							// 校验当前星期CóKhông在星期池（dayRuleSup）中
 							if (this.dayRuleSup.indexOf(thisWeek) < 0) {
 								// 如果到达最大值时
 								if (Di == DDate.length - 1) {
@@ -213,8 +213,8 @@ export default {
 								continue;
 							}
 						} else if (this.dayRule == 'assWeek') {
-							// 如果指定了是第几周的星期几
-							// 获取每月1号是属于星期几
+							// 如果指定了Có第几周的星期几
+							// 获取每月1号Có属于星期几
 							let thisWeek = this.formatDate(new Date(YY + '-' + MM + '-' + DD + ' 00:00:00'), 'week');
 							if (this.dayRuleSup[1] >= thisWeek) {
 								DD = (this.dayRuleSup[0] - 1) * 7 + this.dayRuleSup[1] - thisWeek + 1;
@@ -223,14 +223,14 @@ export default {
 							}
 						} else if (this.dayRule == 'lastWeek') {
 							// 如果指定了每月最后一个星期几
-							// 校验并调整如果是2月30号这种日期传进来时需调整至正常月底
+							// 校验并调整如果Có2月30号这种日期传进来时需调整至Bình thường月底
 							if (this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 								while (DD > 0 && this.checkDate(YY + '-' + MM + '-' + thisDD + ' 00:00:00') !== true) {
 									DD--;
 									thisDD = DD < 10 ? '0' + DD : DD;
 								}
 							}
-							// 获取月末最后一天是星期几
+							// 获取月末最后一天Có星期几
 							let thisWeek = this.formatDate(new Date(YY + '-' + MM + '-' + thisDD + ' 00:00:00'), 'week');
 							// 找到要求中最近的那个星期几
 							if (this.dayRuleSup < thisWeek) {
@@ -239,7 +239,7 @@ export default {
 								DD -= 7 - (this.dayRuleSup - thisWeek)
 							}
 						}
-						// 判断时间值是否小于10置换成“05”这种格式
+						// 判断时间值CóKhông小于10置换成“05”这种格式
 						DD = DD < 10 ? '0' + DD : DD;
 
 						// 循环“时”数组
@@ -334,7 +334,7 @@ export default {
 					this.resultList.push('最近100年内只有上面' + resultArr.length + '条结果！')
 				}
 			}
-			// 计算完成-显示结果
+			// 计算完成-Hiển thị结果
 			this.isShow = true;
 
 
@@ -377,7 +377,7 @@ export default {
 		},
 		// 获取"日"数组-主要为日期规则
 		getWeekArr(rule) {
-			// 只有当日期规则的两个值均为“”时则表达日期是有选项的
+			// 只有当日期规则的两个值均为“”时则表达日期Có有选项的
 			if (this.dayRule == '' && this.dayRuleSup == '') {
 				if (rule.indexOf('-') >= 0) {
 					this.dayRule = 'weekDay';
@@ -462,7 +462,7 @@ export default {
 				this.dateArr[0] = this.getAssignArr(rule)
 			}
 		},
-		// 根据传进来的min-max返回一个顺序的数组
+		// 根据传进来的min-maxQuay lại一个顺序的数组
 		getOrderArr(min, max) {
 			let arr = [];
 			for (let i = min; i <= max; i++) {
@@ -470,7 +470,7 @@ export default {
 			}
 			return arr;
 		},
-		// 根据规则中指定的零散值返回一个数组
+		// 根据规则中指定的零散值Quay lại一个数组
 		getAssignArr(rule) {
 			let arr = [];
 			let assiginArr = rule.split(',');
@@ -480,7 +480,7 @@ export default {
 			arr.sort(this.compare)
 			return arr;
 		},
-		// 根据一定算术规则计算返回一个数组
+		// 根据一定算术规则计算Quay lại一个数组
 		getAverageArr(rule, limit) {
 			let arr = [];
 			let agArr = rule.split('/');
@@ -492,9 +492,9 @@ export default {
 			}
 			return arr;
 		},
-		// 根据规则返回一个具有周期性的数组
+		// 根据规则Quay lại一个具有周期性的数组
 		getCycleArr(rule, limit, status) {
-			// status--表示是否从0开始（则从1开始）
+			// status--表示CóKhông从0开始（则从1开始）
 			let arr = [];
 			let cycleArr = rule.split('-');
 			let min = Number(cycleArr[0]);
@@ -539,7 +539,7 @@ export default {
 				return week + 1;
 			}
 		},
-		// 检查日期是否存在
+		// 检查日期CóKhông存在
 		checkDate(value) {
 			let time = new Date(value);
 			let format = this.formatDate(time)

@@ -4,13 +4,13 @@
       <el-form-item label="任务名称" prop="jobName">
         <el-input
           v-model="queryParams.jobName"
-          placeholder="请输入任务名称"
+          placeholder="Vui lòng nhập任务名称"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
       <el-form-item label="任务组名" prop="jobGroup">
-        <el-select v-model="queryParams.jobGroup" placeholder="请选择任务组名" clearable>
+        <el-select v-model="queryParams.jobGroup" placeholder="Vui lòng chọn任务组名" clearable>
           <el-option
             v-for="dict in dict.type.sys_job_group"
             :key="dict.value"
@@ -19,8 +19,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="任务状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择任务状态" clearable>
+      <el-form-item label="任务Trạng thái" prop="status">
+        <el-select v-model="queryParams.status" placeholder="Vui lòng chọn任务Trạng thái" clearable>
           <el-option
             v-for="dict in dict.type.sys_job_status"
             :key="dict.value"
@@ -30,8 +30,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -44,7 +44,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['monitor:job:add']"
-        >新增</el-button>
+        >Thêm mới</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -55,7 +55,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['monitor:job:edit']"
-        >修改</el-button>
+        >Sửa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,7 +66,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['monitor:job:remove']"
-        >删除</el-button>
+        >Xóa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -76,7 +76,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['monitor:job:export']"
-        >导出</el-button>
+        >Xuất file</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -102,7 +102,7 @@
       </el-table-column>
       <el-table-column label="调用目标字符串" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
       <el-table-column label="cron执行表达式" align="center" prop="cronExpression" :show-overflow-tooltip="true" />
-      <el-table-column label="状态" align="center">
+      <el-table-column label="Trạng thái" align="center">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.status"
@@ -112,7 +112,7 @@
           ></el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -120,16 +120,16 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['monitor:job:edit']"
-          >修改</el-button>
+          >Sửa</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['monitor:job:remove']"
-          >删除</el-button>
+          >Xóa</el-button>
           <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['monitor:job:changeStatus', 'monitor:job:query']">
-            <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
+            <el-button size="mini" type="text" icon="el-icon-d-arrow-right">Thêm</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="handleRun" icon="el-icon-caret-right"
                 v-hasPermi="['monitor:job:changeStatus']">执行一次</el-dropdown-item>
@@ -151,18 +151,18 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改定时任务对话框 -->
+    <!-- 添加或Sửa定时任务对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="12">
             <el-form-item label="任务名称" prop="jobName">
-              <el-input v-model="form.jobName" placeholder="请输入任务名称" />
+              <el-input v-model="form.jobName" placeholder="Vui lòng nhập任务名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="任务分组" prop="jobGroup">
-              <el-select v-model="form.jobGroup" placeholder="请选择任务分组">
+              <el-select v-model="form.jobGroup" placeholder="Vui lòng chọn任务分组">
                 <el-option
                   v-for="dict in dict.type.sys_job_group"
                   :key="dict.value"
@@ -180,17 +180,17 @@
                   <div slot="content">
                     Bean调用示例：ryTask.ryParams('ry')
                     <br />Class类调用示例：com.ruoyi.quartz.task.RyTask.ryParams('ry')
-                    <br />参数说明：支持字符串，布尔类型，长整型，浮点型，整型
+                    <br />参数说明：支持字符串，布尔Loại，长整型，浮点型，整型
                   </div>
                   <i class="el-icon-question"></i>
                 </el-tooltip>
               </span>
-              <el-input v-model="form.invokeTarget" placeholder="请输入调用目标字符串" />
+              <el-input v-model="form.invokeTarget" placeholder="Vui lòng nhập调用目标字符串" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="cron表达式" prop="cronExpression">
-              <el-input v-model="form.cronExpression" placeholder="请输入cron执行表达式">
+              <el-input v-model="form.cronExpression" placeholder="Vui lòng nhậpcron执行表达式">
                 <template slot="append">
                   <el-button type="primary" @click="handleShowCron">
                     生成表达式
@@ -201,7 +201,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="form.jobId !== undefined">
-            <el-form-item label="状态">
+            <el-form-item label="Trạng thái">
               <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="dict in dict.type.sys_job_status"
@@ -221,7 +221,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否并发" prop="concurrent">
+            <el-form-item label="CóKhông并发" prop="concurrent">
               <el-radio-group v-model="form.concurrent" size="small">
                 <el-radio-button label="0">允许</el-radio-button>
                 <el-radio-button label="1">禁止</el-radio-button>
@@ -231,8 +231,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">Xác nhận</el-button>
+        <el-button @click="cancel">Hủy</el-button>
       </div>
     </el-dialog>
 
@@ -250,7 +250,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="任务分组：">{{ jobGroupFormat(form) }}</el-form-item>
-            <el-form-item label="创建时间：">{{ form.createTime }}</el-form-item>
+            <el-form-item label="Ngày tạo：">{{ form.createTime }}</el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="cron表达式：">{{ form.cronExpression }}</el-form-item>
@@ -262,13 +262,13 @@
             <el-form-item label="调用目标方法：">{{ form.invokeTarget }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="任务状态：">
-              <div v-if="form.status == 0">正常</div>
+            <el-form-item label="任务Trạng thái：">
+              <div v-if="form.status == 0">Bình thường</div>
               <div v-else-if="form.status == 1">暂停</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="是否并发：">
+            <el-form-item label="CóKhông并发：">
               <div v-if="form.concurrent == 0">允许</div>
               <div v-else-if="form.concurrent == 1">禁止</div>
             </el-form-item>
@@ -308,7 +308,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
@@ -316,11 +316,11 @@ export default {
       jobList: [],
       // 弹出层标题
       title: "",
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
-      // 是否显示详细弹出层
+      // CóKhôngHiển thị详细弹出层
       openView: false,
-      // 是否显示Cron表达式弹出层
+      // CóKhôngHiển thịCron表达式弹出层
       openCron: false,
       // 传入的表达式
       expression: "",
@@ -365,12 +365,12 @@ export default {
     jobGroupFormat(row, column) {
       return this.selectDictLabel(this.dict.type.sys_job_group, row.jobGroup);
     },
-    // 取消按钮
+    // HủyNút bấm
     cancel() {
       this.open = false;
       this.reset();
     },
-    // 表单重置
+    // 表单Đặt lại
     reset() {
       this.form = {
         jobId: undefined,
@@ -384,12 +384,12 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
@@ -400,7 +400,7 @@ export default {
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    // 更多操作触发
+    // ThêmThao tác触发
     handleCommand(command, row) {
       switch (command) {
         case "handleRun":
@@ -416,23 +416,23 @@ export default {
           break;
       }
     },
-    // 任务状态修改
+    // 任务Trạng tháiSửa
     handleStatusChange(row) {
-      let text = row.status === "0" ? "启用" : "停用";
-      this.$modal.confirm('确认要"' + text + '""' + row.jobName + '"任务吗？').then(function() {
+      let text = row.status === "0" ? "Kích hoạt" : "Hủy kích hoạt";
+      this.$modal.confirm('Bạn có chắc chắn muốn"' + text + '""' + row.jobName + '"任务吗？').then(function() {
         return changeJobStatus(row.jobId, row.status);
       }).then(() => {
-        this.$modal.msgSuccess(text + "成功");
+        this.$modal.msgSuccess(text + "Thành công");
       }).catch(function() {
         row.status = row.status === "0" ? "1" : "0";
       });
     },
     /* 立即执行一次 */
     handleRun(row) {
-      this.$modal.confirm('确认要立即执行一次"' + row.jobName + '"任务吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn立即执行一次"' + row.jobName + '"任务吗？').then(function() {
         return runJob(row.jobId, row.jobGroup);
       }).then(() => {
-        this.$modal.msgSuccess("执行成功");
+        this.$modal.msgSuccess("执行Thành công");
       }).catch(() => {});
     },
     /** 任务详细信息 */
@@ -442,12 +442,12 @@ export default {
         this.openView = true;
       });
     },
-    /** cron表达式按钮操作 */
+    /** cron表达式Nút bấmThao tác */
     handleShowCron() {
       this.expression = this.form.cronExpression;
       this.openCron = true;
     },
-    /** 确定后回传值 */
+    /** Xác nhận后回传值 */
     crontabFill(value) {
       this.form.cronExpression = value;
     },
@@ -456,35 +456,35 @@ export default {
       const jobId = row.jobId || 0;
       this.$router.push('/monitor/job-log/index/' + jobId)
     },
-    /** 新增按钮操作 */
+    /** Thêm mớiNút bấmThao tác */
     handleAdd() {
       this.reset();
       this.open = true;
       this.title = "添加任务";
     },
-    /** 修改按钮操作 */
+    /** SửaNút bấmThao tác */
     handleUpdate(row) {
       this.reset();
       const jobId = row.jobId || this.ids;
       getJob(jobId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改任务";
+        this.title = "Sửa任务";
       });
     },
-    /** 提交按钮 */
+    /** 提交Nút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.jobId != undefined) {
             updateJob(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("Chỉnh sửa thành công");
               this.open = false;
               this.getList();
             });
           } else {
             addJob(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess("Thêm mới thành công");
               this.open = false;
               this.getList();
             });
@@ -492,17 +492,17 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const jobIds = row.jobId || this.ids;
-      this.$modal.confirm('是否确认删除定时任务编号为"' + jobIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa定时任务编号为"' + jobIds + '" không?').then(function() {
         return delJob(jobIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
+    /** Xuất fileNút bấmThao tác */
     handleExport() {
       this.download('monitor/job/export', {
         ...this.queryParams

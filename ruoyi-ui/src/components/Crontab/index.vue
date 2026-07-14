@@ -104,9 +104,9 @@
       <CrontabResult :ex="crontabValueString"></CrontabResult>
 
       <div class="pop_btn">
-        <el-button size="small" type="primary" @click="submitFill">确定</el-button>
-        <el-button size="small" type="warning" @click="clearCron">重置</el-button>
-        <el-button size="small" @click="hidePopup">取消</el-button>
+        <el-button size="small" type="primary" @click="submitFill">Xác nhận</el-button>
+        <el-button size="small" type="warning" @click="clearCron">Đặt lại</el-button>
+        <el-button size="small" @click="hidePopup">Hủy</el-button>
       </div>
     </div>
   </div>
@@ -151,7 +151,7 @@ export default {
       if (this.expression) {
         let arr = this.expression.split(" ");
         if (arr.length >= 6) {
-          //6 位以上是合法表达式
+          //6 位以上Có合法表达式
           let obj = {
             second: arr[0],
             min: arr[1],
@@ -302,7 +302,7 @@ export default {
       }
       return value;
     },
-    // 隐藏弹窗
+    // Ẩn弹窗
     hidePopup() {
       this.$emit("hide");
     },
@@ -360,7 +360,7 @@ export default {
   watch: {
     expression: "resolveExp",
     hideComponent(value) {
-      // 隐藏部分组件
+      // Ẩn部分组件
     },
   },
   mounted: function() {

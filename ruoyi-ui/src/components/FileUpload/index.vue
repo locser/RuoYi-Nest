@@ -14,9 +14,9 @@
       class="upload-file-uploader"
       ref="fileUpload"
     >
-      <!-- 上传按钮 -->
+      <!-- 上传Nút bấm -->
       <el-button size="mini" type="primary">选取文件</el-button>
-      <!-- 上传提示 -->
+      <!-- 上传Gợi ý -->
       <div class="el-upload__tip" slot="tip" v-if="showTip">
         请上传
         <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
@@ -32,7 +32,7 @@
           <span class="el-icon-document"> {{ getFileName(file.name) }} </span>
         </el-link>
         <div class="ele-upload-list__item-content-action">
-          <el-link :underline="false" @click="handleDelete(index)" type="danger">删除</el-link>
+          <el-link :underline="false" @click="handleDelete(index)" type="danger">Xóa</el-link>
         </div>
       </li>
     </transition-group>
@@ -57,12 +57,12 @@ export default {
       type: Number,
       default: 5,
     },
-    // 文件类型, 例如['png', 'jpg', 'jpeg']
+    // 文件Loại, 例如['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
       default: () => ["doc", "xls", "ppt", "txt", "pdf"],
     },
-    // 是否显示提示
+    // CóKhôngHiển thịGợi ý
     isShowTip: {
       type: Boolean,
       default: true
@@ -105,7 +105,7 @@ export default {
     }
   },
   computed: {
-    // 是否显示提示
+    // CóKhôngHiển thịGợi ý
     showTip() {
       return this.isShowTip && (this.fileType || this.fileSize);
     },
@@ -113,7 +113,7 @@ export default {
   methods: {
     // 上传前校检格式和大小
     handleBeforeUpload(file) {
-      // 校检文件类型
+      // 校检文件Loại
       if (this.fileType) {
         const fileName = file.name.split('.');
         const fileExt = fileName[fileName.length - 1];
@@ -123,7 +123,7 @@ export default {
           return false;
         }
       }
-      // 校检文件名是否包含特殊字符
+      // 校检文件名CóKhông包含特殊字符
       if (file.name.includes(',')) {
         this.$modal.msgError('文件名不正确，不能包含英文逗号!');
         return false;
@@ -144,12 +144,12 @@ export default {
     handleExceed() {
       this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
     },
-    // 上传失败
+    // 上传Thất bại
     handleUploadError(err) {
-      this.$modal.msgError("上传文件失败，请重试");
+      this.$modal.msgError("上传文件Thất bại，请重试");
       this.$modal.closeLoading();
     },
-    // 上传成功回调
+    // 上传Thành công回调
     handleUploadSuccess(res, file) {
       if (res.code === 200) {
         this.uploadList.push({ name: res.fileName, url: res.fileName });
@@ -162,7 +162,7 @@ export default {
         this.uploadedSuccessfully();
       }
     },
-    // 删除文件
+    // Xóa文件
     handleDelete(index) {
       this.fileList.splice(index, 1);
       this.$emit("input", this.listToString(this.fileList));
@@ -179,7 +179,7 @@ export default {
     },
     // 获取文件名称
     getFileName(name) {
-      // 如果是url那么取最后的名字 如果不是直接返回
+      // 如果Cóurl那么取最后的名字 如果不Có直接Quay lại
       if (name.lastIndexOf("/") > -1) {
         return name.slice(name.lastIndexOf("/") + 1);
       } else {

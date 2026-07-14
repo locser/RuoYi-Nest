@@ -9,10 +9,10 @@
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="Thao tác人员" prop="createBy">
+      <el-form-item label="Người thực hiện" prop="createBy">
         <el-input
           v-model="queryParams.createBy"
-          placeholder="Vui lòng nhậpThao tác人员"
+          placeholder="Vui lòng nhậpNgười thực hiện"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -155,7 +155,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="内容">
+            <el-form-item label="Nội dung">
               <editor v-model="form.noticeContent" :min-height="192"/>
             </el-form-item>
           </el-col>

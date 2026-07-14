@@ -28,9 +28,9 @@
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.maxmemory_human }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">AOF是否开启</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.aof_enabled == "0" ? "否" : "是" }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">RDB是否成功</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">AOFCóKhông开启</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.aof_enabled == "0" ? "Không" : "Có" }}</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">RDBCóKhôngThành công</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.rdb_last_bgsave_status }}</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell">Key数量</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.dbSize">{{ cache.dbSize }} </div></td>

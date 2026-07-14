@@ -97,7 +97,7 @@
           size="mini"
           @click="handleRefreshCache"
           v-hasPermi="['system:config:remove']"
-        >刷新缓存</el-button>
+        >Làm mới bộ nhớ đệm</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -332,7 +332,7 @@ export default {
         ...this.queryParams
       }, `config_${new Date().getTime()}.xlsx`)
     },
-    /** 刷新缓存Nút bấmThao tác */
+    /** Làm mới bộ nhớ đệmNút bấmThao tác */
     handleRefreshCache() {
       refreshCache().then(() => {
         this.$modal.msgSuccess("刷新Thành công");

@@ -55,7 +55,7 @@
         </div>
 
         <div class="drawer-item">
-          <span>显示 Logo</span>
+          <span>Hiển thị Logo</span>
           <el-switch v-model="sidebarLogo" class="drawer-switch" />
         </div>
 
@@ -66,8 +66,8 @@
 
         <el-divider/>
 
-        <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">保存配置</el-button>
-        <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">重置配置</el-button>
+        <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">Lưu配置</el-button>
+        <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">Đặt lại配置</el-button>
       </div>
     </div>
   </el-drawer>
@@ -168,7 +168,7 @@ export default {
       this.themeMode = val;
     },
     saveSetting() {
-      this.$modal.loading("正在保存到本地，请稍候...");
+      this.$modal.loading("正在Lưu到本地，请稍候...");
       this.$cache.local.set(
         "layout-setting",
         `{

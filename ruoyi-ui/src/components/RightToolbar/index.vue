@@ -1,7 +1,7 @@
 <template>
   <div class="top-right-btn" :style="style">
     <el-row>
-      <el-tooltip class="item" effect="dark" :content="showSearch ? '隐藏搜索' : '显示搜索'" placement="top" v-if="search">
+      <el-tooltip class="item" effect="dark" :content="showSearch ? 'ẨnTìm kiếm' : 'Hiển thịTìm kiếm'" placement="top" v-if="search">
         <el-button size="mini" circle icon="el-icon-search" @click="toggleSearch()" />
       </el-tooltip>
       <el-tooltip class="item" effect="dark" content="刷新" placement="top">
@@ -23,7 +23,7 @@
     </el-row>
     <el-dialog :title="title" :visible.sync="open" append-to-body>
       <el-transfer
-        :titles="['显示', '隐藏']"
+        :titles="['Hiển thị', 'Ẩn']"
         v-model="value"
         :data="columns"
         @change="dataChange"
@@ -39,13 +39,13 @@ export default {
       // 显隐数据
       value: [],
       // 弹出层标题
-      title: "显示/隐藏",
-      // 是否显示弹出层
+      title: "Hiển thị/Ẩn",
+      // CóKhôngHiển thị弹出层
       open: false,
     };
   },
   props: {
-    /* 是否显示检索条件 */
+    /* CóKhôngHiển thị检索条件 */
     showSearch: {
       type: Boolean,
       default: true,
@@ -54,12 +54,12 @@ export default {
     columns: {
       type: Array,
     },
-    /* 是否显示检索图标 */
+    /* CóKhôngHiển thị检索图标 */
     search: {
       type: Boolean,
       default: true,
     },
-    /* 显隐列类型（transfer穿梭框、checkbox复选框） */
+    /* 显隐列Loại（transfer穿梭框、checkbox复选框） */
     showColumnsType: {
       type: String,
       default: "checkbox",
@@ -81,7 +81,7 @@ export default {
   },
   created() {
     if (this.showColumnsType == 'transfer') {
-      // 显隐列初始默认隐藏列
+      // 显隐列初始默认Ẩn列
       for (let item in this.columns) {
         if (this.columns[item].visible === false) {
           this.value.push(parseInt(item));
@@ -90,7 +90,7 @@ export default {
     }
   },
   methods: {
-    // 搜索
+    // Tìm kiếm
     toggleSearch() {
       this.$emit("update:showSearch", !this.showSearch);
     },

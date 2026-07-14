@@ -13,7 +13,7 @@
       </el-col>
       <el-col :span="12">
         <el-form-item prop="tplWebType">
-          <span slot="label">前端类型</span>
+          <span slot="label">前端Loại</span>
           <el-select v-model="info.tplWebType">
             <el-option label="Vue2 Element UI 模版" value="element-ui" />
             <el-option label="Vue3 Element Plus 模版" value="element-plus" />
@@ -59,7 +59,7 @@
       <el-col :span="12">
         <el-form-item prop="functionName">
           <span slot="label">
-            生成功能名
+            生Thành công能名
             <el-tooltip content="用作类描述，例如 用户" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
@@ -84,8 +84,8 @@
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            上级菜单
-            <el-tooltip content="分配到指定菜单下，例如 系统管理" placement="top">
+            Menu cấp trên
+            <el-tooltip content="分配到指定Menu下，例如 系统管理" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -95,7 +95,7 @@
             :options="menus"
             :normalizer="normalizer"
             :show-count="true"
-            placeholder="请选择系统菜单"
+            placeholder="Vui lòng chọn系统Menu"
           />
         </el-form-item>
       </el-col>
@@ -129,11 +129,11 @@
         <el-form-item>
           <span slot="label">
             树编码字段
-            <el-tooltip content="树显示的编码字段名， 如：dept_id" placement="top">
+            <el-tooltip content="树Hiển thị的编码字段名， 如：dept_id" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.treeCode" placeholder="请选择">
+          <el-select v-model="info.treeCode" placeholder="Vui lòng chọn">
             <el-option
               v-for="(column, index) in info.columns"
               :key="index"
@@ -147,11 +147,11 @@
         <el-form-item>
           <span slot="label">
             树父编码字段
-            <el-tooltip content="树显示的父编码字段名， 如：parent_Id" placement="top">
+            <el-tooltip content="树Hiển thị的父编码字段名， 如：parent_Id" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.treeParentCode" placeholder="请选择">
+          <el-select v-model="info.treeParentCode" placeholder="Vui lòng chọn">
             <el-option
               v-for="(column, index) in info.columns"
               :key="index"
@@ -165,11 +165,11 @@
         <el-form-item>
           <span slot="label">
             树名称字段
-            <el-tooltip content="树节点的显示名称字段名， 如：dept_name" placement="top">
+            <el-tooltip content="树节点的Hiển thị名称字段名， 如：dept_name" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.treeName" placeholder="请选择">
+          <el-select v-model="info.treeName" placeholder="Vui lòng chọn">
             <el-option
               v-for="(column, index) in info.columns"
               :key="index"
@@ -190,7 +190,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.subTableName" placeholder="请选择" @change="subSelectChange">
+          <el-select v-model="info.subTableName" placeholder="Vui lòng chọn" @change="subSelectChange">
             <el-option
               v-for="(table, index) in tables"
               :key="index"
@@ -208,7 +208,7 @@
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-select v-model="info.subTableFkName" placeholder="请选择">
+          <el-select v-model="info.subTableFkName" placeholder="Vui lòng chọn">
             <el-option
               v-for="(column, index) in subColumns"
               :key="index"
@@ -247,19 +247,19 @@ export default {
       subColumns: [],
       rules: {
         tplCategory: [
-          { required: true, message: "请选择生成模板", trigger: "blur" }
+          { required: true, message: "Vui lòng chọn生成模板", trigger: "blur" }
         ],
         packageName: [
-          { required: true, message: "请输入生成包路径", trigger: "blur" }
+          { required: true, message: "Vui lòng nhập生成包路径", trigger: "blur" }
         ],
         moduleName: [
-          { required: true, message: "请输入生成模块名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhập生成模块名", trigger: "blur" }
         ],
         businessName: [
-          { required: true, message: "请输入生成业务名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhập生成业务名", trigger: "blur" }
         ],
         functionName: [
-          { required: true, message: "请输入生成功能名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhập生Thành công能名", trigger: "blur" }
         ],
       }
     };
@@ -275,7 +275,7 @@ export default {
     }
   },
   methods: {
-    /** 转换菜单数据结构 */
+    /** 转换Menu数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;

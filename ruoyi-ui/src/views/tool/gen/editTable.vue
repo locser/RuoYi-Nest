@@ -19,12 +19,12 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="物理类型"
+            label="物理Loại"
             prop="columnType"
             min-width="10%"
             :show-overflow-tooltip="true"
           />
-          <el-table-column label="TypeScript类型" min-width="11%">
+          <el-table-column label="TypeScriptLoại" min-width="11%">
             <template slot-scope="scope">
               <el-select v-model="scope.row.tsType">
                 <el-option label="number" value="number" />
@@ -80,7 +80,7 @@
               <el-checkbox true-label="1" false-label="0" v-model="scope.row.isRequired"></el-checkbox>
             </template>
           </el-table-column>
-          <el-table-column label="显示类型" min-width="12%">
+          <el-table-column label="Hiển thịLoại" min-width="12%">
             <template slot-scope="scope">
               <el-select v-model="scope.row.htmlType">
                 <el-option label="文本框" value="input" />
@@ -95,9 +95,9 @@
               </el-select>
             </template>
           </el-table-column>
-          <el-table-column label="字典类型" min-width="12%">
+          <el-table-column label="Loại từ điển" min-width="12%">
             <template slot-scope="scope">
-              <el-select v-model="scope.row.dictType" clearable filterable placeholder="请选择">
+              <el-select v-model="scope.row.dictType" clearable filterable placeholder="Vui lòng chọn">
                 <el-option
                   v-for="dict in dictOptions"
                   :key="dict.dictType"
@@ -118,7 +118,7 @@
     <el-form label-width="100px">
       <el-form-item style="text-align: center;margin-left:-100px;margin-top:10px;">
         <el-button type="primary" @click="submitForm()">提交</el-button>
-        <el-button @click="close()">返回</el-button>
+        <el-button @click="close()">Quay lại</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -150,7 +150,7 @@ export default {
       columns: [],
       // 字典信息
       dictOptions: [],
-      // 菜单信息
+      // Menu信息
       menus: [],
       // 表详细信息
       info: {}
@@ -169,14 +169,14 @@ export default {
       getDictOptionselect().then(response => {
         this.dictOptions = response.data;
       });
-      /** 查询菜单下拉列表 */
+      /** 查询Menu下拉列表 */
       getMenuTreeselect().then(response => {
         this.menus = this.handleTree(response.data, "menuId");
       });
     }
   },
   methods: {
-    /** 提交按钮 */
+    /** 提交Nút bấm */
     submitForm() {
       const basicForm = this.$refs.basicInfo.$refs.basicInfoForm;
       const genForm = this.$refs.genInfo.$refs.genInfoForm;
@@ -198,7 +198,7 @@ export default {
             }
           });
         } else {
-          this.$modal.msgError("表单校验未通过，请重新检查提交内容");
+          this.$modal.msgError("表单校验未通过，请重新检查提交Nội dung");
         }
       });
     },
@@ -209,7 +209,7 @@ export default {
         });
       });
     },
-    /** 关闭按钮 */
+    /** ĐóngNút bấm */
     close() {
       const obj = { path: "/tool/gen", query: { t: Date.now(), pageNum: this.$route.query.pageNum } };
       this.$tab.closeOpenPage(obj);

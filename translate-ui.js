@@ -225,14 +225,43 @@ const dict = {
   "旧密码": "Mật khẩu cũ",
   "新密码": "Mật khẩu mới",
   "确认密码": "Xác nhận mật khẩu",
+  "个人中心": "Trang cá nhân",
+
+  // Giám sát & Nhật ký (Monitor & Logs)
+  "刷新缓存": "Làm mới bộ nhớ đệm",
+  "Thao tác人员": "Người thực hiện",
+  "操作人员": "Người thực hiện",
+  "操作时间": "Thời gian thực hiện",
+  "消耗时间": "Thời gian tiêu hao",
+  "日志主键": "ID nhật ký",
+  "模块标题": "Tiêu đề module",
+  "业务类型": "Loại nghiệp vụ",
+  "方法名称": "Tên phương thức",
+  "请求方式": "Phương thức yêu cầu",
+  "操作类别": "Loại thao tác",
+  "主机地址": "Địa chỉ IP",
+  "操作地点": "Địa điểm thao tác",
+  "请求参数": "Tham số yêu cầu",
+  "返回参数": "Tham số phản hồi",
+  "错误消息": "Thông báo lỗi",
+  "操作状态": "Trạng thái hoạt động",
+  "内容": "Nội dung",
+  "æ˜¯": "Có",
 };
 
 // Sắp xếp các key trong dict theo chiều dài giảm dần
 const sortedKeys = Object.keys(dict).sort((a, b) => b.length - a.length);
 
-const targetDir = path.join(__dirname, 'ruoyi-ui', 'src', 'views', 'system');
+const targetDirs = [
+  path.join(__dirname, 'ruoyi-ui', 'src', 'views', 'system'),
+  path.join(__dirname, 'ruoyi-ui', 'src', 'views', 'monitor'),
+  path.join(__dirname, 'ruoyi-ui', 'src', 'views', 'tool'),
+  path.join(__dirname, 'ruoyi-ui', 'src', 'layout'),
+  path.join(__dirname, 'ruoyi-ui', 'src', 'components')
+];
 
 function walkDir(dir) {
+  if (!fs.existsSync(dir)) return;
   const files = fs.readdirSync(dir);
   for (const file of files) {
     const filePath = path.join(dir, file);
@@ -268,5 +297,7 @@ function translateFile(filePath) {
 }
 
 console.log('Bắt đầu dịch các giao diện hệ thống...');
-walkDir(targetDir);
+for (const dir of targetDirs) {
+  walkDir(dir);
+}
 console.log('Dịch hoàn tất!');

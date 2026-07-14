@@ -35,13 +35,13 @@
             ></el-table-column>
 
             <el-table-column
-              label="备注"
+              label="Ghi chú"
               align="center"
               prop="remark"
               :show-overflow-tooltip="true"
             />
             <el-table-column
-              label="操作"
+              label="Thao tác"
               width="60"
               align="center"
               class-name="small-padding fixed-width"
@@ -91,7 +91,7 @@
             >
             </el-table-column>
             <el-table-column
-              label="操作"
+              label="Thao tác"
               width="60"
               align="center"
               class-name="small-padding fixed-width"
@@ -112,7 +112,7 @@
       <el-col :span="8">
         <el-card :bordered="false" style="height: calc(100vh - 125px)">
           <div slot="header">
-            <span><i class="el-icon-document"></i> 缓存内容</span>
+            <span><i class="el-icon-document"></i> 缓存Nội dung</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -134,7 +134,7 @@
                 </el-form-item>
               </el-col>
               <el-col :offset="1" :span="22">
-                <el-form-item label="缓存内容:" prop="cacheValue">
+                <el-form-item label="缓存Nội dung:" prop="cacheValue">
                   <el-input
                     v-model="cacheForm.cacheValue"
                     type="textarea"
@@ -179,15 +179,15 @@ export default {
         this.loading = false;
       });
     },
-    /** 刷新缓存名称列表 */
+    /** Làm mới bộ nhớ đệm名称列表 */
     refreshCacheNames() {
       this.getCacheNames();
-      this.$modal.msgSuccess("刷新缓存列表成功");
+      this.$modal.msgSuccess("Làm mới bộ nhớ đệm列表Thành công");
     },
     /** 清理指定名称缓存 */
     handleClearCacheName(row) {
       clearCacheName(row.cacheName).then(response => {
-        this.$modal.msgSuccess("清理缓存名称[" + row.cacheName + "]成功");
+        this.$modal.msgSuccess("清理缓存名称[" + row.cacheName + "]Thành công");
         this.getCacheKeys();
       });
     },
@@ -204,15 +204,15 @@ export default {
         this.nowCacheName = cacheName;
       });
     },
-    /** 刷新缓存键名列表 */
+    /** Làm mới bộ nhớ đệm键名列表 */
     refreshCacheKeys() {
       this.getCacheKeys();
-      this.$modal.msgSuccess("刷新键名列表成功");
+      this.$modal.msgSuccess("刷新键名列表Thành công");
     },
     /** 清理指定键名缓存 */
     handleClearCacheKey(cacheKey) {
       clearCacheKey(cacheKey).then(response => {
-        this.$modal.msgSuccess("清理缓存键名[" + cacheKey + "]成功");
+        this.$modal.msgSuccess("清理缓存键名[" + cacheKey + "]Thành công");
         this.getCacheKeys();
       });
     },
@@ -224,7 +224,7 @@ export default {
     keyFormatter(cacheKey) {
       return cacheKey.replace(this.nowCacheName, "");
     },
-    /** 查询缓存内容详细 */
+    /** 查询缓存Nội dung详细 */
     handleCacheValue(cacheKey) {
       getCacheValue(this.nowCacheName, cacheKey).then(response => {
         this.cacheForm = response.data;
@@ -233,7 +233,7 @@ export default {
     /** 清理全部缓存 */
     handleClearCacheAll() {
       clearCacheAll().then(response => {
-        this.$modal.msgSuccess("清理全部缓存成功");
+        this.$modal.msgSuccess("清理全部缓存Thành công");
       });
     }
   },

@@ -4,7 +4,7 @@
       <el-form-item label="任务名称" prop="jobName">
         <el-input
           v-model="queryParams.jobName"
-          placeholder="请输入任务名称"
+          placeholder="Vui lòng nhập任务名称"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
@@ -13,7 +13,7 @@
       <el-form-item label="任务组名" prop="jobGroup">
         <el-select
           v-model="queryParams.jobGroup"
-          placeholder="请选择任务组名"
+          placeholder="Vui lòng chọn任务组名"
           clearable
           style="width: 240px"
         >
@@ -25,10 +25,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="执行状态" prop="status">
+      <el-form-item label="执行Trạng thái" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="请选择执行状态"
+          placeholder="Vui lòng chọn执行Trạng thái"
           clearable
           style="width: 240px"
         >
@@ -47,13 +47,13 @@
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Từ ngày"
+          end-placeholder="Đến ngày"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -67,7 +67,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['monitor:job:remove']"
-        >删除</el-button>
+        >Xóa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +77,7 @@
           size="mini"
           @click="handleClean"
           v-hasPermi="['monitor:job:remove']"
-        >清空</el-button>
+        >Xóa sạch</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -87,7 +87,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['monitor:job:export']"
-        >导出</el-button>
+        >Xuất file</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -96,7 +96,7 @@
           icon="el-icon-close"
           size="mini"
           @click="handleClose"
-        >关闭</el-button>
+        >Đóng</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -112,7 +112,7 @@
       </el-table-column>
       <el-table-column label="调用目标字符串" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
       <el-table-column label="日志信息" align="center" prop="jobMessage" :show-overflow-tooltip="true" />
-      <el-table-column label="执行状态" align="center" prop="status">
+      <el-table-column label="执行Trạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
         </template>
@@ -122,7 +122,7 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -162,9 +162,9 @@
             <el-form-item label="日志信息：">{{ form.jobMessage }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="执行状态：">
-              <div v-if="form.status == 0">正常</div>
-              <div v-else-if="form.status == 1">失败</div>
+            <el-form-item label="执行Trạng thái：">
+              <div v-if="form.status == 0">Bình thường</div>
+              <div v-else-if="form.status == 1">Thất bại</div>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -194,13 +194,13 @@ export default {
       ids: [],
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
       // 调度日志表格数据
       jobLogList: [],
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
       // 日期范围
       dateRange: [],
@@ -239,17 +239,17 @@ export default {
         }
       );
     },
-    // 返回按钮
+    // Quay lạiNút bấm
     handleClose() {
       const obj = { path: "/monitor/job" };
       this.$tab.closeOpenPage(obj);
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
@@ -260,31 +260,31 @@ export default {
       this.ids = selection.map(item => item.jobLogId);
       this.multiple = !selection.length;
     },
-    /** 详细按钮操作 */
+    /** 详细Nút bấmThao tác */
     handleView(row) {
       this.open = true;
       this.form = row;
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const jobLogIds = this.ids;
-      this.$modal.confirm('是否确认删除调度日志编号为"' + jobLogIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa调度日志编号为"' + jobLogIds + '" không?').then(function() {
         return delJobLog(jobLogIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     },
-    /** 清空按钮操作 */
+    /** Xóa sạchNút bấmThao tác */
     handleClean() {
-      this.$modal.confirm('是否确认清空所有调度日志数据项？').then(function() {
+      this.$modal.confirm('CóKhông确认Xóa sạch所有调度日志数据项？').then(function() {
         return cleanJobLog();
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("清空成功");
+        this.$modal.msgSuccess("Xóa sạch thành công");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
+    /** Xuất fileNút bấmThao tác */
     handleExport() {
       this.download('/monitor/jobLog/export', {
         ...this.queryParams

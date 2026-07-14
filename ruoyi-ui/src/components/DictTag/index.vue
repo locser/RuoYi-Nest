@@ -36,7 +36,7 @@ export default {
       default: null,
     },
     value: [Number, String, Array],
-    // 当未找到匹配的数据时，显示value
+    // 当未找到匹配的数据时，Hiển thịvalue
     showValue: {
       type: Boolean,
       default: true,
@@ -58,17 +58,17 @@ export default {
     },
     unmatch() {
       this.unmatchArray = []
-      // 没有value不显示
+      // 没有value不Hiển thị
       if (this.value === null || typeof this.value === 'undefined' || this.value === '' || this.options.length === 0) return false
       // 传入值为数组
-      let unmatch = false // 添加一个标志来判断是否有未匹配项
+      let unmatch = false // 添加一个标志来判断CóKhông有未匹配项
       this.values.forEach(item => {
         if (!this.options.some(v => v.value === item)) {
           this.unmatchArray.push(item)
           unmatch = true // 如果有未匹配项，将标志设置为true
         }
       })
-      return unmatch // 返回标志的值
+      return unmatch // Quay lại标志的值
     },
 
   },

@@ -49,7 +49,7 @@ export default {
 	name: 'crontab-second',
 	props: ['check', 'radioParent'],
 	methods: {
-		// 单选按钮值变化时
+		// 单选Nút bấm值变化时
 		radioChange() {
 			switch (this.radioValue) {
 				case 1:
