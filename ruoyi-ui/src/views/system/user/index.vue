@@ -6,7 +6,7 @@
         <div class="head-container">
           <el-input
             v-model="deptName"
-            placeholder="请输入部门名称"
+            placeholder="Vui lòng nhập tên phòng ban"
             clearable
             size="small"
             prefix-icon="el-icon-search"
@@ -30,28 +30,28 @@
       <!--用户数据-->
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-          <el-form-item label="用户名称" prop="userName">
+          <el-form-item label="Tên đăng nhập" prop="userName">
             <el-input
               v-model="queryParams.userName"
-              placeholder="请输入用户名称"
+              placeholder="Vui lòng nhập tên đăng nhập"
               clearable
               style="width: 240px"
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="手机号码" prop="phonenumber">
+          <el-form-item label="Số điện thoại" prop="phonenumber">
             <el-input
               v-model="queryParams.phonenumber"
-              placeholder="请输入手机号码"
+              placeholder="Vui lòng nhập số điện thoại"
               clearable
               style="width: 240px"
               @keyup.enter.native="handleQuery"
             />
           </el-form-item>
-          <el-form-item label="状态" prop="status">
+          <el-form-item label="Trạng thái" prop="status">
             <el-select
               v-model="queryParams.status"
-              placeholder="用户状态"
+              placeholder="Trạng thái"
               clearable
               style="width: 240px"
             >
@@ -63,20 +63,20 @@
               />
             </el-select>
           </el-form-item>
-          <el-form-item label="创建时间">
+          <el-form-item label="Ngày tạo">
             <el-date-picker
               v-model="dateRange"
               style="width: 240px"
               value-format="yyyy-MM-dd"
               type="daterange"
               range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Từ ngày"
+              end-placeholder="Đến ngày"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
           </el-form-item>
         </el-form>
 
@@ -89,7 +89,7 @@
               size="mini"
               @click="handleAdd"
               v-hasPermi="['system:user:add']"
-            >新增</el-button>
+            >Thêm mới</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -100,7 +100,7 @@
               :disabled="single"
               @click="handleUpdate"
               v-hasPermi="['system:user:edit']"
-            >修改</el-button>
+            >Sửa</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -111,7 +111,7 @@
               :disabled="multiple"
               @click="handleDelete"
               v-hasPermi="['system:user:remove']"
-            >删除</el-button>
+            >Xóa</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -121,7 +121,7 @@
               size="mini"
               @click="handleImport"
               v-hasPermi="['system:user:import']"
-            >导入</el-button>
+            >Nhập file</el-button>
           </el-col>
           <el-col :span="1.5">
             <el-button
@@ -131,19 +131,19 @@
               size="mini"
               @click="handleExport"
               v-hasPermi="['system:user:export']"
-            >导出</el-button>
+            >Xuất file</el-button>
           </el-col>
           <right-toolbar :showSearch.sync="showSearch" @queryTable="getList" :columns="columns"></right-toolbar>
         </el-row>
 
         <el-table v-loading="loading" :data="userList" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" align="center" />
-          <el-table-column label="用户编号" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
-          <el-table-column label="用户名称" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="用户昵称" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
-          <el-table-column label="状态" align="center" key="status" v-if="columns[5].visible">
+          <el-table-column label="Mã người dùng" align="center" key="userId" prop="userId" v-if="columns[0].visible" />
+          <el-table-column label="Tên đăng nhập" align="center" key="userName" prop="userName" v-if="columns[1].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="Tên hiển thị" align="center" key="nickName" prop="nickName" v-if="columns[2].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="Phòng ban" align="center" key="deptName" prop="dept.deptName" v-if="columns[3].visible" :show-overflow-tooltip="true" />
+          <el-table-column label="Số điện thoại" align="center" key="phonenumber" prop="phonenumber" v-if="columns[4].visible" width="120" />
+          <el-table-column label="Trạng thái" align="center" key="status" v-if="columns[5].visible">
             <template slot-scope="scope">
               <el-switch
                 v-model="scope.row.status"
@@ -153,13 +153,13 @@
               ></el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" align="center" prop="createTime" v-if="columns[6].visible" width="160">
+          <el-table-column label="Ngày tạo" align="center" prop="createTime" v-if="columns[6].visible" width="160">
             <template slot-scope="scope">
               <span>{{ parseTime(scope.row.createTime) }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            label="操作"
+            label="Thao tác"
             align="center"
             width="160"
             class-name="small-padding fixed-width"
@@ -171,21 +171,21 @@
                 icon="el-icon-edit"
                 @click="handleUpdate(scope.row)"
                 v-hasPermi="['system:user:edit']"
-              >修改</el-button>
+              >Sửa</el-button>
               <el-button
                 size="mini"
                 type="text"
                 icon="el-icon-delete"
                 @click="handleDelete(scope.row)"
                 v-hasPermi="['system:user:remove']"
-              >删除</el-button>
+              >Xóa</el-button>
               <el-dropdown size="mini" @command="(command) => handleCommand(command, scope.row)" v-hasPermi="['system:user:resetPwd', 'system:user:edit']">
-                <el-button size="mini" type="text" icon="el-icon-d-arrow-right">更多</el-button>
+                <el-button size="mini" type="text" icon="el-icon-d-arrow-right">Xem thêm</el-button>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="handleResetPwd" icon="el-icon-key"
-                    v-hasPermi="['system:user:resetPwd']">重置密码</el-dropdown-item>
+                    v-hasPermi="['system:user:resetPwd']">Đổi mật khẩu</el-dropdown-item>
                   <el-dropdown-item command="handleAuthRole" icon="el-icon-circle-check"
-                    v-hasPermi="['system:user:edit']">分配角色</el-dropdown-item>
+                    v-hasPermi="['system:user:edit']">Gán vai trò</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -204,47 +204,47 @@
 
     <!-- 添加或修改用户配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户昵称" prop="nickName">
-              <el-input v-model="form.nickName" placeholder="请输入用户昵称" maxlength="30" />
+            <el-form-item label="Tên hiển thị" prop="nickName">
+              <el-input v-model="form.nickName" placeholder="Vui lòng nhập tên hiển thị" maxlength="30" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" placeholder="请选择归属部门" />
+            <el-form-item label="Thuộc phòng ban" prop="deptId">
+              <treeselect v-model="form.deptId" :options="deptOptions" :show-count="true" placeholder="Chọn phòng ban" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
+            <el-form-item label="Số điện thoại" prop="phonenumber">
+              <el-input v-model="form.phonenumber" placeholder="Vui lòng nhập số điện thoại" maxlength="11" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
-              <el-input v-model="form.userName" placeholder="请输入用户名称" maxlength="30" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item v-if="form.userId == undefined" label="用户密码" prop="password">
-              <el-input v-model="form.password" placeholder="请输入用户密码" type="password" maxlength="20" show-password/>
+            <el-form-item label="Email" prop="email">
+              <el-input v-model="form.email" placeholder="Vui lòng nhập email" maxlength="50" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="用户性别">
-              <el-select v-model="form.sex" placeholder="请选择性别">
+            <el-form-item v-if="form.userId == undefined" label="Tên đăng nhập" prop="userName">
+              <el-input v-model="form.userName" placeholder="Vui lòng nhập tên đăng nhập" maxlength="30" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item v-if="form.userId == undefined" label="Mật khẩu" prop="password">
+              <el-input v-model="form.password" placeholder="Vui lòng nhập mật khẩu" type="password" maxlength="20" show-password/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="Giới tính">
+              <el-select v-model="form.sex" placeholder="Chọn giới tính">
                 <el-option
                   v-for="dict in dict.type.sys_user_sex"
                   :key="dict.value"
@@ -255,7 +255,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="状态">
+            <el-form-item label="Trạng thái">
               <el-radio-group v-model="form.status">
                 <el-radio
                   v-for="dict in dict.type.sys_normal_disable"
@@ -268,8 +268,8 @@
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择岗位">
+            <el-form-item label="Chức vụ">
+              <el-select v-model="form.postIds" multiple placeholder="Chọn chức vụ">
                 <el-option
                   v-for="item in postOptions"
                   :key="item.postId"
@@ -281,8 +281,8 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="角色">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择角色">
+            <el-form-item label="Vai trò">
+              <el-select v-model="form.roleIds" multiple placeholder="Chọn vai trò">
                 <el-option
                   v-for="item in roleOptions"
                   :key="item.roleId"
@@ -296,19 +296,19 @@
         </el-row>
         <el-row>
           <el-col :span="24">
-            <el-form-item label="备注">
-              <el-input v-model="form.remark" type="textarea" placeholder="请输入内容"></el-input>
+            <el-form-item label="Ghi chú">
+              <el-input v-model="form.remark" type="textarea" placeholder="Vui lòng nhập nội dung"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">Xác nhận</el-button>
+        <el-button @click="cancel">Hủy</el-button>
       </div>
     </el-dialog>
 
-    <!-- 用户导入对话框 -->
+    <!-- Hộp thoại nhập người dùng -->
     <el-dialog :title="upload.title" :visible.sync="upload.open" width="400px" append-to-body>
       <el-upload
         ref="upload"
@@ -323,18 +323,18 @@
         drag
       >
         <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+        <div class="el-upload__text">Kéo thả file vào đây, hoặc <em>click để tải lên</em></div>
         <div class="el-upload__tip text-center" slot="tip">
           <div class="el-upload__tip" slot="tip">
-            <el-checkbox v-model="upload.updateSupport" /> 是否更新已经存在的用户数据
+            <el-checkbox v-model="upload.updateSupport" /> Cập nhật dữ liệu người dùng đã tồn tại
           </div>
-          <span>仅允许导入xls、xlsx格式文件。</span>
-          <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">下载模板</el-link>
+          <span>Chỉ chấp nhận file định dạng xls, xlsx.</span>
+          <el-link type="primary" :underline="false" style="font-size:12px;vertical-align: baseline;" @click="importTemplate">Tải file mẫu</el-link>
         </div>
       </el-upload>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitFileForm">确 定</el-button>
-        <el-button @click="upload.open = false">取 消</el-button>
+        <el-button type="primary" @click="submitFileForm">Xác nhận</el-button>
+        <el-button @click="upload.open = false">Hủy</el-button>
       </div>
     </el-dialog>
   </div>
@@ -414,39 +414,39 @@ export default {
       },
       // 列信息
       columns: [
-        { key: 0, label: `用户编号`, visible: true },
-        { key: 1, label: `用户名称`, visible: true },
-        { key: 2, label: `用户昵称`, visible: true },
-        { key: 3, label: `部门`, visible: true },
-        { key: 4, label: `手机号码`, visible: true },
-        { key: 5, label: `状态`, visible: true },
-        { key: 6, label: `创建时间`, visible: true }
+        { key: 0, label: `Mã người dùng`, visible: true },
+        { key: 1, label: `Tên đăng nhập`, visible: true },
+        { key: 2, label: `Tên hiển thị`, visible: true },
+        { key: 3, label: `Phòng ban`, visible: true },
+        { key: 4, label: `Số điện thoại`, visible: true },
+        { key: 5, label: `Trạng thái`, visible: true },
+        { key: 6, label: `Ngày tạo`, visible: true }
       ],
       // 表单校验
       rules: {
         userName: [
-          { required: true, message: "用户名称不能为空", trigger: "blur" },
-          { min: 2, max: 20, message: '用户名称长度必须介于 2 和 20 之间', trigger: 'blur' }
+          { required: true, message: "Tên đăng nhập không được để trống", trigger: "blur" },
+          { min: 2, max: 20, message: 'Độ dài tên đăng nhập phải từ 2 đến 20 ký tự', trigger: 'blur' }
         ],
         nickName: [
-          { required: true, message: "用户昵称不能为空", trigger: "blur" }
+          { required: true, message: "Tên hiển thị không được để trống", trigger: "blur" }
         ],
         password: [
-          { required: true, message: "用户密码不能为空", trigger: "blur" },
-          { min: 5, max: 20, message: '用户密码长度必须介于 5 和 20 之间', trigger: 'blur' },
-          { pattern: /^[^<>"'|\\]+$/, message: "不能包含非法字符：< > \" ' \\\ |", trigger: "blur" }
+          { required: true, message: "Mật khẩu không được để trống", trigger: "blur" },
+          { min: 5, max: 20, message: 'Độ dài mật khẩu phải từ 5 đến 20 ký tự', trigger: 'blur' },
+          { pattern: /^[^<>"'|\\]+$/, message: "Không được chứa ký tự đặc biệt: < > \" ' \\\ |", trigger: "blur" }
         ],
         email: [
           {
             type: "email",
-            message: "请输入正确的邮箱地址",
+            message: "Vui lòng nhập đúng định dạng email",
             trigger: ["blur", "change"]
           }
         ],
         phonenumber: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "请输入正确的手机号码",
+            message: "Vui lòng nhập đúng định dạng số điện thoại",
             trigger: "blur"
           }
         ]
@@ -495,11 +495,11 @@ export default {
     },
     // 用户状态修改
     handleStatusChange(row) {
-      let text = row.status === "0" ? "启用" : "停用";
-      this.$modal.confirm('确认要"' + text + '""' + row.userName + '"用户吗？').then(function() {
+      let text = row.status === "0" ? "Kích hoạt" : "Hủy kích hoạt";
+      this.$modal.confirm('Bạn có chắc chắn muốn ' + text + ' người dùng "' + row.userName + '" không?').then(function() {
         return changeUserStatus(row.userId, row.status);
       }).then(() => {
-        this.$modal.msgSuccess(text + "成功");
+        this.$modal.msgSuccess(text + " thành công");
       }).catch(function() {
         row.status = row.status === "0" ? "1" : "0";
       });
@@ -566,7 +566,7 @@ export default {
         this.postOptions = response.posts;
         this.roleOptions = response.roles;
         this.open = true;
-        this.title = "添加用户";
+        this.title = "Thêm người dùng";
         this.form.password = this.initPassword;
       });
     },
@@ -581,26 +581,26 @@ export default {
         this.$set(this.form, "postIds", response.postIds);
         this.$set(this.form, "roleIds", response.roleIds);
         this.open = true;
-        this.title = "修改用户";
+        this.title = "Chỉnh sửa người dùng";
         this.form.password = "";
       });
     },
     /** 重置密码按钮操作 */
     handleResetPwd(row) {
-      this.$prompt('请输入"' + row.userName + '"的新密码', "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
+      this.$prompt('Nhập mật khẩu mới cho người dùng "' + row.userName + '"', "Gợi ý", {
+        confirmButtonText: "Xác nhận",
+        cancelButtonText: "Hủy",
         closeOnClickModal: false,
         inputPattern: /^.{5,20}$/,
-        inputErrorMessage: "用户密码长度必须介于 5 和 20 之间",
+        inputErrorMessage: "Độ dài mật khẩu phải từ 5 đến 20 ký tự",
         inputValidator: (value) => {
           if (/<|>|"|'|\||\\/.test(value)) {
-            return "不能包含非法字符：< > \" ' \\\ |"
+            return "Không được chứa ký tự đặc biệt: < > \" ' \\\ |"
           }
         },
       }).then(({ value }) => {
           resetUserPwd(row.userId, value).then(response => {
-            this.$modal.msgSuccess("修改成功，新密码是：" + value);
+            this.$modal.msgSuccess("Chỉnh sửa thành công, mật khẩu mới là: " + value);
           });
         }).catch(() => {});
     },
@@ -615,13 +615,13 @@ export default {
         if (valid) {
           if (this.form.userId != undefined) {
             updateUser(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("Chỉnh sửa thành công");
               this.open = false;
               this.getList();
             });
           } else {
             addUser(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess("Thêm mới thành công");
               this.open = false;
               this.getList();
             });
@@ -632,11 +632,11 @@ export default {
     /** 删除按钮操作 */
     handleDelete(row) {
       const userIds = row.userId || this.ids;
-      this.$modal.confirm('是否确认删除用户编号为"' + userIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa người dùng có mã "' + userIds + '" không?').then(function() {
         return delUser(userIds);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     },
     /** 导出按钮操作 */
@@ -647,7 +647,7 @@ export default {
     },
     /** 导入按钮操作 */
     handleImport() {
-      this.upload.title = "用户导入";
+      this.upload.title = "Nhập dữ liệu người dùng";
       this.upload.open = true;
     },
     /** 下载模板操作 */
@@ -664,7 +664,7 @@ export default {
       this.upload.open = false;
       this.upload.isUploading = false;
       this.$refs.upload.clearFiles();
-      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "导入结果", { dangerouslyUseHTMLString: true });
+      this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "Kết quả nhập file", { dangerouslyUseHTMLString: true });
       this.getList();
     },
     // 提交上传文件
