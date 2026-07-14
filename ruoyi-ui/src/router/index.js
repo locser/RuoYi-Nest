@@ -70,7 +70,7 @@ export const constantRoutes = [
         path: 'index',
         component: loadView('index'), 
         name: 'Index',
-        meta: { title: '首页', icon: 'dashboard', affix: true }
+        meta: { title: 'Trang chủ', icon: 'dashboard', affix: true }
       }
     ]
   },
