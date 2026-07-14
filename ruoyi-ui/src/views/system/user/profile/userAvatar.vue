@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="user-info-head" @click="editCropper()"><img v-bind:src="options.img" title="点击上传头像" class="img-circle img-lg" /></div>
+    <div class="user-info-head" @click="editCropper()"><img v-bind:src="options.img" title="click để tải lên头像" class="img-circle img-lg" /></div>
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened"  @close="closeDialog">
       <el-row>
         <el-col :xs="24" :md="12" :style="{height: '350px'}">
@@ -63,15 +63,15 @@ export default {
   components: { VueCropper },
   data() {
     return {
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
-      // 是否显示cropper
+      // CóKhôngHiển thịcropper
       visible: false,
       // 弹出层标题
-      title: "修改头像",
+      title: "Sửa头像",
       options: {
         img: store.getters.avatar,  //裁剪图片的地址
-        autoCrop: true,             // 是否默认生成截图框
+        autoCrop: true,             // Mặc định生成截图框
         autoCropWidth: 200,         // 默认生成截图框宽度
         autoCropHeight: 200,        // 默认生成截图框高度
         fixedBox: true,             // 固定截图框大小 不允许改变
@@ -120,7 +120,7 @@ export default {
     // 上传预处理
     beforeUpload(file) {
       if (file.type.indexOf("image/") == -1) {
-        this.$modal.msgError("文件格式错误，请上传图片类型,如：JPG，PNG后缀的文件。");
+        this.$modal.msgError("文件格式错误，请上传图片Loại,如：JPG，PNG后缀的文件。");
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -139,7 +139,7 @@ export default {
           this.open = false;
           this.options.img = import.meta.env.VITE_APP_BASE_API + response.imgUrl;
           store.commit('SET_AVATAR', this.options.img);
-          this.$modal.msgSuccess("修改成功");
+          this.$modal.msgSuccess("Chỉnh sửa thành công");
           this.visible = false;
         });
       });
@@ -148,7 +148,7 @@ export default {
     realTime(data) {
       this.previews = data;
     },
-    // 关闭窗口
+    // Đóng窗口
     closeDialog() {
       this.options.img = store.getters.avatar
       this.visible = false;

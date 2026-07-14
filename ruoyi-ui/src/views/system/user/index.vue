@@ -202,7 +202,7 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或修改用户配置对话框 -->
+    <!-- 添加或Sửa người dùng配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
@@ -360,7 +360,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
@@ -370,9 +370,9 @@ export default {
       title: "",
       // 部门树选项
       deptOptions: undefined,
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
-      // 部门名称
+      // Tên phòng ban
       deptName: undefined,
       // 默认密码
       initPassword: undefined,
@@ -388,15 +388,15 @@ export default {
         children: "children",
         label: "label"
       },
-      // 用户导入参数
+      // Nhập dữ liệu người dùng参数
       upload: {
-        // 是否显示弹出层（用户导入）
+        // CóKhôngHiển thị弹出层（Nhập dữ liệu người dùng）
         open: false,
-        // 弹出层标题（用户导入）
+        // 弹出层标题（Nhập dữ liệu người dùng）
         title: "",
-        // 是否禁用上传
+        // CóKhông禁用上传
         isUploading: false,
-        // 是否更新已经存在的用户数据
+        // Cập nhật dữ liệu người dùng đã tồn tại
         updateSupport: 0,
         // 设置上传的请求头部
         headers: { Authorization: "Bearer " + getToken() },
@@ -493,7 +493,7 @@ export default {
       this.queryParams.deptId = data.id;
       this.handleQuery();
     },
-    // 用户状态修改
+    // Trạng thái người dùngSửa
     handleStatusChange(row) {
       let text = row.status === "0" ? "Kích hoạt" : "Hủy kích hoạt";
       this.$modal.confirm('Bạn có chắc chắn muốn ' + text + ' người dùng "' + row.userName + '" không?').then(function() {
@@ -504,12 +504,12 @@ export default {
         row.status = row.status === "0" ? "1" : "0";
       });
     },
-    // 取消按钮
+    // HủyNút bấm
     cancel() {
       this.open = false;
       this.reset();
     },
-    // 表单重置
+    // 表单Đặt lại
     reset() {
       this.form = {
         userId: undefined,
@@ -527,12 +527,12 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
@@ -546,7 +546,7 @@ export default {
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    // 更多操作触发
+    // ThêmThao tác触发
     handleCommand(command, row) {
       switch (command) {
         case "handleResetPwd":
@@ -559,7 +559,7 @@ export default {
           break;
       }
     },
-    /** 新增按钮操作 */
+    /** Thêm mớiNút bấmThao tác */
     handleAdd() {
       this.reset();
       getUser().then(response => {
@@ -570,7 +570,7 @@ export default {
         this.form.password = this.initPassword;
       });
     },
-    /** 修改按钮操作 */
+    /** SửaNút bấmThao tác */
     handleUpdate(row) {
       this.reset();
       const userId = row.userId || this.ids;
@@ -585,7 +585,7 @@ export default {
         this.form.password = "";
       });
     },
-    /** 重置密码按钮操作 */
+    /** Đổi mật khẩuNút bấmThao tác */
     handleResetPwd(row) {
       this.$prompt('Nhập mật khẩu mới cho người dùng "' + row.userName + '"', "Gợi ý", {
         confirmButtonText: "Xác nhận",
@@ -604,12 +604,12 @@ export default {
           });
         }).catch(() => {});
     },
-    /** 分配角色操作 */
+    /** Gán vai tròThao tác */
     handleAuthRole: function(row) {
       const userId = row.userId;
       this.$router.push("/system/user-auth/role/" + userId);
     },
-    /** 提交按钮 */
+    /** 提交Nút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -629,7 +629,7 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const userIds = row.userId || this.ids;
       this.$modal.confirm('Bạn có chắc chắn muốn xóa người dùng có mã "' + userIds + '" không?').then(function() {
@@ -639,18 +639,18 @@ export default {
         this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     },
-    /** 导出按钮操作 */
+    /** Xuất fileNút bấmThao tác */
     handleExport() {
       this.download('system/user/export', {
         ...this.queryParams
       }, `user_${new Date().getTime()}.xlsx`)
     },
-    /** 导入按钮操作 */
+    /** Nhập fileNút bấmThao tác */
     handleImport() {
       this.upload.title = "Nhập dữ liệu người dùng";
       this.upload.open = true;
     },
-    /** 下载模板操作 */
+    /** Tải file mẫuThao tác */
     importTemplate() {
       this.download('system/user/importTemplate', {
       }, `user_template_${new Date().getTime()}.xlsx`)
@@ -659,7 +659,7 @@ export default {
     handleFileUploadProgress(event, file, fileList) {
       this.upload.isUploading = true;
     },
-    // 文件上传成功处理
+    // 文件上传Thành công处理
     handleFileSuccess(response, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;

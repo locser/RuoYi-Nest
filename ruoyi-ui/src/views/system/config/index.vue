@@ -1,26 +1,26 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="参数名称" prop="configName">
+      <el-form-item label="Tên tham số" prop="configName">
         <el-input
           v-model="queryParams.configName"
-          placeholder="请输入参数名称"
+          placeholder="Vui lòng nhập tên tham số"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="参数键名" prop="configKey">
+      <el-form-item label="Key tham số" prop="configKey">
         <el-input
           v-model="queryParams.configKey"
-          placeholder="请输入参数键名"
+          placeholder="Vui lòng nhập key tham số"
           clearable
           style="width: 240px"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="系统内置" prop="configType">
-        <el-select v-model="queryParams.configType" placeholder="系统内置" clearable>
+      <el-form-item label="Hệ thống tích hợp" prop="configType">
+        <el-select v-model="queryParams.configType" placeholder="Hệ thống tích hợp" clearable>
           <el-option
             v-for="dict in dict.type.sys_yes_no"
             :key="dict.value"
@@ -29,20 +29,20 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间">
+      <el-form-item label="Ngày tạo">
         <el-date-picker
           v-model="dateRange"
           style="width: 240px"
           value-format="yyyy-MM-dd"
           type="daterange"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Từ ngày"
+          end-placeholder="Đến ngày"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -55,7 +55,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:config:add']"
-        >新增</el-button>
+        >Thêm mới</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -66,7 +66,7 @@
           :disabled="single"
           @click="handleUpdate"
           v-hasPermi="['system:config:edit']"
-        >修改</el-button>
+        >Sửa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -77,7 +77,7 @@
           :disabled="multiple"
           @click="handleDelete"
           v-hasPermi="['system:config:remove']"
-        >删除</el-button>
+        >Xóa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -87,7 +87,7 @@
           size="mini"
           @click="handleExport"
           v-hasPermi="['system:config:export']"
-        >导出</el-button>
+        >Xuất file</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -105,21 +105,21 @@
     <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="参数主键" align="center" prop="configId" />
-      <el-table-column label="参数名称" align="center" prop="configName" :show-overflow-tooltip="true" />
-      <el-table-column label="参数键名" align="center" prop="configKey" :show-overflow-tooltip="true" />
-      <el-table-column label="参数键值" align="center" prop="configValue" :show-overflow-tooltip="true" />
-      <el-table-column label="系统内置" align="center" prop="configType">
+      <el-table-column label="Tên tham số" align="center" prop="configName" :show-overflow-tooltip="true" />
+      <el-table-column label="Key tham số" align="center" prop="configKey" :show-overflow-tooltip="true" />
+      <el-table-column label="Giá trị tham số" align="center" prop="configValue" :show-overflow-tooltip="true" />
+      <el-table-column label="Hệ thống tích hợp" align="center" prop="configType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_yes_no" :value="scope.row.configType"/>
         </template>
       </el-table-column>
-      <el-table-column label="备注" align="center" prop="remark" :show-overflow-tooltip="true" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="Ghi chú" align="center" prop="remark" :show-overflow-tooltip="true" />
+      <el-table-column label="Ngày tạo" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -127,14 +127,14 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:config:edit']"
-          >修改</el-button>
+          >Sửa</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:config:remove']"
-          >删除</el-button>
+          >Xóa</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -147,19 +147,19 @@
       @pagination="getList"
     />
 
-    <!-- 添加或修改参数配置对话框 -->
+    <!-- 添加或Sửa tham số配置对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="参数名称" prop="configName">
-          <el-input v-model="form.configName" placeholder="请输入参数名称" />
+        <el-form-item label="Tên tham số" prop="configName">
+          <el-input v-model="form.configName" placeholder="Vui lòng nhập tên tham số" />
         </el-form-item>
-        <el-form-item label="参数键名" prop="configKey">
-          <el-input v-model="form.configKey" placeholder="请输入参数键名" />
+        <el-form-item label="Key tham số" prop="configKey">
+          <el-input v-model="form.configKey" placeholder="Vui lòng nhập key tham số" />
         </el-form-item>
-        <el-form-item label="参数键值" prop="configValue">
-          <el-input v-model="form.configValue" placeholder="请输入参数键值" />
+        <el-form-item label="Giá trị tham số" prop="configValue">
+          <el-input v-model="form.configValue" placeholder="Vui lòng nhập giá trị tham số" />
         </el-form-item>
-        <el-form-item label="系统内置" prop="configType">
+        <el-form-item label="Hệ thống tích hợp" prop="configType">
           <el-radio-group v-model="form.configType">
             <el-radio
               v-for="dict in dict.type.sys_yes_no"
@@ -168,13 +168,13 @@
             >{{dict.label}}</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="form.remark" type="textarea" placeholder="请输入内容" />
+        <el-form-item label="Ghi chú" prop="remark">
+          <el-input v-model="form.remark" type="textarea" placeholder="Vui lòng nhập nội dung" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">Xác nhận</el-button>
+        <el-button @click="cancel">Hủy</el-button>
       </div>
     </el-dialog>
   </div>
@@ -196,7 +196,7 @@ export default {
       single: true,
       // 非多个禁用
       multiple: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
       // 总条数
       total: 0,
@@ -204,7 +204,7 @@ export default {
       configList: [],
       // 弹出层标题
       title: "",
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
       // 日期范围
       dateRange: [],
@@ -221,13 +221,13 @@ export default {
       // 表单校验
       rules: {
         configName: [
-          { required: true, message: "参数名称不能为空", trigger: "blur" }
+          { required: true, message: "Tên tham số不能为空", trigger: "blur" }
         ],
         configKey: [
-          { required: true, message: "参数键名不能为空", trigger: "blur" }
+          { required: true, message: "Key tham số不能为空", trigger: "blur" }
         ],
         configValue: [
-          { required: true, message: "参数键值不能为空", trigger: "blur" }
+          { required: true, message: "Giá trị tham số不能为空", trigger: "blur" }
         ]
       }
     };
@@ -246,12 +246,12 @@ export default {
         }
       );
     },
-    // 取消按钮
+    // HủyNút bấm
     cancel() {
       this.open = false;
       this.reset();
     },
-    // 表单重置
+    // 表单Đặt lại
     reset() {
       this.form = {
         configId: undefined,
@@ -263,22 +263,22 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.queryParams.pageNum = 1;
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.dateRange = [];
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 新增按钮操作 */
+    /** Thêm mớiNút bấmThao tác */
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加参数";
+      this.title = "Thêm tham số";
     },
     // 多选框选中数据
     handleSelectionChange(selection) {
@@ -286,29 +286,29 @@ export default {
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
-    /** 修改按钮操作 */
+    /** SửaNút bấmThao tác */
     handleUpdate(row) {
       this.reset();
       const configId = row.configId || this.ids
       getConfig(configId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改参数";
+        this.title = "Sửa tham số";
       });
     },
-    /** 提交按钮 */
+    /** 提交Nút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.configId != undefined) {
             updateConfig(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("Chỉnh sửa thành công");
               this.open = false;
               this.getList();
             });
           } else {
             addConfig(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess("Thêm mới thành công");
               this.open = false;
               this.getList();
             });
@@ -316,26 +316,26 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
       const configIds = row.configId || this.ids;
-      this.$modal.confirm('是否确认删除参数编号为"' + configIds + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã tham số为"' + configIds + '" không?').then(function() {
           return delConfig(configIds);
         }).then(() => {
           this.getList();
-          this.$modal.msgSuccess("删除成功");
+          this.$modal.msgSuccess("Xóa thành công");
         }).catch(() => {});
     },
-    /** 导出按钮操作 */
+    /** Xuất fileNút bấmThao tác */
     handleExport() {
       this.download('system/config/export', {
         ...this.queryParams
       }, `config_${new Date().getTime()}.xlsx`)
     },
-    /** 刷新缓存按钮操作 */
+    /** 刷新缓存Nút bấmThao tác */
     handleRefreshCache() {
       refreshCache().then(() => {
-        this.$modal.msgSuccess("刷新成功");
+        this.$modal.msgSuccess("刷新Thành công");
       });
     }
   }

@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch">
-      <el-form-item label="菜单名称" prop="menuName">
+      <el-form-item label="Tên menu" prop="menuName">
         <el-input
           v-model="queryParams.menuName"
-          placeholder="请输入菜单名称"
+          placeholder="Vui lòng nhậpTên menu"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="菜单状态" clearable>
+      <el-form-item label="Trạng thái" prop="status">
+        <el-select v-model="queryParams.status" placeholder="MenuTrạng thái" clearable>
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -20,8 +20,8 @@
         </el-select>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">Tìm kiếm</el-button>
+        <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">Đặt lại</el-button>
       </el-form-item>
     </el-form>
 
@@ -34,7 +34,7 @@
           size="mini"
           @click="handleAdd"
           v-hasPermi="['system:menu:add']"
-        >新增</el-button>
+        >Thêm mới</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -56,26 +56,26 @@
       :default-expand-all="isExpandAll"
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
-      <el-table-column prop="menuName" label="菜单名称" :show-overflow-tooltip="true" width="160"></el-table-column>
+      <el-table-column prop="menuName" label="Tên menu" :show-overflow-tooltip="true" width="160"></el-table-column>
       <el-table-column prop="icon" label="图标" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
       <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
-      <el-table-column prop="perms" label="权限标识" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="component" label="组件路径" :show-overflow-tooltip="true"></el-table-column>
-      <el-table-column prop="status" label="状态" width="80">
+      <el-table-column prop="perms" label="Key quyền hạn" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="component" label="Đường dẫn component" :show-overflow-tooltip="true"></el-table-column>
+      <el-table-column prop="status" label="Trạng thái" width="80">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" align="center" prop="createTime">
+      <el-table-column label="Ngày tạo" align="center" prop="createTime">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
             size="mini"
@@ -83,51 +83,51 @@
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:menu:edit']"
-          >修改</el-button>
+          >Sửa</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-plus"
             @click="handleAdd(scope.row)"
             v-hasPermi="['system:menu:add']"
-          >新增</el-button>
+          >Thêm mới</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:menu:remove']"
-          >删除</el-button>
+          >Xóa</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <!-- 添加或修改菜单对话框 -->
+    <!-- 添加或Sửa menu对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="上级菜单" prop="parentId">
+            <el-form-item label="Menu cấp trên" prop="parentId">
               <treeselect
                 v-model="form.parentId"
                 :options="menuOptions"
                 :normalizer="normalizer"
                 :show-count="true"
-                placeholder="选择上级菜单"
+                placeholder="选择Menu cấp trên"
               />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="菜单类型" prop="menuType">
+            <el-form-item label="Loại menu" prop="menuType">
               <el-radio-group v-model="form.menuType">
-                <el-radio label="M">目录</el-radio>
-                <el-radio label="C">菜单</el-radio>
-                <el-radio label="F">按钮</el-radio>
+                <el-radio label="M">Thư mục</el-radio>
+                <el-radio label="C">Menu</el-radio>
+                <el-radio label="F">Nút bấm</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-if="form.menuType != 'F'">
-            <el-form-item label="菜单图标" prop="icon">
+            <el-form-item label="Icon menu" prop="icon">
               <el-popover
                 placement="bottom-start"
                 width="460"
@@ -148,80 +148,80 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="菜单名称" prop="menuName">
-              <el-input v-model="form.menuName" placeholder="请输入菜单名称" />
+            <el-form-item label="Tên menu" prop="menuName">
+              <el-input v-model="form.menuName" placeholder="Vui lòng nhậpTên menu" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="显示排序" prop="orderNum">
+            <el-form-item label="Hiển thị排序" prop="orderNum">
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="isFrame">
               <span slot="label">
-                <el-tooltip content="选择是外链则路由地址需要以`http(s)://`开头" placement="top">
+                <el-tooltip content="选择Có外链则Đường dẫn route需要以`http(s)://`开头" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                是否外链
+                Là link ngoài
               </span>
               <el-radio-group v-model="form.isFrame">
-                <el-radio label="0">是</el-radio>
-                <el-radio label="1">否</el-radio>
+                <el-radio label="0">Có</el-radio>
+                <el-radio label="1">Không</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="path">
               <span slot="label">
-                <el-tooltip content="访问的路由地址，如：`user`，如外网地址需内链访问则以`http(s)://`开头" placement="top">
+                <el-tooltip content="访问的Đường dẫn route，如：`user`，如外网地址需内链访问则以`http(s)://`开头" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                路由地址
+                Đường dẫn route
               </span>
-              <el-input v-model="form.path" placeholder="请输入路由地址" />
+              <el-input v-model="form.path" placeholder="Vui lòng nhập đường dẫn route" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="component">
               <span slot="label">
-                <el-tooltip content="访问的组件路径，如：`system/user/index`，默认在`views`目录下" placement="top">
+                <el-tooltip content="访问的Đường dẫn component，如：`system/user/index`，默认在`views`Thư mục下" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                组件路径
+                Đường dẫn component
               </span>
-              <el-input v-model="form.component" placeholder="请输入组件路径" />
+              <el-input v-model="form.component" placeholder="Vui lòng nhập đường dẫn component" />
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType != 'M'">
             <el-form-item prop="perms">
-              <el-input v-model="form.perms" placeholder="请输入权限标识" maxlength="100" />
+              <el-input v-model="form.perms" placeholder="Vui lòng nhậpKey quyền hạn" maxlength="100" />
               <span slot="label">
-                <el-tooltip content="控制器中定义的权限字符，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)" placement="top">
+                <el-tooltip content="控制器中定义的Key quyền hạn，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                权限字符
+                Key quyền hạn
               </span>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="query">
-              <el-input v-model="form.query" placeholder="请输入路由参数" maxlength="255" />
+              <el-input v-model="form.query" placeholder="Vui lòng nhập tham số route" maxlength="255" />
               <span slot="label">
                 <el-tooltip content='访问路由的默认传递参数，如：`{"id": 1, "name": "ry"}`' placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                路由参数
+                Tham số route
               </span>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="isCache">
               <span slot="label">
-                <el-tooltip content="选择是则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
+                <el-tooltip content="选择Có则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                是否缓存
+                Có cache
               </span>
               <el-radio-group v-model="form.isCache">
                 <el-radio label="0">缓存</el-radio>
@@ -232,10 +232,10 @@
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="visible">
               <span slot="label">
-                <el-tooltip content="选择隐藏则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
+                <el-tooltip content="选择Ẩn则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                显示状态
+                Trạng thái hiển thị
               </span>
               <el-radio-group v-model="form.visible">
                 <el-radio
@@ -249,10 +249,10 @@
           <el-col :span="12">
             <el-form-item prop="status">
               <span slot="label">
-                <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top">
+                <el-tooltip content="选择Hủy kích hoạt则路由将不会出现在侧边栏，也不能被访问" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
-                菜单状态
+                MenuTrạng thái
               </span>
               <el-radio-group v-model="form.status">
                 <el-radio
@@ -266,8 +266,8 @@
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <el-button type="primary" @click="submitForm">Xác nhận</el-button>
+        <el-button @click="cancel">Hủy</el-button>
       </div>
     </el-dialog>
   </div>
@@ -287,19 +287,19 @@ export default {
     return {
       // 遮罩层
       loading: true,
-      // 显示搜索条件
+      // Hiển thịTìm kiếm条件
       showSearch: true,
-      // 菜单表格树数据
+      // Menu表格树数据
       menuList: [],
-      // 菜单树选项
+      // Menu树选项
       menuOptions: [],
       // 弹出层标题
       title: "",
-      // 是否显示弹出层
+      // CóKhôngHiển thị弹出层
       open: false,
-      // 是否展开，默认全部折叠
+      // CóKhông展开，默认全部折叠
       isExpandAll: false,
-      // 重新渲染表格状态
+      // 重新渲染表格Trạng thái
       refreshTable: true,
       // 查询参数
       queryParams: {
@@ -311,13 +311,13 @@ export default {
       // 表单校验
       rules: {
         menuName: [
-          { required: true, message: "菜单名称不能为空", trigger: "blur" }
+          { required: true, message: "Tên menu不能为空", trigger: "blur" }
         ],
         orderNum: [
-          { required: true, message: "菜单顺序不能为空", trigger: "blur" }
+          { required: true, message: "Menu顺序不能为空", trigger: "blur" }
         ],
         path: [
-          { required: true, message: "路由地址不能为空", trigger: "blur" }
+          { required: true, message: "Đường dẫn route不能为空", trigger: "blur" }
         ]
       }
     };
@@ -330,7 +330,7 @@ export default {
     selected(name) {
       this.form.icon = name;
     },
-    /** 查询菜单列表 */
+    /** 查询Menu列表 */
     getList() {
       this.loading = true;
       listMenu(this.queryParams).then(response => {
@@ -338,7 +338,7 @@ export default {
         this.loading = false;
       });
     },
-    /** 转换菜单数据结构 */
+    /** 转换Menu数据结构 */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -349,7 +349,7 @@ export default {
         children: node.children
       };
     },
-    /** 查询菜单下拉树结构 */
+    /** 查询Menu下拉树结构 */
     getTreeselect() {
       listMenu().then(response => {
         this.menuOptions = [];
@@ -358,12 +358,12 @@ export default {
         this.menuOptions.push(menu);
       });
     },
-    // 取消按钮
+    // HủyNút bấm
     cancel() {
       this.open = false;
       this.reset();
     },
-    // 表单重置
+    // 表单Đặt lại
     reset() {
       this.form = {
         menuId: undefined,
@@ -379,16 +379,16 @@ export default {
       };
       this.resetForm("form");
     },
-    /** 搜索按钮操作 */
+    /** Tìm kiếmNút bấmThao tác */
     handleQuery() {
       this.getList();
     },
-    /** 重置按钮操作 */
+    /** Đặt lạiNút bấmThao tác */
     resetQuery() {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 新增按钮操作 */
+    /** Thêm mớiNút bấmThao tác */
     handleAdd(row) {
       this.reset();
       this.getTreeselect();
@@ -398,9 +398,9 @@ export default {
         this.form.parentId = 0;
       }
       this.open = true;
-      this.title = "添加菜单";
+      this.title = "Thêm menu";
     },
-    /** 展开/折叠操作 */
+    /** 展开/折叠Thao tác */
     toggleExpandAll() {
       this.refreshTable = false;
       this.isExpandAll = !this.isExpandAll;
@@ -408,29 +408,29 @@ export default {
         this.refreshTable = true;
       });
     },
-    /** 修改按钮操作 */
+    /** SửaNút bấmThao tác */
     handleUpdate(row) {
       this.reset();
       this.getTreeselect();
       getMenu(row.menuId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改菜单";
+        this.title = "Sửa menu";
       });
     },
-    /** 提交按钮 */
+    /** 提交Nút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.menuId != undefined) {
             updateMenu(this.form).then(response => {
-              this.$modal.msgSuccess("修改成功");
+              this.$modal.msgSuccess("Chỉnh sửa thành công");
               this.open = false;
               this.getList();
             });
           } else {
             addMenu(this.form).then(response => {
-              this.$modal.msgSuccess("新增成功");
+              this.$modal.msgSuccess("Thêm mới thành công");
               this.open = false;
               this.getList();
             });
@@ -438,13 +438,13 @@ export default {
         }
       });
     },
-    /** 删除按钮操作 */
+    /** XóaNút bấmThao tác */
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除名称为"' + row.menuName + '"的数据项？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóa名称为"' + row.menuName + '" không?').then(function() {
         return delMenu(row.menuId);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("删除成功");
+        this.$modal.msgSuccess("Xóa thành công");
       }).catch(() => {});
     }
   }
