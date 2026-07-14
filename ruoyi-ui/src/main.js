@@ -77,8 +77,11 @@ DictData.install()
  * please remove it before going online! ! !
  */
 
+import locale from 'element-ui/lib/locale/lang/vi'
+
 Vue.use(Element, {
-  size: Cookies.get('size') || 'medium' // set element-ui default size
+  size: Cookies.get('size') || 'medium', // set element-ui default size
+  locale
 })
 
 Vue.config.productionTip = false

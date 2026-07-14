@@ -92,8 +92,9 @@ export default defineConfig(({ mode }) => {
             cors: true, // 允许跨域
             proxy: {
                 [env.VITE_APP_BASE_API]: {
-                    target: `http://localhost:19130`,
+                    target: `https://kpah.4me4you.io.vn`,
                     changeOrigin: true,
+                    secure: false, // bỏ qua kiểm tra chứng chỉ TLS của target (an toàn cho dev)
                     configure: (proxy, options) => {
                         proxy.on('proxyReq', (proxyReq, req, res) => {
                           console.log('代理请求:', req.method, req.url)

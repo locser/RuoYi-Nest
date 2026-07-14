@@ -1,6 +1,8 @@
 -- Script cập nhật tiếng Việt cho bảng sys_menu của RuoYi
 -- Chạy script này trực tiếp trên database của bạn (ví dụ ry_vue) để dịch Menu và Nút bấm sang Tiếng Việt.
 
+SET NAMES utf8mb4;
+
 -- Một số menu chính và thư mục
 UPDATE sys_menu SET menu_name = 'Quản lý hệ thống', remark = 'Thư mục quản lý hệ thống' WHERE menu_id = 1;
 UPDATE sys_menu SET menu_name = 'Giám sát hệ thống', remark = 'Thư mục giám sát hệ thống' WHERE menu_id = 2;
