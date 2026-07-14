@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="user-info-head" @click="editCropper()"><img v-bind:src="options.img" title="click để tải lên头像" class="img-circle img-lg" /></div>
+    <div class="user-info-head" @click="editCropper()"><img v-bind:src="options.img" title="click để tải lênhình đại diện" class="img-circle img-lg" /></div>
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body @opened="modalOpened"  @close="closeDialog">
       <el-row>
         <el-col :xs="24" :md="12" :style="{height: '350px'}">
@@ -28,7 +28,7 @@
         <el-col :lg="2" :sm="3" :xs="3">
           <el-upload action="#" :http-request="requestUpload" :show-file-list="false" :before-upload="beforeUpload">
             <el-button size="small">
-              选择
+              chọn
               <i class="el-icon-upload el-icon--right"></i>
             </el-button>
           </el-upload>
@@ -46,7 +46,7 @@
           <el-button icon="el-icon-refresh-right" size="small" @click="rotateRight()"></el-button>
         </el-col>
         <el-col :lg="{span: 2, offset: 6}" :sm="2" :xs="2">
-          <el-button type="primary" size="small" @click="uploadImg()">提 交</el-button>
+          <el-button type="primary" size="small" @click="uploadImg()">mang chi trả</el-button>
         </el-col>
       </el-row>
     </el-dialog>
@@ -63,31 +63,31 @@ export default {
   components: { VueCropper },
   data() {
     return {
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
       // CóKhôngHiển thịcropper
       visible: false,
-      // 弹出层标题
-      title: "Sửa头像",
+      // Tiêu đề lớp bật lên
+      title: "Sửahình đại diện",
       options: {
-        img: store.getters.avatar,  //裁剪图片的地址
-        autoCrop: true,             // Mặc định生成截图框
-        autoCropWidth: 200,         // 默认生成截图框宽度
-        autoCropHeight: 200,        // 默认生成截图框高度
-        fixedBox: true,             // 固定截图框大小 不允许改变
-        outputType:"png",           // 默认生成截图为PNG格式
-        filename: 'avatar'          // 文件名称
+        img: store.getters.avatar,  //Địa chỉ của hình ảnh đã cắt
+        autoCrop: true,             // Mặc địnhTạo hộp ảnh chụp màn hình
+        autoCropWidth: 200,         // Chiều rộng khung ảnh chụp màn hình được tạo mặc định
+        autoCropHeight: 200,        // Chiều cao khung ảnh chụp màn hình được tạo mặc định
+        fixedBox: true,             // Đã sửa kích thước khung ảnh chụp màn hình không được phép thay đổi
+        outputType:"png",           // Ảnh chụp màn hình mặc định được tạo làPNGĐịnh dạng
+        filename: 'avatar'          // Tên tập tin
       },
       previews: {},
       resizeHandler: null
     };
   },
   methods: {
-    // 编辑头像
+    // Chỉnh sửa hình đại diện
     editCropper() {
       this.open = true;
     },
-    // 打开弹出层结束时的回调
+    // Gọi lại khi mở lớp bật lên kết thúc
     modalOpened() {
       this.visible = true;
       if (!this.resizeHandler) {
@@ -97,30 +97,30 @@ export default {
       }
       window.addEventListener("resize", this.resizeHandler)
     },
-    // 刷新组件
+    // làm mới thành phần
     refresh() {
       this.$refs.cropper.refresh();
     },
-    // 覆盖默认的上传行为
+    // Ghi đè hành vi tải lên mặc định
     requestUpload() {
     },
-    // 向左旋转
+    // Xoay trái
     rotateLeft() {
       this.$refs.cropper.rotateLeft();
     },
-    // 向右旋转
+    // Xoay phải
     rotateRight() {
       this.$refs.cropper.rotateRight();
     },
-    // 图片缩放
+    // Thu phóng hình ảnh
     changeScale(num) {
       num = num || 1;
       this.$refs.cropper.changeScale(num);
     },
-    // 上传预处理
+    // Xử lý trước tải lên
     beforeUpload(file) {
       if (file.type.indexOf("image/") == -1) {
-        this.$modal.msgError("文件格式错误，请上传图片Loại,如：JPG，PNG后缀的文件。");
+        this.$modal.msgError("Lỗi định dạng tệp，Vui lòng tải ảnh lênLoại,giống：JPG，PNGtập tin hậu tố。");
       } else {
         const reader = new FileReader();
         reader.readAsDataURL(file);
@@ -130,7 +130,7 @@ export default {
         };
       }
     },
-    // 上传图片
+    // Tải ảnh lên
     uploadImg() {
       this.$refs.cropper.getCropBlob(data => {
         let formData = new FormData();
@@ -144,11 +144,11 @@ export default {
         });
       });
     },
-    // 实时预览
+    // Xem trước trực tiếp
     realTime(data) {
       this.previews = data;
     },
-    // Đóng窗口
+    // Đóngcửa sổ
     closeDialog() {
       this.options.img = store.getters.avatar
       this.visible = false;

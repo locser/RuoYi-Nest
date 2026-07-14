@@ -6,7 +6,7 @@ const components = {
   itemBtns(h, element, index, parent) {
     const { copyItem, deleteItem } = this.$listeners
     return [
-      <span class="drawing-item-copy" title="复制" onClick={event => {
+      <span class="drawing-item-copy" title="sao chép" onClick={event => {
         copyItem(element, parent); event.stopPropagation()
       }}>
         <i class="el-icon-copy-document" />
@@ -73,7 +73,7 @@ function renderChildren(h, element, index, parent) {
 }
 
 function layoutIsNotFound() {
-  throw new Error(`没有与${this.element.layout}匹配的layout`)
+  throw new Error(`không phải với${this.element.layout}khớplayout`)
 }
 
 export default {

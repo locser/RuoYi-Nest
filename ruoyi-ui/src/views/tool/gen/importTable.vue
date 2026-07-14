@@ -1,19 +1,19 @@
 <template>
-  <!-- Nhập file表 -->
-  <el-dialog title="Nhập file表" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <!-- Nhập filebề mặt -->
+  <el-dialog title="Nhập filebề mặt" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true">
-      <el-form-item label="表名称" prop="tableName">
+      <el-form-item label="tên bảng" prop="tableName">
         <el-input
           v-model="queryParams.tableName"
-          placeholder="Vui lòng nhập表名称"
+          placeholder="Vui lòng nhậptên bảng"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="表描述" prop="tableComment">
+      <el-form-item label="Mô tả bảng" prop="tableComment">
         <el-input
           v-model="queryParams.tableComment"
-          placeholder="Vui lòng nhập表描述"
+          placeholder="Vui lòng nhậpMô tả bảng"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -26,10 +26,10 @@
     <el-row>
       <el-table @row-click="clickRow" ref="table" :data="dbTableList" @selection-change="handleSelectionChange" height="260px">
         <el-table-column type="selection" width="55"></el-table-column>
-        <el-table-column prop="tableName" label="表名称" :show-overflow-tooltip="true"></el-table-column>
-        <el-table-column prop="tableComment" label="表描述" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="tableName" label="tên bảng" :show-overflow-tooltip="true"></el-table-column>
+        <el-table-column prop="tableComment" label="Mô tả bảng" :show-overflow-tooltip="true"></el-table-column>
         <el-table-column prop="createTime" label="Ngày tạo"></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间"></el-table-column>
+        <el-table-column prop="updateTime" label="Thời gian cập nhật"></el-table-column>
       </el-table>
       <pagination
         v-show="total>0"
@@ -51,15 +51,15 @@ import { listDbTable, importTable } from "@/api/tool/gen";
 export default {
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       visible: false,
-      // 选中数组值
+      // Chọn giá trị mảng
       tables: [],
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 表数据
+      // dữ liệu bảng
       dbTableList: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -69,7 +69,7 @@ export default {
     };
   },
   methods: {
-    // Hiển thị弹框
+    // Hiển thịHộp bật lên
     show() {
       this.getList();
       this.visible = true;
@@ -77,11 +77,11 @@ export default {
     clickRow(row) {
       this.$refs.table.toggleRowSelection(row);
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.tables = selection.map(item => item.tableName);
     },
-    // 查询表数据
+    // Dữ liệu bảng truy vấn
     getList() {
       listDbTable(this.queryParams).then(res => {
         if (res.code === 200) {
@@ -104,7 +104,7 @@ export default {
     handleImportTable() {
       const tableNames = this.tables.join(",");
       if (tableNames == "") {
-        this.$modal.msgError("Vui lòng chọn要Nhập file的表");
+        this.$modal.msgError("Vui lòng chọnmuốnNhập filebàn");
         return;
       }
       importTable({ tables: tableNames }).then(res => {

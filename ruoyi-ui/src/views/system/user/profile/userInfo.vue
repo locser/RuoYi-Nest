@@ -9,7 +9,7 @@
     <el-form-item label="Email" prop="email">
       <el-input v-model="form.email" maxlength="50" />
     </el-form-item>
-    <el-form-item label="性别">
+    <el-form-item label="giới tính">
       <el-radio-group v-model="form.sex">
         <el-radio label="0">Nam</el-radio>
         <el-radio label="1">Nữ</el-radio>
@@ -34,24 +34,24 @@ export default {
   data() {
     return {
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         nickName: [
-          { required: true, message: "Tên hiển thị不能为空", trigger: "blur" }
+          { required: true, message: "Tên hiển thịkhông thể trống", trigger: "blur" }
         ],
         email: [
-          { required: true, message: "Email地址不能为空", trigger: "blur" },
+          { required: true, message: "EmailĐịa chỉ không thể trống", trigger: "blur" },
           {
             type: "email",
-            message: "Vui lòng nhập正确的Email地址",
+            message: "Vui lòng nhậpChính xácEmailĐịa chỉ",
             trigger: ["blur", "change"]
           }
         ],
         phonenumber: [
-          { required: true, message: "Số điện thoại不能为空", trigger: "blur" },
+          { required: true, message: "Số điện thoạikhông thể trống", trigger: "blur" },
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "Vui lòng nhập正确的Số điện thoại",
+            message: "Vui lòng nhậpChính xácSố điện thoại",
             trigger: "blur"
           }
         ]

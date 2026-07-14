@@ -71,7 +71,7 @@
 
     <el-table v-loading="loading" :data="noticeList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="序号" align="center" prop="noticeId" width="100" />
+      <el-table-column label="số seri" align="center" prop="noticeId" width="100" />
       <el-table-column
         label="Tiêu đề thông báo"
         align="center"
@@ -88,7 +88,7 @@
           <dict-tag :options="dict.type.sys_notice_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="创建者" align="center" prop="createBy" width="100" />
+      <el-table-column label="Người sáng tạo" align="center" prop="createBy" width="100" />
       <el-table-column label="Ngày tạo" align="center" prop="createTime" width="100">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime, '{y}-{m}-{d}') }}</span>
@@ -122,7 +122,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa thông báo对话框 -->
+    <!-- thêm hoặcSửa thông báohộp thoại -->
     <el-dialog :title="title" :visible.sync="open" width="780px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
@@ -177,25 +177,25 @@ export default {
   dicts: ['sys_notice_status', 'sys_notice_type'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 公告表格数据
+      // Dữ liệu mẫu thông báo
       noticeList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -203,15 +203,15 @@ export default {
         createBy: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         noticeTitle: [
-          { required: true, message: "Tiêu đề thông báo不能为空", trigger: "blur" }
+          { required: true, message: "Tiêu đề thông báokhông thể trống", trigger: "blur" }
         ],
         noticeType: [
-          { required: true, message: "Loại thông báo不能为空", trigger: "change" }
+          { required: true, message: "Loại thông báokhông thể trống", trigger: "change" }
         ]
       }
     };
@@ -220,7 +220,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询公告列表 */
+    /** Danh sách thông báo truy vấn */
     getList() {
       this.loading = true;
       listNotice(this.queryParams).then(response => {
@@ -234,7 +234,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         noticeId: undefined,
@@ -255,7 +255,7 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.noticeId)
       this.single = selection.length!=1
@@ -277,7 +277,7 @@ export default {
         this.title = "Sửa thông báo";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -300,7 +300,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const noticeIds = row.noticeId || this.ids
-      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã thông báo为"' + noticeIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã thông báovì"' + noticeIds + '" không?').then(function() {
         return delNotice(noticeIds);
       }).then(() => {
         this.getList();

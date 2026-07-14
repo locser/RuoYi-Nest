@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="任务名称" prop="jobName">
+      <el-form-item label="Tên nhiệm vụ" prop="jobName">
         <el-input
           v-model="queryParams.jobName"
-          placeholder="Vui lòng nhập任务名称"
+          placeholder="Vui lòng nhậpTên nhiệm vụ"
           clearable
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="任务组名" prop="jobGroup">
-        <el-select v-model="queryParams.jobGroup" placeholder="Vui lòng chọn任务组名" clearable>
+      <el-form-item label="Tên nhóm nhiệm vụ" prop="jobGroup">
+        <el-select v-model="queryParams.jobGroup" placeholder="Vui lòng chọnTên nhóm nhiệm vụ" clearable>
           <el-option
             v-for="dict in dict.type.sys_job_group"
             :key="dict.value"
@@ -19,8 +19,8 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="任务Trạng thái" prop="status">
-        <el-select v-model="queryParams.status" placeholder="Vui lòng chọn任务Trạng thái" clearable>
+      <el-form-item label="Nhiệm vụTrạng thái" prop="status">
+        <el-select v-model="queryParams.status" placeholder="Vui lòng chọnNhiệm vụTrạng thái" clearable>
           <el-option
             v-for="dict in dict.type.sys_job_status"
             :key="dict.value"
@@ -86,22 +86,22 @@
           size="mini"
           @click="handleJobLog"
           v-hasPermi="['monitor:job:query']"
-        >日志</el-button>
+        >nhật ký</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="jobList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="任务编号" width="100" align="center" prop="jobId" />
-      <el-table-column label="任务名称" align="center" prop="jobName" :show-overflow-tooltip="true" />
-      <el-table-column label="任务组名" align="center" prop="jobGroup">
+      <el-table-column label="Số nhiệm vụ" width="100" align="center" prop="jobId" />
+      <el-table-column label="Tên nhiệm vụ" align="center" prop="jobName" :show-overflow-tooltip="true" />
+      <el-table-column label="Tên nhóm nhiệm vụ" align="center" prop="jobGroup">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_job_group" :value="scope.row.jobGroup"/>
         </template>
       </el-table-column>
-      <el-table-column label="调用目标字符串" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
-      <el-table-column label="cron执行表达式" align="center" prop="cronExpression" :show-overflow-tooltip="true" />
+      <el-table-column label="gọi chuỗi mục tiêu" align="center" prop="invokeTarget" :show-overflow-tooltip="true" />
+      <el-table-column label="cronthực hiện biểu thức" align="center" prop="cronExpression" :show-overflow-tooltip="true" />
       <el-table-column label="Trạng thái" align="center">
         <template slot-scope="scope">
           <el-switch
@@ -132,11 +132,11 @@
             <el-button size="mini" type="text" icon="el-icon-d-arrow-right">Thêm</el-button>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="handleRun" icon="el-icon-caret-right"
-                v-hasPermi="['monitor:job:changeStatus']">执行一次</el-dropdown-item>
+                v-hasPermi="['monitor:job:changeStatus']">Thực hiện một lần</el-dropdown-item>
               <el-dropdown-item command="handleView" icon="el-icon-view"
-                v-hasPermi="['monitor:job:query']">任务详细</el-dropdown-item>
+                v-hasPermi="['monitor:job:query']">Chi tiết nhiệm vụ</el-dropdown-item>
               <el-dropdown-item command="handleJobLog" icon="el-icon-s-operation"
-                v-hasPermi="['monitor:job:query']">调度日志</el-dropdown-item>
+                v-hasPermi="['monitor:job:query']">Nhật ký lịch trình</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </template>
@@ -151,18 +151,18 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa定时任务对话框 -->
+    <!-- thêm hoặcSửaHộp thoại tác vụ theo lịch trình -->
     <el-dialog :title="title" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="任务名称" prop="jobName">
-              <el-input v-model="form.jobName" placeholder="Vui lòng nhập任务名称" />
+            <el-form-item label="Tên nhiệm vụ" prop="jobName">
+              <el-input v-model="form.jobName" placeholder="Vui lòng nhậpTên nhiệm vụ" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="任务分组" prop="jobGroup">
-              <el-select v-model="form.jobGroup" placeholder="Vui lòng chọn任务分组">
+            <el-form-item label="Nhóm nhiệm vụ" prop="jobGroup">
+              <el-select v-model="form.jobGroup" placeholder="Vui lòng chọnNhóm nhiệm vụ">
                 <el-option
                   v-for="dict in dict.type.sys_job_group"
                   :key="dict.value"
@@ -175,25 +175,25 @@
           <el-col :span="24">
             <el-form-item prop="invokeTarget">
               <span slot="label">
-                调用方法
+                phương thức gọi
                 <el-tooltip placement="top">
                   <div slot="content">
-                    Bean调用示例：ryTask.ryParams('ry')
-                    <br />Class类调用示例：com.ruoyi.quartz.task.RyTask.ryParams('ry')
-                    <br />参数说明：支持字符串，布尔Loại，长整型，浮点型，整型
+                    BeanVí dụ cuộc gọi：ryTask.ryParams('ry')
+                    <br />ClassVí dụ về cuộc gọi lớp：com.ruoyi.quartz.task.RyTask.ryParams('ry')
+                    <br />Mô tả thông số：Chuỗi hỗ trợ，BooleanLoại，số nguyên dài，dấu phẩy động，số nguyên
                   </div>
                   <i class="el-icon-question"></i>
                 </el-tooltip>
               </span>
-              <el-input v-model="form.invokeTarget" placeholder="Vui lòng nhập调用目标字符串" />
+              <el-input v-model="form.invokeTarget" placeholder="Vui lòng nhậpgọi chuỗi mục tiêu" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="cron表达式" prop="cronExpression">
-              <el-input v-model="form.cronExpression" placeholder="Vui lòng nhậpcron执行表达式">
+            <el-form-item label="cronsự biểu lộ" prop="cronExpression">
+              <el-input v-model="form.cronExpression" placeholder="Vui lòng nhậpcronthực hiện biểu thức">
                 <template slot="append">
                   <el-button type="primary" @click="handleShowCron">
-                    生成表达式
+                    Tạo biểu thức
                     <i class="el-icon-time el-icon--right"></i>
                   </el-button>
                 </template>
@@ -212,19 +212,19 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="执行策略" prop="misfirePolicy">
+            <el-form-item label="chiến lược thực hiện" prop="misfirePolicy">
               <el-radio-group v-model="form.misfirePolicy" size="small">
-                <el-radio-button label="1">立即执行</el-radio-button>
-                <el-radio-button label="2">执行一次</el-radio-button>
-                <el-radio-button label="3">放弃执行</el-radio-button>
+                <el-radio-button label="1">Thực hiện ngay lập tức</el-radio-button>
+                <el-radio-button label="2">Thực hiện một lần</el-radio-button>
+                <el-radio-button label="3">Từ bỏ việc thực hiện</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="CóKhông并发" prop="concurrent">
+            <el-form-item label="CóKhôngđồng thời" prop="concurrent">
               <el-radio-group v-model="form.concurrent" size="small">
-                <el-radio-button label="0">允许</el-radio-button>
-                <el-radio-button label="1">禁止</el-radio-button>
+                <el-radio-button label="0">cho phép</el-radio-button>
+                <el-radio-button label="1">cấm</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -236,55 +236,55 @@
       </div>
     </el-dialog>
 
-    <el-dialog title="Cron表达式生成器" :visible.sync="openCron" append-to-body destroy-on-close class="scrollbar">
+    <el-dialog title="Crontrình tạo biểu thức" :visible.sync="openCron" append-to-body destroy-on-close class="scrollbar">
       <crontab @hide="openCron=false" @fill="crontabFill" :expression="expression"></crontab>
     </el-dialog>
 
-    <!-- 任务日志详细 -->
-    <el-dialog title="任务详细" :visible.sync="openView" width="700px" append-to-body>
+    <!-- Chi tiết nhật ký tác vụ -->
+    <el-dialog title="Chi tiết nhiệm vụ" :visible.sync="openView" width="700px" append-to-body>
       <el-form ref="form" :model="form" label-width="120px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="任务编号：">{{ form.jobId }}</el-form-item>
-            <el-form-item label="任务名称：">{{ form.jobName }}</el-form-item>
+            <el-form-item label="Số nhiệm vụ：">{{ form.jobId }}</el-form-item>
+            <el-form-item label="Tên nhiệm vụ：">{{ form.jobName }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="任务分组：">{{ jobGroupFormat(form) }}</el-form-item>
+            <el-form-item label="Nhóm nhiệm vụ：">{{ jobGroupFormat(form) }}</el-form-item>
             <el-form-item label="Ngày tạo：">{{ form.createTime }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="cron表达式：">{{ form.cronExpression }}</el-form-item>
+            <el-form-item label="cronsự biểu lộ：">{{ form.cronExpression }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="下次执行时间：">{{ parseTime(form.nextValidTime) }}</el-form-item>
+            <el-form-item label="Lần thực hiện tiếp theo：">{{ parseTime(form.nextValidTime) }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="调用目标方法：">{{ form.invokeTarget }}</el-form-item>
+            <el-form-item label="Gọi phương thức mục tiêu：">{{ form.invokeTarget }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="任务Trạng thái：">
+            <el-form-item label="Nhiệm vụTrạng thái：">
               <div v-if="form.status == 0">Bình thường</div>
-              <div v-else-if="form.status == 1">暂停</div>
+              <div v-else-if="form.status == 1">tạm dừng</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="CóKhông并发：">
-              <div v-if="form.concurrent == 0">允许</div>
-              <div v-else-if="form.concurrent == 1">禁止</div>
+            <el-form-item label="CóKhôngđồng thời：">
+              <div v-if="form.concurrent == 0">cho phép</div>
+              <div v-else-if="form.concurrent == 1">cấm</div>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="执行策略：">
-              <div v-if="form.misfirePolicy == 0">默认策略</div>
-              <div v-else-if="form.misfirePolicy == 1">立即执行</div>
-              <div v-else-if="form.misfirePolicy == 2">执行一次</div>
-              <div v-else-if="form.misfirePolicy == 3">放弃执行</div>
+            <el-form-item label="chiến lược thực hiện：">
+              <div v-if="form.misfirePolicy == 0">Chính sách mặc định</div>
+              <div v-else-if="form.misfirePolicy == 1">Thực hiện ngay lập tức</div>
+              <div v-else-if="form.misfirePolicy == 2">Thực hiện một lần</div>
+              <div v-else-if="form.misfirePolicy == 3">Từ bỏ việc thực hiện</div>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="openView = false">关 闭</el-button>
+        <el-button @click="openView = false">đóng đóng</el-button>
       </div>
     </el-dialog>
   </div>
@@ -300,31 +300,31 @@ export default {
   dicts: ['sys_job_group', 'sys_job_status'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 定时任务表格数据
+      // Dữ liệu bảng nhiệm vụ theo lịch trình
       jobList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // CóKhôngHiển thị详细弹出层
+      // CóKhôngHiển thịLớp bật lên chi tiết
       openView: false,
-      // CóKhôngHiển thịCron表达式弹出层
+      // CóKhôngHiển thịCronLớp bật lên biểu thức
       openCron: false,
-      // 传入的表达式
+      // biểu thức được truyền vào
       expression: "",
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -332,18 +332,18 @@ export default {
         jobGroup: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         jobName: [
-          { required: true, message: "任务名称不能为空", trigger: "blur" }
+          { required: true, message: "Tên nhiệm vụ không được để trống", trigger: "blur" }
         ],
         invokeTarget: [
-          { required: true, message: "调用目标字符串不能为空", trigger: "blur" }
+          { required: true, message: "Chuỗi mục tiêu đang gọi không được để trống", trigger: "blur" }
         ],
         cronExpression: [
-          { required: true, message: "cron执行表达式不能为空", trigger: "blur" }
+          { required: true, message: "cronBiểu thức thực thi không được để trống", trigger: "blur" }
         ]
       }
     };
@@ -352,7 +352,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询定时任务列表 */
+    /** Truy vấn danh sách nhiệm vụ theo lịch trình */
     getList() {
       this.loading = true;
       listJob(this.queryParams).then(response => {
@@ -361,7 +361,7 @@ export default {
         this.loading = false;
       });
     },
-    // 任务组名字典翻译
+    // Dịch từ điển tên nhóm nhiệm vụ
     jobGroupFormat(row, column) {
       return this.selectDictLabel(this.dict.type.sys_job_group, row.jobGroup);
     },
@@ -370,7 +370,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         jobId: undefined,
@@ -394,13 +394,13 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.jobId);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    // ThêmThao tác触发
+    // ThêmThao táccò súng
     handleCommand(command, row) {
       switch (command) {
         case "handleRun":
@@ -416,10 +416,10 @@ export default {
           break;
       }
     },
-    // 任务Trạng tháiSửa
+    // Nhiệm vụTrạng tháiSửa
     handleStatusChange(row) {
       let text = row.status === "0" ? "Kích hoạt" : "Hủy kích hoạt";
-      this.$modal.confirm('Bạn có chắc chắn muốn"' + text + '""' + row.jobName + '"任务吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn"' + text + '""' + row.jobName + '"Nhiệm vụ?？').then(function() {
         return changeJobStatus(row.jobId, row.status);
       }).then(() => {
         this.$modal.msgSuccess(text + "Thành công");
@@ -427,31 +427,31 @@ export default {
         row.status = row.status === "0" ? "1" : "0";
       });
     },
-    /* 立即执行一次 */
+    /* Thực hiện ngay lập tức một lần */
     handleRun(row) {
-      this.$modal.confirm('Bạn có chắc chắn muốn立即执行一次"' + row.jobName + '"任务吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốnThực hiện ngay lập tức một lần"' + row.jobName + '"Nhiệm vụ?？').then(function() {
         return runJob(row.jobId, row.jobGroup);
       }).then(() => {
-        this.$modal.msgSuccess("执行Thành công");
+        this.$modal.msgSuccess("thực hiệnThành công");
       }).catch(() => {});
     },
-    /** 任务详细信息 */
+    /** Chi tiết nhiệm vụ */
     handleView(row) {
       getJob(row.jobId).then(response => {
         this.form = response.data;
         this.openView = true;
       });
     },
-    /** cron表达式Nút bấmThao tác */
+    /** cronsự biểu lộNút bấmThao tác */
     handleShowCron() {
       this.expression = this.form.cronExpression;
       this.openCron = true;
     },
-    /** Xác nhận后回传值 */
+    /** Xác nhậnGiá trị trả về sau */
     crontabFill(value) {
       this.form.cronExpression = value;
     },
-    /** 任务日志列表查询 */
+    /** Truy vấn danh sách nhật ký tác vụ */
     handleJobLog(row) {
       const jobId = row.jobId || 0;
       this.$router.push('/monitor/job-log/index/' + jobId)
@@ -460,7 +460,7 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加任务";
+      this.title = "Thêm nhiệm vụ";
     },
     /** SửaNút bấmThao tác */
     handleUpdate(row) {
@@ -469,10 +469,10 @@ export default {
       getJob(jobId).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "Sửa任务";
+        this.title = "SửaNhiệm vụ";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -495,7 +495,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const jobIds = row.jobId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa定时任务编号为"' + jobIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaSố nhiệm vụ theo lịch trình là"' + jobIds + '" không?').then(function() {
         return delJob(jobIds);
       }).then(() => {
         this.getList();

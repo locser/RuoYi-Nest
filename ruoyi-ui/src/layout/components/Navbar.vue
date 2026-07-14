@@ -9,17 +9,17 @@
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <el-tooltip content="源码地址" effect="dark" placement="bottom">
+        <el-tooltip content="Địa chỉ mã nguồn" effect="dark" placement="bottom">
           <ruo-yi-git id="ruoyi-git" class="right-menu-item hover-effect" />
         </el-tooltip>
 
-        <el-tooltip content="文档地址" effect="dark" placement="bottom">
+        <el-tooltip content="Địa chỉ tài liệu" effect="dark" placement="bottom">
           <ruo-yi-doc id="ruoyi-doc" class="right-menu-item hover-effect" />
         </el-tooltip>
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
+        <el-tooltip content="kích thước bố cục" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
@@ -35,10 +35,10 @@
             <el-dropdown-item>Trang cá nhân</el-dropdown-item>
           </router-link>
           <el-dropdown-item @click.native="setting = true">
-            <span>布局设置</span>
+            <span>cài đặt bố cục</span>
           </el-dropdown-item>
           <el-dropdown-item divided @click.native="logout">
-            <span>退出登录</span>
+            <span>Đăng xuất</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -96,7 +96,7 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      this.$confirm('Xác nhận注销并退出系统吗？', 'Gợi ý', {
+      this.$confirm('Xác nhậnĐăng xuất và thoát khỏi hệ thống?？', 'Gợi ý', {
         confirmButtonText: 'Xác nhận',
         cancelButtonText: 'Hủy',
         type: 'warning'

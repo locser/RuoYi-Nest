@@ -2,22 +2,22 @@
   <el-form ref="basicInfoForm" :model="info" :rules="rules" label-width="150px">
     <el-row>
       <el-col :span="12">
-        <el-form-item label="表名称" prop="tableName">
-          <el-input placeholder="Vui lòng nhập仓库名称" v-model="info.tableName" />
+        <el-form-item label="tên bảng" prop="tableName">
+          <el-input placeholder="Vui lòng nhậpTên kho" v-model="info.tableName" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="表描述" prop="tableComment">
+        <el-form-item label="Mô tả bảng" prop="tableComment">
           <el-input placeholder="Vui lòng nhập" v-model="info.tableComment" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="实体类名称" prop="className">
+        <el-form-item label="Tên lớp thực thể" prop="className">
           <el-input placeholder="Vui lòng nhập" v-model="info.className" />
         </el-form-item>
       </el-col>
       <el-col :span="12">
-        <el-form-item label="作者" prop="functionAuthor">
+        <el-form-item label="tác giả" prop="functionAuthor">
           <el-input placeholder="Vui lòng nhập" v-model="info.functionAuthor" />
         </el-form-item>
       </el-col>
@@ -42,16 +42,16 @@ export default {
     return {
       rules: {
         tableName: [
-          { required: true, message: "Vui lòng nhập表名称", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậptên bảng", trigger: "blur" }
         ],
         tableComment: [
-          { required: true, message: "Vui lòng nhập表描述", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpMô tả bảng", trigger: "blur" }
         ],
         className: [
-          { required: true, message: "Vui lòng nhập实体类名称", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpTên lớp thực thể", trigger: "blur" }
         ],
         functionAuthor: [
-          { required: true, message: "Vui lòng nhập作者", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậptác giả", trigger: "blur" }
         ]
       }
     };

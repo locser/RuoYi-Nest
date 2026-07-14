@@ -104,7 +104,7 @@
 
     <el-table v-loading="loading" :data="configList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="参数主键" align="center" prop="configId" />
+      <el-table-column label="Khóa chính tham số" align="center" prop="configId" />
       <el-table-column label="Tên tham số" align="center" prop="configName" :show-overflow-tooltip="true" />
       <el-table-column label="Key tham số" align="center" prop="configKey" :show-overflow-tooltip="true" />
       <el-table-column label="Giá trị tham số" align="center" prop="configValue" :show-overflow-tooltip="true" />
@@ -147,7 +147,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa tham số配置对话框 -->
+    <!-- thêm hoặcSửa tham sốHộp thoại cấu hình -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="Tên tham số" prop="configName">
@@ -188,27 +188,27 @@ export default {
   dicts: ['sys_yes_no'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 参数表格数据
+      // Dữ liệu bảng tham số
       configList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -216,18 +216,18 @@ export default {
         configKey: undefined,
         configType: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         configName: [
-          { required: true, message: "Tên tham số不能为空", trigger: "blur" }
+          { required: true, message: "Tên tham sốkhông thể trống", trigger: "blur" }
         ],
         configKey: [
-          { required: true, message: "Key tham số不能为空", trigger: "blur" }
+          { required: true, message: "Key tham sốkhông thể trống", trigger: "blur" }
         ],
         configValue: [
-          { required: true, message: "Giá trị tham số不能为空", trigger: "blur" }
+          { required: true, message: "Giá trị tham sốkhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -236,7 +236,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询参数列表 */
+    /** Danh sách tham số truy vấn */
     getList() {
       this.loading = true;
       listConfig(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -251,7 +251,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         configId: undefined,
@@ -280,7 +280,7 @@ export default {
       this.open = true;
       this.title = "Thêm tham số";
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.configId)
       this.single = selection.length!=1
@@ -296,7 +296,7 @@ export default {
         this.title = "Sửa tham số";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -319,7 +319,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const configIds = row.configId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã tham số为"' + configIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã tham sốvì"' + configIds + '" không?').then(function() {
           return delConfig(configIds);
         }).then(() => {
           this.getList();
@@ -335,7 +335,7 @@ export default {
     /** Làm mới bộ nhớ đệmNút bấmThao tác */
     handleRefreshCache() {
       refreshCache().then(() => {
-        this.$modal.msgSuccess("刷新Thành công");
+        this.$modal.msgSuccess("làm cho khỏe lạiThành công");
       });
     }
   }

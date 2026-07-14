@@ -1,8 +1,8 @@
 <template>
-  <!-- 创建表 -->
-  <el-dialog title="创建表" :visible.sync="visible" width="800px" top="5vh" append-to-body>
-    <span>创建表语句(支持多个建表语句)：</span>
-    <el-input type="textarea" :rows="10" placeholder="Vui lòng nhập文本" v-model="content"></el-input>
+  <!-- Tạo bảng -->
+  <el-dialog title="Tạo bảng" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+    <span>Tạo câu lệnh bảng(Hỗ trợ nhiều câu lệnh tạo bảng)：</span>
+    <el-input type="textarea" :rows="10" placeholder="Vui lòng nhậpchữ" v-model="content"></el-input>
     <div slot="footer" class="dialog-footer">
       <el-button type="primary" @click="handleCreateTable">Xác nhận</el-button>
       <el-button @click="visible = false">Hủy</el-button>
@@ -15,21 +15,21 @@ import { createTable } from "@/api/tool/gen";
 export default {
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       visible: false,
-      // 文本Nội dung
+      // chữNội dung
       content: ""
     };
   },
   methods: {
-    // Hiển thị弹框
+    // Hiển thịHộp bật lên
     show() {
       this.visible = true;
     },
-    /** 创建Nút bấmThao tác */
+    /** tạo nênNút bấmThao tác */
     handleCreateTable() {
       if (this.content === "") {
-        this.$modal.msgError("Vui lòng nhập建表语句");
+        this.$modal.msgError("Vui lòng nhậpTạo câu lệnh bảng");
         return;
       }
       createTable({ sql: this.content }).then(res => {

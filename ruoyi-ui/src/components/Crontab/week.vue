@@ -2,19 +2,19 @@
 	<el-form size='small'>
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="1">
-				周，允许的通配符[, - * ? / L #]
+				tuần，Ký tự đại diện được phép[, - * ? / L #]
 			</el-radio>
 		</el-form-item>
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="2">
-				不指定
+				Không được chỉ định
 			</el-radio>
 		</el-form-item>
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="3">
-				周期从星期
+				chu kỳ từ tuần này sang tuần khác
 				<el-select clearable v-model="cycle01">
 					<el-option
 						v-for="(item,index) of weekList"
@@ -39,8 +39,8 @@
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="4">
-				第
-				<el-input-number v-model='average01' :min="1" :max="4" /> 周的星期
+				KHÔNG.
+				<el-input-number v-model='average01' :min="1" :max="4" /> tuần trong tuần
 				<el-select clearable v-model="average02">
 					<el-option v-for="(item,index) of weekList" :key="index" :label="item.value" :value="item.key">{{item.value}}</el-option>
 				</el-select>
@@ -49,7 +49,7 @@
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="5">
-				本月最后一个星期
+				tuần cuối cùng của tháng này
 				<el-select clearable v-model="weekday">
 					<el-option v-for="(item,index) of weekList" :key="index" :label="item.value" :value="item.key">{{item.value}}</el-option>
 				</el-select>
@@ -58,8 +58,8 @@
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="6">
-				指定
-				<el-select clearable v-model="checkboxList" placeholder="可多选" multiple style="width:100%">
+				Chỉ định
+				<el-select clearable v-model="checkboxList" placeholder="Có thể có nhiều lựa chọn" multiple style="width:100%">
 					<el-option v-for="(item,index) of weekList" :key="index" :label="item.value" :value="String(item.key)">{{item.value}}</el-option>
 				</el-select>
 			</el-radio>
@@ -82,31 +82,31 @@ export default {
 			weekList: [
 				{
 					key: 2,
-					value: '星期一'
+					value: 'Thứ hai'
 				},
 				{
 					key: 3,
-					value: '星期二'
+					value: 'Thứ ba'
 				},
 				{
 					key: 4,
-					value: '星期三'
+					value: 'Thứ Tư'
 				},
 				{
 					key: 5,
-					value: '星期四'
+					value: 'Thứ năm'
 				},
 				{
 					key: 6,
-					value: '星期五'
+					value: 'Thứ sáu'
 				},
 				{
 					key: 7,
-					value: '星期六'
+					value: 'Thứ bảy'
 				},
 				{
 					key: 1,
-					value: '星期日'
+					value: 'Chủ nhật'
 				}
 			],
 			checkNum: this.$options.propsData.check
@@ -115,7 +115,7 @@ export default {
 	name: 'crontab-week',
 	props: ['check', 'cron'],
 	methods: {
-		// 单选Nút bấm值变化时
+		// Lựa chọn duy nhấtNút bấmKhi giá trị thay đổi
 		radioChange() {
 			if (this.radioValue !== 2 && this.cron.day !== '?') {
 				this.$emit('update', 'day', '?', 'week');
@@ -142,25 +142,25 @@ export default {
 			}
 		},
 
-		// 周期两个值变化时
+		// Khi hai giá trị của khoảng thời gian thay đổi
 		cycleChange() {
 			if (this.radioValue == '3') {
 				this.$emit('update', 'week', this.cycleTotal);
 			}
 		},
-		// 平均两个值变化时
+		// Khi giá trị trung bình của hai giá trị thay đổi
 		averageChange() {
 			if (this.radioValue == '4') {
 				this.$emit('update', 'week', this.averageTotal);
 			}
 		},
-		// 最近工作日值变化时
+		// Khi giá trị của ngày làm việc cuối cùng thay đổi
 		weekdayChange() {
 			if (this.radioValue == '5') {
 				this.$emit('update', 'week', this.weekday + 'L');
 			}
 		},
-		// checkbox值变化时
+		// checkboxKhi giá trị thay đổi
 		checkboxChange() {
 			if (this.radioValue == '6') {
 				this.$emit('update', 'week', this.checkboxString);
@@ -175,24 +175,24 @@ export default {
 		'checkboxString': 'checkboxChange',
 	},
 	computed: {
-		// 计算两个周期值
+		// Tính hai giá trị thời kỳ
 		cycleTotal: function () {
 			this.cycle01 = this.checkNum(this.cycle01, 1, 7)
 			this.cycle02 = this.checkNum(this.cycle02, 1, 7)
 			return this.cycle01 + '-' + this.cycle02;
 		},
-		// 计算平均用到的值
+		// Tính giá trị trung bình đã sử dụng
 		averageTotal: function () {
 			this.average01 = this.checkNum(this.average01, 1, 4)
 			this.average02 = this.checkNum(this.average02, 1, 7)
 			return this.average02 + '#' + this.average01;
 		},
-		// 最近的工作日（格式）
+		// ngày làm việc gần đây nhất（Định dạng）
 		weekdayCheck: function () {
 			this.weekday = this.checkNum(this.weekday, 1, 7)
 			return this.weekday;
 		},
-		// 计算勾选的checkbox值合集
+		// Đã kiểm tra số lượngcheckboxbộ sưu tập giá trị
 		checkboxString: function () {
 			let str = this.checkboxList.join();
 			return str == '' ? '*' : str;

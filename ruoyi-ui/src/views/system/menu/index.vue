@@ -57,7 +57,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column prop="menuName" label="Tên menu" :show-overflow-tooltip="true" width="160"></el-table-column>
-      <el-table-column prop="icon" label="图标" align="center" width="100">
+      <el-table-column prop="icon" label="biểu tượng" align="center" width="100">
         <template slot-scope="scope">
           <svg-icon :icon-class="scope.row.icon" />
         </template>
@@ -102,7 +102,7 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或Sửa menu对话框 -->
+    <!-- thêm hoặcSửa menuhộp thoại -->
     <el-dialog :title="title" :visible.sync="open" width="680px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-row>
@@ -113,7 +113,7 @@
                 :options="menuOptions"
                 :normalizer="normalizer"
                 :show-count="true"
-                placeholder="选择Menu cấp trên"
+                placeholder="chọnMenu cấp trên"
               />
             </el-form-item>
           </el-col>
@@ -135,7 +135,7 @@
                 @show="$refs['iconSelect'].reset()"
               >
                 <IconSelect ref="iconSelect" @selected="selected" :active-icon="form.icon" />
-                <el-input slot="reference" v-model="form.icon" placeholder="点击选择图标" readonly>
+                <el-input slot="reference" v-model="form.icon" placeholder="Bấm vào biểu tượng chọn" readonly>
                   <svg-icon
                     v-if="form.icon"
                     slot="prefix"
@@ -160,7 +160,7 @@
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="isFrame">
               <span slot="label">
-                <el-tooltip content="选择Có外链则Đường dẫn route需要以`http(s)://`开头" placement="top">
+                <el-tooltip content="chọnCóQuy tắc liên kết bên ngoàiĐường dẫn routecần phải`http(s)://`sự khởi đầu" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Là link ngoài
@@ -174,7 +174,7 @@
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="path">
               <span slot="label">
-                <el-tooltip content="访问的Đường dẫn route，如：`user`，如外网地址需内链访问则以`http(s)://`开头" placement="top">
+                <el-tooltip content="đã đến thămĐường dẫn route，giống：`user`，Nếu địa chỉ mạng bên ngoài yêu cầu truy cập liên kết nội bộ, hãy sử dụng`http(s)://`sự khởi đầu" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Đường dẫn route
@@ -185,7 +185,7 @@
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="component">
               <span slot="label">
-                <el-tooltip content="访问的Đường dẫn component，如：`system/user/index`，默认在`views`Thư mục下" placement="top">
+                <el-tooltip content="đã đến thămĐường dẫn component，giống：`system/user/index`，Mặc định trong`views`Thư mụcXuống" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Đường dẫn component
@@ -197,7 +197,7 @@
             <el-form-item prop="perms">
               <el-input v-model="form.perms" placeholder="Vui lòng nhậpKey quyền hạn" maxlength="100" />
               <span slot="label">
-                <el-tooltip content="控制器中定义的Key quyền hạn，如：@PreAuthorize(`@ss.hasPermi('system:user:list')`)" placement="top">
+                <el-tooltip content="được xác định trong bộ điều khiểnKey quyền hạn，giống：@PreAuthorize(`@ss.hasPermi('system:user:list')`)" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Key quyền hạn
@@ -208,7 +208,7 @@
             <el-form-item prop="query">
               <el-input v-model="form.query" placeholder="Vui lòng nhập tham số route" maxlength="255" />
               <span slot="label">
-                <el-tooltip content='访问路由的默认传递参数，如：`{"id": 1, "name": "ry"}`' placement="top">
+                <el-tooltip content='Các tham số truyền mặc định cho các tuyến truy cập，giống：`{"id": 1, "name": "ry"}`' placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Tham số route
@@ -218,21 +218,21 @@
           <el-col :span="12" v-if="form.menuType == 'C'">
             <el-form-item prop="isCache">
               <span slot="label">
-                <el-tooltip content="选择Có则会被`keep-alive`缓存，需要匹配组件的`name`和地址保持一致" placement="top">
+                <el-tooltip content="chọnCósẽ được`keep-alive`bộ nhớ đệm，Yêu cầu các thành phần phù hợp`name`Hãy nhất quán với địa chỉ" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Có cache
               </span>
               <el-radio-group v-model="form.isCache">
-                <el-radio label="0">缓存</el-radio>
-                <el-radio label="1">不缓存</el-radio>
+                <el-radio label="0">bộ nhớ đệm</el-radio>
+                <el-radio label="1">Không lưu vào bộ nhớ đệm</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="12" v-if="form.menuType != 'F'">
             <el-form-item prop="visible">
               <span slot="label">
-                <el-tooltip content="选择Ẩn则路由将不会出现在侧边栏，但仍然可以访问" placement="top">
+                <el-tooltip content="chọnẨnthì tuyến đường sẽ không xuất hiện trong thanh bên，nhưng vẫn có thể truy cập được" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 Trạng thái hiển thị
@@ -249,7 +249,7 @@
           <el-col :span="12">
             <el-form-item prop="status">
               <span slot="label">
-                <el-tooltip content="选择Hủy kích hoạt则路由将不会出现在侧边栏，也不能被访问" placement="top">
+                <el-tooltip content="chọnHủy kích hoạtthì tuyến đường sẽ không xuất hiện trong thanh bên，nó cũng không thể truy cập được" placement="top">
                 <i class="el-icon-question"></i>
                 </el-tooltip>
                 MenuTrạng thái
@@ -285,39 +285,39 @@ export default {
   components: { Treeselect, IconSelect },
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // Menu表格树数据
+      // Menudữ liệu cây bảng
       menuList: [],
-      // Menu树选项
+      // Menutùy chọn cây
       menuOptions: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // CóKhôngMở rộng，默认Thu gọn tất cả
+      // CóKhôngMở rộng，mặc địnhThu gọn tất cả
       isExpandAll: false,
-      // 重新渲染表格Trạng thái
+      // Kết xuất lại bảngTrạng thái
       refreshTable: true,
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         menuName: undefined,
         visible: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         menuName: [
-          { required: true, message: "Tên menu不能为空", trigger: "blur" }
+          { required: true, message: "Tên menukhông thể trống", trigger: "blur" }
         ],
         orderNum: [
-          { required: true, message: "Menu顺序不能为空", trigger: "blur" }
+          { required: true, message: "MenuĐơn hàng không thể trống", trigger: "blur" }
         ],
         path: [
-          { required: true, message: "Đường dẫn route不能为空", trigger: "blur" }
+          { required: true, message: "Đường dẫn routekhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -326,11 +326,11 @@ export default {
     this.getList();
   },
   methods: {
-    // 选择图标
+    // Chọn biểu tượng
     selected(name) {
       this.form.icon = name;
     },
-    /** 查询Menu列表 */
+    /** Truy vấnMenudanh sách */
     getList() {
       this.loading = true;
       listMenu(this.queryParams).then(response => {
@@ -338,7 +338,7 @@ export default {
         this.loading = false;
       });
     },
-    /** 转换Menu数据结构 */
+    /** Chuyển thànhMenucấu trúc dữ liệu */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -349,11 +349,11 @@ export default {
         children: node.children
       };
     },
-    /** 查询Menu下拉树结构 */
+    /** Truy vấnMenuCấu trúc cây thả xuống */
     getTreeselect() {
       listMenu().then(response => {
         this.menuOptions = [];
-        const menu = { menuId: 0, menuName: '主类目', children: [] };
+        const menu = { menuId: 0, menuName: 'danh mục chính', children: [] };
         menu.children = this.handleTree(response.data, "menuId");
         this.menuOptions.push(menu);
       });
@@ -363,7 +363,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         menuId: undefined,
@@ -418,7 +418,7 @@ export default {
         this.title = "Sửa menu";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -440,7 +440,7 @@ export default {
     },
     /** XóaNút bấmThao tác */
     handleDelete(row) {
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa名称为"' + row.menuName + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaTên là"' + row.menuName + '" không?').then(function() {
         return delMenu(row.menuId);
       }).then(() => {
         this.getList();

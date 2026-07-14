@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" label-width="68px">
-      <el-form-item label="登录地址" prop="ipaddr">
+      <el-form-item label="Địa chỉ đăng nhập" prop="ipaddr">
         <el-input
           v-model="queryParams.ipaddr"
-          placeholder="Vui lòng nhập登录地址"
+          placeholder="Vui lòng nhậpĐịa chỉ đăng nhập"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -28,19 +28,19 @@
       :data="list.slice((pageNum-1)*pageSize,pageNum*pageSize)"
       style="width: 100%;"
     >
-      <el-table-column label="序号" type="index" align="center">
+      <el-table-column label="số seri" type="index" align="center">
         <template slot-scope="scope">
           <span>{{(pageNum - 1) * pageSize + scope.$index + 1}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="会话编号" align="center" prop="tokenId" :show-overflow-tooltip="true" />
-      <el-table-column label="登录名称" align="center" prop="userName" :show-overflow-tooltip="true" />
+      <el-table-column label="số phiên" align="center" prop="tokenId" :show-overflow-tooltip="true" />
+      <el-table-column label="Tên đăng nhập" align="center" prop="userName" :show-overflow-tooltip="true" />
       <el-table-column label="Tên phòng ban" align="center" prop="deptName" />
-      <el-table-column label="主机" align="center" prop="ipaddr" :show-overflow-tooltip="true" />
-      <el-table-column label="登录地点" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
-      <el-table-column label="浏览器" align="center" prop="browser" />
-      <el-table-column label="Thao tác系统" align="center" prop="os" />
-      <el-table-column label="登录时间" align="center" prop="loginTime" width="180">
+      <el-table-column label="Chủ nhà" align="center" prop="ipaddr" :show-overflow-tooltip="true" />
+      <el-table-column label="Vị trí đăng nhập" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
+      <el-table-column label="Trình duyệt" align="center" prop="browser" />
+      <el-table-column label="Thao táchệ thống" align="center" prop="os" />
+      <el-table-column label="Thời gian đăng nhập" align="center" prop="loginTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
@@ -53,7 +53,7 @@
             icon="el-icon-delete"
             @click="handleForceLogout(scope.row)"
             v-hasPermi="['monitor:online:forceLogout']"
-          >强退</el-button>
+          >Buộc rút lui</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -69,15 +69,15 @@ export default {
   name: "Online",
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 表格数据
+      // dữ liệu dạng bảng
       list: [],
       pageNum: 1,
       pageSize: 10,
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         ipaddr: undefined,
         userName: undefined
@@ -88,7 +88,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询登录日志列表 */
+    /** Truy vấn danh sách nhật ký đăng nhập */
     getList() {
       this.loading = true;
       list(this.queryParams).then(response => {
@@ -107,13 +107,13 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 强退Nút bấmThao tác */
+    /** Buộc rút luiNút bấmThao tác */
     handleForceLogout(row) {
-      this.$modal.confirm('CóKhông确认强退名称为"' + row.userName + '"的用户？').then(function() {
+      this.$modal.confirm('CóKhôngXác nhận rằng tên rút tiền bắt buộc là"' + row.userName + '"của người dùng？').then(function() {
         return forceLogout(row.tokenId);
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("强退Thành công");
+        this.$modal.msgSuccess("Buộc rút luiThành công");
       }).catch(() => {});
     }
   }

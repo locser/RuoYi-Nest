@@ -18,24 +18,24 @@
         >
           <el-col :span="24">
             <el-form-item
-              label="选项名"
+              label="tên tùy chọn"
               prop="label"
             >
               <el-input
                 v-model="formData.label"
-                placeholder="Vui lòng nhập选项名"
+                placeholder="Vui lòng nhậptên tùy chọn"
                 clearable
               />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item
-              label="选项值"
+              label="giá trị tùy chọn"
               prop="value"
             >
               <el-input
                 v-model="formData.value"
-                placeholder="Vui lòng nhập选项值"
+                placeholder="Vui lòng nhậpgiá trị tùy chọn"
                 clearable
               >
                 <el-select
@@ -88,14 +88,14 @@ export default {
         label: [
           {
             required: true,
-            message: 'Vui lòng nhập选项名',
+            message: 'Vui lòng nhậptên tùy chọn',
             trigger: 'blur'
           }
         ],
         value: [
           {
             required: true,
-            message: 'Vui lòng nhập选项值',
+            message: 'Vui lòng nhậpgiá trị tùy chọn',
             trigger: 'blur'
           }
         ]
@@ -103,11 +103,11 @@ export default {
       dataType: 'string',
       dataTypeOptions: [
         {
-          label: '字符串',
+          label: 'sợi dây',
           value: 'string'
         },
         {
-          label: '数字',
+          label: 'con số',
           value: 'number'
         }
       ]

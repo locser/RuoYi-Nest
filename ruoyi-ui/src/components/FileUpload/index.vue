@@ -14,18 +14,18 @@
       class="upload-file-uploader"
       ref="fileUpload"
     >
-      <!-- 上传Nút bấm -->
-      <el-button size="mini" type="primary">选取文件</el-button>
-      <!-- 上传Gợi ý -->
+      <!-- tải lênNút bấm -->
+      <el-button size="mini" type="primary">Chọn tập tin</el-button>
+      <!-- tải lênGợi ý -->
       <div class="el-upload__tip" slot="tip" v-if="showTip">
-        请上传
-        <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-        <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
-        的文件
+        Vui lòng tải lên
+        <template v-if="fileSize"> Kích thước không vượt quá <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
+        <template v-if="fileType"> Định dạng là <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+        tập tin
       </div>
     </el-upload>
 
-    <!-- 文件列表 -->
+    <!-- danh sách tập tin -->
     <transition-group class="upload-file-list el-upload-list el-upload-list--text" name="el-fade-in-linear" tag="ul">
       <li :key="file.url" class="el-upload-list__item ele-upload-list__item-content" v-for="(file, index) in fileList">
         <el-link :href="`${baseUrl}${file.url}`" :underline="false" target="_blank">
@@ -45,19 +45,19 @@ import { getToken } from "@/utils/auth";
 export default {
   name: "FileUpload",
   props: {
-    // 值
+    // giá trị
     value: [String, Object, Array],
-    // 数量限制
+    // Giới hạn số lượng
     limit: {
       type: Number,
       default: 5,
     },
-    // 大小限制(MB)
+    // giới hạn kích thước(MB)
     fileSize: {
       type: Number,
       default: 5,
     },
-    // 文件Loại, 例如['png', 'jpg', 'jpeg']
+    // tài liệuLoại, Ví dụ['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
       default: () => ["doc", "xls", "ppt", "txt", "pdf"],
@@ -73,7 +73,7 @@ export default {
       number: 0,
       uploadList: [],
       baseUrl: import.meta.env.VITE_APP_BASE_API,
-      uploadFileUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // 上传文件服务器地址
+      uploadFileUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // Tải lên địa chỉ máy chủ tập tin
       headers: {
         Authorization: "Bearer " + getToken(),
       },
@@ -85,9 +85,9 @@ export default {
       handler(val) {
         if (val) {
           let temp = 1;
-          // 首先将值转为数组
+          // Đầu tiên chuyển đổi giá trị thành một mảng
           const list = Array.isArray(val) ? val : this.value.split(',');
-          // 然后将数组转为对象数组
+          // Sau đó chuyển đổi mảng thành một mảng đối tượng
           this.fileList = list.map(item => {
             if (typeof item === "string") {
               item = { name: item, url: item };
@@ -111,45 +111,45 @@ export default {
     },
   },
   methods: {
-    // 上传前校检格式和大小
+    // Kiểm tra định dạng và kích thước trước khi tải lên
     handleBeforeUpload(file) {
-      // 校检文件Loại
+      // Hiệu đính tài liệuLoại
       if (this.fileType) {
         const fileName = file.name.split('.');
         const fileExt = fileName[fileName.length - 1];
         const isTypeOk = this.fileType.indexOf(fileExt) >= 0;
         if (!isTypeOk) {
-          this.$modal.msgError(`文件格式不正确，请上传${this.fileType.join("/")}格式文件!`);
+          this.$modal.msgError(`Định dạng tệp không chính xác，Vui lòng tải lên${this.fileType.join("/")}tập tin định dạng!`);
           return false;
         }
       }
-      // 校检文件名CóKhông包含特殊字符
+      // Tên file chứng minhCóKhôngChứa ký tự đặc biệt
       if (file.name.includes(',')) {
-        this.$modal.msgError('文件名不正确，不能包含英文逗号!');
+        this.$modal.msgError('Tên tệp không chính xác，Không thể chứa dấu phẩy tiếng Anh!');
         return false;
       }
-      // 校检文件大小
+      // Kích thước tập tin bằng chứng
       if (this.fileSize) {
         const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$modal.msgError(`上传文件大小不能超过 ${this.fileSize} MB!`);
+          this.$modal.msgError(`Kích thước tệp tải lên không thể vượt quá ${this.fileSize} MB!`);
           return false;
         }
       }
-      this.$modal.loading("正在上传文件，请稍候...");
+      this.$modal.loading("Đang tải tập tin lên，Vui lòng chờ...");
       this.number++;
       return true;
     },
-    // 文件个数超出
+    // Số lượng tập tin vượt quá
     handleExceed() {
-      this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
+      this.$modal.msgError(`Số lượng tập tin tải lên không thể vượt quá ${this.limit} cá nhân!`);
     },
-    // 上传Thất bại
+    // tải lênThất bại
     handleUploadError(err) {
-      this.$modal.msgError("上传文件Thất bại，请重试");
+      this.$modal.msgError("Tải tập tin lênThất bại，Vui lòng thử lại");
       this.$modal.closeLoading();
     },
-    // 上传Thành công回调
+    // tải lênThành cônggọi lại
     handleUploadSuccess(res, file) {
       if (res.code === 200) {
         this.uploadList.push({ name: res.fileName, url: res.fileName });
@@ -162,12 +162,12 @@ export default {
         this.uploadedSuccessfully();
       }
     },
-    // Xóa文件
+    // Xóatài liệu
     handleDelete(index) {
       this.fileList.splice(index, 1);
       this.$emit("input", this.listToString(this.fileList));
     },
-    // 上传结束处理
+    // Tải lên quá trình xử lý cuối cùng
     uploadedSuccessfully() {
       if (this.number > 0 && this.uploadList.length === this.number) {
         this.fileList = this.fileList.concat(this.uploadList);
@@ -177,16 +177,16 @@ export default {
         this.$modal.closeLoading();
       }
     },
-    // 获取文件名称
+    // Lấy tên tập tin
     getFileName(name) {
-      // 如果Cóurl那么取最后的名字 如果不Có直接Quay lại
+      // nếu nhưCóurlSau đó lấy họ nếu khôngCótrực tiếpQuay lại
       if (name.lastIndexOf("/") > -1) {
         return name.slice(name.lastIndexOf("/") + 1);
       } else {
         return name;
       }
     },
-    // 对象转成指定字符串分隔
+    // Chuyển đổi đối tượng thành chuỗi đã chỉ định được phân cách
     listToString(list, separator) {
       let strs = "";
       separator = separator || ",";

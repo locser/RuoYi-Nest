@@ -8,25 +8,25 @@
             <table cellspacing="0" style="width: 100%;">
               <thead>
                 <tr>
-                  <th class="el-table__cell is-leaf"><div class="cell">属性</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">值</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">tài sản</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">giá trị</div></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">核心数</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Số lượng lõi</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.cpu">{{ server.cpu.cpuNum }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">用户使用率</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Tỷ lệ sử dụng của người dùng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.cpu">{{ server.cpu.used }}%</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">系统使用率</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Sử dụng hệ thống</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.cpu">{{ server.cpu.sys }}%</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">当前空闲率</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Tốc độ không tải hiện tại</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.cpu">{{ server.cpu.free }}%</div></td>
                 </tr>
               </tbody>
@@ -37,34 +37,34 @@
 
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header"><span><i class="el-icon-tickets"></i> 内存</span></div>
+          <div slot="header"><span><i class="el-icon-tickets"></i> Ký ức</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%;">
               <thead>
                 <tr>
-                  <th class="el-table__cell is-leaf"><div class="cell">属性</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">内存</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">tài sản</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">Ký ức</div></th>
                   <th class="el-table__cell is-leaf"><div class="cell">V8</div></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">总内存</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">tổng bộ nhớ</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.total }}G</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.total }}M</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">已用内存</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Bộ nhớ đã sử dụng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.used}}G</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.used}}M</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">剩余内存</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">bộ nhớ còn lại</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem">{{ server.mem.free }}G</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.free }}M</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">使用率</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Tỷ lệ sử dụng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.mem" :class="{'text-danger': server.mem.usage > 80}">{{ server.mem.usage }}%</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8" :class="{'text-danger': server.v8.usage > 80}">{{ server.v8.usage }}%</div></td>
                 </tr>
@@ -77,21 +77,21 @@
       <el-col :span="24" class="card-box">
         <el-card>
           <div slot="header">
-            <span><i class="el-icon-monitor"></i> 服务器信息</span>
+            <span><i class="el-icon-monitor"></i> Thông tin máy chủ</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%;">
               <tbody>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">服务器名称</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Tên máy chủ</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.sys">{{ server.sys.computerName }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">Thao tác系统</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Thao táchệ thống</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.sys">{{ server.sys.osName }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">服务器IP</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">máy chủIP</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.sys">{{ server.sys.computerIp }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">系统架构</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Kiến trúc hệ thống</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.sys">{{ server.sys.osArch }}</div></td>
                 </tr>
               </tbody>
@@ -103,33 +103,33 @@
       <el-col :span="24" class="card-box">
         <el-card>
           <div slot="header">
-            <span><i class="el-icon-coffee-cup"></i> NodeJS虚拟机信息</span>
+            <span><i class="el-icon-coffee-cup"></i> NodeJSThông tin máy ảo</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%;table-layout:fixed;">
               <tbody>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">NodeJS名称</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">NodeJStên</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.name }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">NodeJS版本</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">NodeJSPhiên bản</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.version }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">启动时间</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Thời gian bắt đầu</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.startTime }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">运行时长</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Thời gian chạy</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.runTime }}</div></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">安装路径</div></td>
+                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">Đường dẫn cài đặt</div></td>
                   <td colspan="3" class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.home }}</div></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">项目路径</div></td>
+                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">Đường dẫn dự án</div></td>
                   <td colspan="3" class="el-table__cell is-leaf"><div class="cell" v-if="server.sys">{{ server.sys.userDir }}</div></td>
                 </tr>
                 <tr>
-                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">运行参数</div></td>
+                  <td colspan="1" class="el-table__cell is-leaf"><div class="cell">Thông số vận hành</div></td>
                   <td colspan="3" class="el-table__cell is-leaf"><div class="cell" v-if="server.v8">{{ server.v8.inputArgs }}</div></td>
                 </tr>
               </tbody>
@@ -141,19 +141,19 @@
       <el-col :span="24" class="card-box">
         <el-card>
           <div slot="header">
-            <span><i class="el-icon-receiving"></i> 磁盘Trạng thái</span>
+            <span><i class="el-icon-receiving"></i> đĩaTrạng thái</span>
           </div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%;">
               <thead>
                 <tr>
-                  <th class="el-table__cell el-table__cell is-leaf"><div class="cell">盘符路径</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">文件系统</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">盘符Loại</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">总大小</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">可用大小</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">已用大小</div></th>
-                  <th class="el-table__cell is-leaf"><div class="cell">已用百分比</div></th>
+                  <th class="el-table__cell el-table__cell is-leaf"><div class="cell">Đường dẫn ký tự ổ đĩa</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">hệ thống tập tin</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">ký tự ổ đĩaLoại</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">tổng kích thước</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">Kích thước có sẵn</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">Kích thước đã qua sử dụng</div></th>
+                  <th class="el-table__cell is-leaf"><div class="cell">Phần trăm đã sử dụng</div></th>
                 </tr>
               </thead>
               <tbody v-if="server.sysFiles">
@@ -182,7 +182,7 @@ export default {
   name: "Server",
   data() {
     return {
-      // 服务器信息
+      // Thông tin máy chủ
       server: []
     };
   },
@@ -191,16 +191,16 @@ export default {
     this.openLoading();
   },
   methods: {
-    /** 查询服务器信息 */
+    /** Truy vấn thông tin máy chủ */
     getList() {
       getServer().then(response => {
         this.server = response.data;
         this.$modal.closeLoading();
       });
     },
-    // 打开加载层
+    // Mở lớp tải
     openLoading() {
-      this.$modal.loading("正在加载服务监控数据，请稍候！");
+      this.$modal.loading("Đang tải dữ liệu giám sát dịch vụ，Vui lòng chờ！");
     }
   }
 };

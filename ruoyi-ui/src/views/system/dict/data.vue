@@ -20,7 +20,7 @@
         />
       </el-form-item>
       <el-form-item label="Trạng thái" prop="status">
-        <el-select v-model="queryParams.status" placeholder="数据Trạng thái" clearable>
+        <el-select v-model="queryParams.status" placeholder="dữ liệuTrạng thái" clearable>
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -92,7 +92,7 @@
 
     <el-table v-loading="loading" :data="dataList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="字典编码" align="center" prop="dictCode" />
+      <el-table-column label="mã hóa từ điển" align="center" prop="dictCode" />
       <el-table-column label="Nhãn từ điển" align="center" prop="dictLabel">
         <template slot-scope="scope">
           <span v-if="(scope.row.listClass == '' || scope.row.listClass == 'default') && (scope.row.cssClass == '' || scope.row.cssClass == null)">{{ scope.row.dictLabel }}</span>
@@ -140,7 +140,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa tham số配置对话框 -->
+    <!-- thêm hoặcSửa tham sốHộp thoại cấu hình -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="Loại từ điển">
@@ -198,35 +198,35 @@ export default {
   dicts: ['sys_normal_disable'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 字典表格数据
+      // dữ liệu bảng từ điển
       dataList: [],
-      // 默认Loại từ điển
+      // mặc địnhLoại từ điển
       defaultDictType: "",
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
       // Nhãn dữ liệuClass hiển thị
       listClassOptions: [
         {
           value: "default",
-          label: "默认"
+          label: "mặc định"
         },
         {
           value: "primary",
-          label: "主要"
+          label: "chủ yếu"
         },
         {
           value: "success",
@@ -234,7 +234,7 @@ export default {
         },
         {
           value: "info",
-          label: "信息"
+          label: "thông tin"
         },
         {
           value: "warning",
@@ -242,12 +242,12 @@ export default {
         },
         {
           value: "danger",
-          label: "危险"
+          label: "Sự nguy hiểm"
         }
       ],
-      // Loại数据字典
+      // Loạitừ điển dữ liệu
       typeOptions: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -255,18 +255,18 @@ export default {
         dictLabel: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         dictLabel: [
-          { required: true, message: "Nhãn dữ liệu不能为空", trigger: "blur" }
+          { required: true, message: "Nhãn dữ liệukhông thể trống", trigger: "blur" }
         ],
         dictValue: [
-          { required: true, message: "Giá trị dữ liệu不能为空", trigger: "blur" }
+          { required: true, message: "Giá trị dữ liệukhông thể trống", trigger: "blur" }
         ],
         dictSort: [
-          { required: true, message: "Thứ tự dữ liệu不能为空", trigger: "blur" }
+          { required: true, message: "Thứ tự dữ liệukhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -277,7 +277,7 @@ export default {
     this.getTypeList();
   },
   methods: {
-    /** 查询Loại từ điển详细 */
+    /** Truy vấnLoại từ điểnchi tiết */
     getType(dictId) {
       getType(dictId).then(response => {
         this.queryParams.dictType = response.data.dictType;
@@ -285,13 +285,13 @@ export default {
         this.getList();
       });
     },
-    /** 查询Loại từ điển列表 */
+    /** Truy vấnLoại từ điểndanh sách */
     getTypeList() {
       getDictOptionselect().then(response => {
         this.typeOptions = response.data;
       });
     },
-    /** 查询Dữ liệu từ điển列表 */
+    /** Truy vấnDữ liệu từ điểndanh sách */
     getList() {
       this.loading = true;
       listData(this.queryParams).then(response => {
@@ -305,7 +305,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         dictCode: undefined,
@@ -339,10 +339,10 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "Thêm từ điển数据";
+      this.title = "Thêm từ điểndữ liệu";
       this.form.dictType = this.queryParams.dictType;
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.dictCode)
       this.single = selection.length!=1
@@ -355,10 +355,10 @@ export default {
       getData(dictCode).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "Sửa từ điển数据";
+        this.title = "Sửa từ điểndữ liệu";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -383,7 +383,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const dictCodes = row.dictCode || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa字典编码为"' + dictCodes + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã hóa từ điển là"' + dictCodes + '" không?').then(function() {
         return delData(dictCodes);
       }).then(() => {
         this.getList();

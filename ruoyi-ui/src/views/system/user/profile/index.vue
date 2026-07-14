@@ -20,7 +20,7 @@
                 <div class="pull-right">{{ user.phonenumber }}</div>
               </li>
               <li class="list-group-item">
-                <svg-icon icon-class="email" />用户Email
+                <svg-icon icon-class="email" />người dùngEmail
                 <div class="pull-right">{{ user.email }}</div>
               </li>
               <li class="list-group-item">
@@ -32,7 +32,7 @@
                 <div class="pull-right">{{ roleGroup }}</div>
               </li>
               <li class="list-group-item">
-                <svg-icon icon-class="date" />创建日期
+                <svg-icon icon-class="date" />Ngày tạo
                 <div class="pull-right">{{ user.createTime }}</div>
               </li>
             </ul>

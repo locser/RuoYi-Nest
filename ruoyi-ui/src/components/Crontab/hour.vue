@@ -2,30 +2,30 @@
 	<el-form size="small">
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="1">
-				小时，允许的通配符[, - * /]
+				Giờ，Ký tự đại diện được phép[, - * /]
 			</el-radio>
 		</el-form-item>
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="2">
-				周期从
+				chu kỳ từ
 				<el-input-number v-model='cycle01' :min="0" :max="22" /> -
-				<el-input-number v-model='cycle02' :min="cycle01 ? cycle01 + 1 : 1" :max="23" /> 小时
+				<el-input-number v-model='cycle02' :min="cycle01 ? cycle01 + 1 : 1" :max="23" /> Giờ
 			</el-radio>
 		</el-form-item>
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="3">
-				从
-				<el-input-number v-model='average01' :min="0" :max="22" /> 小时开始，每
-				<el-input-number v-model='average02' :min="1" :max="23 - average01 || 0" /> 小时执行一次
+				từ
+				<el-input-number v-model='average01' :min="0" :max="22" /> giờ bắt đầu，Mọi
+				<el-input-number v-model='average02' :min="1" :max="23 - average01 || 0" /> Thực hiện mỗi giờ một lần
 			</el-radio>
 		</el-form-item>
 
 		<el-form-item>
 			<el-radio v-model='radioValue' :label="4">
-				指定
-				<el-select clearable v-model="checkboxList" placeholder="可多选" multiple style="width:100%">
+				Chỉ định
+				<el-select clearable v-model="checkboxList" placeholder="Có thể có nhiều lựa chọn" multiple style="width:100%">
 					<el-option v-for="item in 24" :key="item" :value="item-1">{{item-1}}</el-option>
 				</el-select>
 			</el-radio>
@@ -49,7 +49,7 @@ export default {
 	name: 'crontab-hour',
 	props: ['check', 'cron'],
 	methods: {
-		// 单选Nút bấm值变化时
+		// Lựa chọn duy nhấtNút bấmKhi giá trị thay đổi
 		radioChange() {
 			if (this.cron.min === '*') {
 			    this.$emit('update', 'min', '0', 'hour');
@@ -72,19 +72,19 @@ export default {
 					break;
 			}
 		},
-		// 周期两个值变化时
+		// Khi hai giá trị của khoảng thời gian thay đổi
 		cycleChange() {
 			if (this.radioValue == '2') {
 				this.$emit('update', 'hour', this.cycleTotal);
 			}
 		},
-		// 平均两个值变化时
+		// Khi giá trị trung bình của hai giá trị thay đổi
 		averageChange() {
 			if (this.radioValue == '3') {
 				this.$emit('update', 'hour', this.averageTotal);
 			}
 		},
-		// checkbox值变化时
+		// checkboxKhi giá trị thay đổi
 		checkboxChange() {
 			if (this.radioValue == '4') {
 				this.$emit('update', 'hour', this.checkboxString);
@@ -98,19 +98,19 @@ export default {
 		'checkboxString': 'checkboxChange'
 	},
 	computed: {
-		// 计算两个周期值
+		// Tính hai giá trị thời kỳ
 		cycleTotal: function () {
 			const cycle01 = this.checkNum(this.cycle01, 0, 22)
 			const cycle02 = this.checkNum(this.cycle02, cycle01 ? cycle01 + 1 : 1, 23)
 			return cycle01 + '-' + cycle02;
 		},
-		// 计算平均用到的值
+		// Tính giá trị trung bình đã sử dụng
 		averageTotal: function () {
 			const average01 = this.checkNum(this.average01, 0, 22)
 			const average02 = this.checkNum(this.average02, 1, 23 - average01 || 0)
 			return average01 + '/' + average02;
 		},
-		// 计算勾选的checkbox值合集
+		// Đã kiểm tra số lượngcheckboxbộ sưu tập giá trị
 		checkboxString: function () {
 			let str = this.checkboxList.join();
 			return str == '' ? '*' : str;

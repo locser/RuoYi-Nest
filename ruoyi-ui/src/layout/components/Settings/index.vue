@@ -4,13 +4,13 @@
       <div>
         <div class="setting-drawer-content">
           <div class="setting-drawer-title">
-            <h3 class="drawer-title">主题风格设置</h3>
+            <h3 class="drawer-title">Cài đặt kiểu chủ đề</h3>
           </div>
           <div class="setting-drawer-block-checbox">
             <div class="setting-drawer-block-checbox-item" @click="handleTheme('dark')">
               <img src="@/assets/images/dark.svg" alt="dark">
               <div v-if="themeMode === 'dark'" class="setting-drawer-block-checbox-selectIcon" style="display: block;">
-                <i aria-label="图标: check" class="anticon anticon-check">
+                <i aria-label="biểu tượng: check" class="anticon anticon-check">
                   <svg viewBox="64 64 896 896" data-icon="check" width="1em" height="1em" :fill="theme" aria-hidden="true" focusable="false" class="">
                     <path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"/>
                   </svg>
@@ -20,7 +20,7 @@
             <div class="setting-drawer-block-checbox-item" @click="handleTheme('light')">
               <img src="@/assets/images/light.svg" alt="light">
               <div v-if="themeMode === 'light'" class="setting-drawer-block-checbox-selectIcon" style="display: block;">
-                <i aria-label="图标: check" class="anticon anticon-check">
+                <i aria-label="biểu tượng: check" class="anticon anticon-check">
                   <svg viewBox="64 64 896 896" data-icon="check" width="1em" height="1em" :fill="theme" aria-hidden="true" focusable="false" class="">
                     <path d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 0 0-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"/>
                   </svg>
@@ -30,27 +30,27 @@
           </div>
 
           <div class="drawer-item">
-            <span>主题颜色</span>
+            <span>màu chủ đề</span>
             <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
           </div>
         </div>
 
         <el-divider/>
 
-        <h3 class="drawer-title">系统布局配置</h3>
+        <h3 class="drawer-title">Cấu hình bố trí hệ thống</h3>
 
         <div class="drawer-item">
-          <span>开启 TopNav</span>
+          <span>bật lên TopNav</span>
           <el-switch v-model="topNav" class="drawer-switch" />
         </div>
 
         <div class="drawer-item">
-          <span>开启 Tags-Views</span>
+          <span>bật lên Tags-Views</span>
           <el-switch v-model="tagsView" class="drawer-switch" />
         </div>
 
         <div class="drawer-item">
-          <span>固定 Header</span>
+          <span>đã sửa Header</span>
           <el-switch v-model="fixedHeader" class="drawer-switch" />
         </div>
 
@@ -60,14 +60,14 @@
         </div>
 
         <div class="drawer-item">
-          <span>动态标题</span>
+          <span>tiêu đề động</span>
           <el-switch v-model="dynamicTitle" class="drawer-switch" />
         </div>
 
         <el-divider/>
 
-        <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">Lưu配置</el-button>
-        <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">Đặt lại配置</el-button>
+        <el-button size="small" type="primary" plain icon="el-icon-document-add" @click="saveSetting">LưuCấu hình</el-button>
+        <el-button size="small" plain icon="el-icon-refresh" @click="resetSetting">Đặt lạiCấu hình</el-button>
       </div>
     </div>
   </el-drawer>
@@ -168,7 +168,7 @@ export default {
       this.themeMode = val;
     },
     saveSetting() {
-      this.$modal.loading("正在Lưu到本地，请稍候...");
+      this.$modal.loading("làLưuđến địa phương，Vui lòng chờ...");
       this.$cache.local.set(
         "layout-setting",
         `{
@@ -184,7 +184,7 @@ export default {
       setTimeout(this.$modal.closeLoading(), 1000)
     },
     resetSetting() {
-      this.$modal.loading("正在清除设置缓存并刷新，请稍候...");
+      this.$modal.loading("Xóa bộ nhớ đệm cài đặt và làm mới，Vui lòng chờ...");
       this.$cache.local.remove("layout-setting")
       setTimeout("window.location.reload()", 1000)
     }

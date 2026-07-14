@@ -45,7 +45,7 @@
           :disabled="multiple"
           @click="cancelAuthUserAll"
           v-hasPermi="['system:role:remove']"
-        >批量Hủy授权</el-button>
+        >lôHủyỦy quyền</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -64,7 +64,7 @@
       <el-table-column label="Tên đăng nhập" prop="userName" :show-overflow-tooltip="true" />
       <el-table-column label="Tên hiển thị" prop="nickName" :show-overflow-tooltip="true" />
       <el-table-column label="Email" prop="email" :show-overflow-tooltip="true" />
-      <el-table-column label="手机" prop="phonenumber" :show-overflow-tooltip="true" />
+      <el-table-column label="điện thoại di động" prop="phonenumber" :show-overflow-tooltip="true" />
       <el-table-column label="Trạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
@@ -83,7 +83,7 @@
             icon="el-icon-circle-close"
             @click="cancelAuthUser(scope.row)"
             v-hasPermi="['system:role:remove']"
-          >Hủy授权</el-button>
+          >HủyỦy quyền</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -109,19 +109,19 @@ export default {
   components: { selectUser },
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中用户组
+      // Chọn nhóm người dùng
       userIds: [],
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 用户表格数据
+      // dữ liệu biểu mẫu người dùng
       userList: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -139,7 +139,7 @@ export default {
     }
   },
   methods: {
-    /** 查询授权用户列表 */
+    /** Truy vấn danh sách người dùng được ủy quyền */
     getList() {
       this.loading = true;
       allocatedUserList(this.queryParams).then(response => {
@@ -164,34 +164,34 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.userIds = selection.map(item => item.userId)
       this.multiple = !selection.length
     },
-    /** 打开授权用户表弹窗 */
+    /** Mở cửa sổ bật lên bảng người dùng được ủy quyền */
     openSelectUser() {
       this.$refs.select.show();
     },
-    /** Hủy授权Nút bấmThao tác */
+    /** HủyỦy quyềnNút bấmThao tác */
     cancelAuthUser(row) {
       const roleId = this.queryParams.roleId;
-      this.$modal.confirm('Bạn có chắc chắn muốnHủy该用户"' + row.userName + '"角色吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốnHủyNgười dùng"' + row.userName + '"Vai trò?？').then(function() {
         return authUserCancel({ userId: row.userId, roleId: roleId });
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("Hủy授权Thành công");
+        this.$modal.msgSuccess("HủyỦy quyềnThành công");
       }).catch(() => {});
     },
-    /** 批量Hủy授权Nút bấmThao tác */
+    /** lôHủyỦy quyềnNút bấmThao tác */
     cancelAuthUserAll(row) {
       const roleId = this.queryParams.roleId;
       const userIds = this.userIds.join(",");
-      this.$modal.confirm('CóKhôngHủy选中用户授权数据项？').then(function() {
+      this.$modal.confirm('CóKhôngHủyChọn mục dữ liệu ủy quyền người dùng？').then(function() {
         return authUserCancelAll({ roleId: roleId, userIds: userIds });
       }).then(() => {
         this.getList();
-        this.$modal.msgSuccess("Hủy授权Thành công");
+        this.$modal.msgSuccess("HủyỦy quyềnThành công");
       }).catch(() => {});
     }
   }

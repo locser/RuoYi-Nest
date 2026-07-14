@@ -27,32 +27,32 @@ import { getToken } from "@/utils/auth";
 export default {
   name: "Editor",
   props: {
-    /* 编辑器的Nội dung */
+    /* biên tập viênNội dung */
     value: {
       type: String,
       default: "",
     },
-    /* 高度 */
+    /* cao */
     height: {
       type: Number,
       default: null,
     },
-    /* 最小高度 */
+    /* chiều cao tối thiểu */
     minHeight: {
       type: Number,
       default: null,
     },
-    /* 只读 */
+    /* chỉ đọc */
     readOnly: {
       type: Boolean,
       default: false,
     },
-    /* 上传文件大小限制(MB) */
+    /* Giới hạn kích thước tệp tải lên(MB) */
     fileSize: {
       type: Number,
       default: 5,
     },
-    /* Loại（base64格式、url格式） */
+    /* Loại（base64Định dạng、urlĐịnh dạng） */
     type: {
       type: String,
       default: "url",
@@ -60,7 +60,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // 上传的图片服务器地址
+      uploadUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // Địa chỉ máy chủ hình ảnh đã tải lên
       headers: {
         Authorization: "Bearer " + getToken()
       },
@@ -71,18 +71,18 @@ export default {
         bounds: document.body,
         debug: "warn",
         modules: {
-          // 工具栏配置
+          // Cấu hình thanh công cụ
           toolbar: [
-            ["bold", "italic", "underline", "strike"],       // 加粗 斜体 下划线 Xóa线
-            ["blockquote", "code-block"],                    // 引用  代码块
-            [{ list: "ordered" }, { list: "bullet" }],       // 有序、无序列表
-            [{ indent: "-1" }, { indent: "+1" }],            // 缩进
-            [{ size: ["small", false, "large", "huge"] }],   // 字体大小
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],         // 标题
-            [{ color: [] }, { background: [] }],             // 字体颜色、字体背景颜色
-            [{ align: [] }],                                 // 对齐方式
-            ["clean"],                                       // 清除文本格式
-            ["link", "image", "video"]                       // 链接、图片、视频
+            ["bold", "italic", "underline", "strike"],       // In đậm chữ nghiêng gạch chân XóaDây điện
+            ["blockquote", "code-block"],                    // Trích dẫn  khối mã
+            [{ list: "ordered" }, { list: "bullet" }],       // có trật tự、danh sách không có thứ tự
+            [{ indent: "-1" }, { indent: "+1" }],            // vết lõm
+            [{ size: ["small", false, "large", "huge"] }],   // cỡ chữ
+            [{ header: [1, 2, 3, 4, 5, 6, false] }],         // tiêu đề
+            [{ color: [] }, { background: [] }],             // Màu chữ、Màu nền phông chữ
+            [{ align: [] }],                                 // Căn chỉnh
+            ["clean"],                                       // định dạng văn bản rõ ràng
+            ["link", "image", "video"]                       // liên kết、hình ảnh、băng hình
           ],
         },
         placeholder: "Vui lòng nhập nội dung",
@@ -125,7 +125,7 @@ export default {
     init() {
       const editor = this.$refs.editor;
       this.Quill = new Quill(editor, this.options);
-      // 如果设置了上传地址则自定义图片上传事件
+      // Nếu địa chỉ tải lên được đặt, hãy tùy chỉnh sự kiện tải lên hình ảnh
       if (this.type == 'url') {
         let toolbar = this.Quill.getModule("toolbar");
         toolbar.addHandler("image", (value) => {
@@ -155,42 +155,42 @@ export default {
         this.$emit("on-editor-change", eventName, ...args);
       });
     },
-    // 上传前校检格式和大小
+    // Kiểm tra định dạng và kích thước trước khi tải lên
     handleBeforeUpload(file) {
       const type = ["image/jpeg", "image/jpg", "image/png", "image/svg"];
       const isJPG = type.includes(file.type);
-      // 检验文件格式
+      // Kiểm tra định dạng tập tin
       if (!isJPG) {
-        this.$message.error(`图片格式错误!`);
+        this.$message.error(`Lỗi định dạng hình ảnh!`);
         return false;
       }
-      // 校检文件大小
+      // Kích thước tập tin bằng chứng
       if (this.fileSize) {
         const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$message.error(`上传文件大小不能超过 ${this.fileSize} MB!`);
+          this.$message.error(`Kích thước tệp tải lên không thể vượt quá ${this.fileSize} MB!`);
           return false;
         }
       }
       return true;
     },
     handleUploadSuccess(res, file) {
-      // 如果上传Thành công
+      // Nếu tải lênThành công
       if (res.code == 200) {
-        // 获取富文本组件实例
+        // Nhận phiên bản thành phần văn bản đa dạng thức
         let quill = this.Quill;
-        // 获取光标所在位置
+        // Lấy vị trí con trỏ
         let length = quill.getSelection().index;
-        // 插入图片  res.url为服务器Quay lại的图片地址
+        // Chèn ảnh  res.urlcho máy chủQuay lạiđịa chỉ hình ảnh
         quill.insertEmbed(length, "image", import.meta.env.VITE_APP_BASE_API + res.fileName);
-        // 调整光标到最后
+        // Điều chỉnh con trỏ đến cuối
         quill.setSelection(length + 1);
       } else {
-        this.$message.error("图片插入Thất bại");
+        this.$message.error("chèn ảnhThất bại");
       }
     },
     handleUploadError() {
-      this.$message.error("图片插入Thất bại");
+      this.$message.error("chèn ảnhThất bại");
     },
   },
 };
@@ -205,7 +205,7 @@ export default {
   display: none;
 }
 .ql-snow .ql-tooltip[data-mode="link"]::before {
-  content: "Vui lòng nhập链接地址:";
+  content: "Vui lòng nhậpĐịa chỉ liên kết:";
 }
 .ql-snow .ql-tooltip.ql-editing a.ql-action::after {
   border-right: 0px;
@@ -213,7 +213,7 @@ export default {
   padding-right: 0px;
 }
 .ql-snow .ql-tooltip[data-mode="video"]::before {
-  content: "Vui lòng nhập视频地址:";
+  content: "Vui lòng nhậpĐịa chỉ video:";
 }
 .ql-snow .ql-picker.ql-size .ql-picker-label::before,
 .ql-snow .ql-picker.ql-size .ql-picker-item::before {
@@ -233,42 +233,42 @@ export default {
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item::before {
-  content: "文本";
+  content: "chữ";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="1"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="1"]::before {
-  content: "标题1";
+  content: "tiêu đề1";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="2"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="2"]::before {
-  content: "标题2";
+  content: "tiêu đề2";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="3"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="3"]::before {
-  content: "标题3";
+  content: "tiêu đề3";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="4"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="4"]::before {
-  content: "标题4";
+  content: "tiêu đề4";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="5"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="5"]::before {
-  content: "标题5";
+  content: "tiêu đề5";
 }
 .ql-snow .ql-picker.ql-header .ql-picker-label[data-value="6"]::before,
 .ql-snow .ql-picker.ql-header .ql-picker-item[data-value="6"]::before {
-  content: "标题6";
+  content: "tiêu đề6";
 }
 .ql-snow .ql-picker.ql-font .ql-picker-label::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item::before {
-  content: "标准字体";
+  content: "Phông chữ chuẩn";
 }
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="serif"]::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="serif"]::before {
-  content: "衬线字体";
+  content: "phông chữ serif";
 }
 .ql-snow .ql-picker.ql-font .ql-picker-label[data-value="monospace"]::before,
 .ql-snow .ql-picker.ql-font .ql-picker-item[data-value="monospace"]::before {
-  content: "等宽字体";
+  content: "phông chữ đơn cách";
 }
 </style>

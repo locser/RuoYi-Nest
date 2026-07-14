@@ -1,6 +1,6 @@
 <template>
-  <!-- 授权用户 -->
-  <el-dialog title="选择用户" :visible.sync="visible" width="800px" top="5vh" append-to-body>
+  <!-- người dùng được ủy quyền -->
+  <el-dialog title="Chọn người dùng" :visible.sync="visible" width="800px" top="5vh" append-to-body>
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true">
       <el-form-item label="Tên đăng nhập" prop="userName">
         <el-input
@@ -29,7 +29,7 @@
         <el-table-column label="Tên đăng nhập" prop="userName" :show-overflow-tooltip="true" />
         <el-table-column label="Tên hiển thị" prop="nickName" :show-overflow-tooltip="true" />
         <el-table-column label="Email" prop="email" :show-overflow-tooltip="true" />
-        <el-table-column label="手机" prop="phonenumber" :show-overflow-tooltip="true" />
+        <el-table-column label="điện thoại di động" prop="phonenumber" :show-overflow-tooltip="true" />
         <el-table-column label="Trạng thái" align="center" prop="status">
           <template slot-scope="scope">
             <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
@@ -68,15 +68,15 @@ export default {
   },
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       visible: false,
-      // 选中数组值
+      // Chọn giá trị mảng
       userIds: [],
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 未授权用户数据
+      // Dữ liệu người dùng trái phép
       userList: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -87,7 +87,7 @@ export default {
     };
   },
   methods: {
-    // Hiển thị弹框
+    // Hiển thịHộp bật lên
     show() {
       this.queryParams.roleId = this.roleId;
       this.getList();
@@ -96,11 +96,11 @@ export default {
     clickRow(row) {
       this.$refs.table.toggleRowSelection(row);
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.userIds = selection.map(item => item.userId);
     },
-    // 查询表数据
+    // Dữ liệu bảng truy vấn
     getList() {
       unallocatedUserList(this.queryParams).then(res => {
         this.userList = res.rows;
@@ -117,12 +117,12 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    /** 选择授权用户Thao tác */
+    /** Chọn người dùng được ủy quyềnThao tác */
     handleSelectUser() {
       const roleId = this.queryParams.roleId;
       const userIds = this.userIds.join(",");
       if (userIds == "") {
-        this.$modal.msgError("Vui lòng chọn要分配的用户");
+        this.$modal.msgError("Vui lòng chọnNgười dùng gán");
         return;
       }
       authUserSelectAll({ roleId: roleId, userIds: userIds }).then(res => {

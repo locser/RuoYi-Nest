@@ -13,7 +13,7 @@
       </el-menu-item>
     </template>
 
-    <!-- 顶部Menu超出数量Thu gọn -->
+    <!-- đứng đầuMenuVượt quá số lượngThu gọn -->
     <el-submenu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
       <template slot="title">ThêmMenu</template>
       <template v-for="(item, index) in topMenus">
@@ -34,15 +34,15 @@
 <script>
 import { constantRoutes } from "@/router";
 
-// Ẩn侧边栏路由
+// ẨnĐịnh tuyến thanh bên
 const hideList = ['/index', '/user/profile'];
 
 export default {
   data() {
     return {
-      // 顶部栏初始数
+      // Số ban đầu của thanh trên cùng
       visibleNumber: 5,
-      // 当前激活Menu的 index
+      // Hiện đang hoạt độngMenucủa index
       currentIndex: undefined
     };
   },
@@ -50,12 +50,12 @@ export default {
     theme() {
       return this.$store.state.settings.theme;
     },
-    // 顶部Hiển thịMenu
+    // đứng đầuHiển thịMenu
     topMenus() {
       let topMenus = [];
       this.routers.map((menu) => {
         if (menu.hidden !== true) {
-          // 兼容顶部栏一级Menu内部跳转
+          // Tương thích với thanh cấp mộtMenunhảy nội bộ
           if (menu.path === "/") {
             topMenus.push(menu.children[0]);
           } else {
@@ -65,11 +65,11 @@ export default {
       });
       return topMenus;
     },
-    // 所有的路由信息
+    // Tất cả thông tin định tuyến
     routers() {
       return this.$store.state.permission.topbarRouters;
     },
-    // 设置子路由
+    // Thiết lập các tuyến đường phụ
     childrenMenus() {
       var childrenMenus = [];
       this.routers.map((router) => {
@@ -89,7 +89,7 @@ export default {
       });
       return constantRoutes.concat(childrenMenus);
     },
-    // 默认激活的Menu
+    // được kích hoạt theo mặc địnhMenu
     activeMenu() {
       const path = this.$route.path;
       let activePath = path;
@@ -117,20 +117,20 @@ export default {
     this.setVisibleNumber();
   },
   methods: {
-    // 根据宽度计算设置Hiển thị栏数
+    // Tính toán cài đặt dựa trên chiều rộngHiển thịSố lượng cột
     setVisibleNumber() {
       const width = document.body.getBoundingClientRect().width / 3;
       this.visibleNumber = parseInt(width / 85);
     },
-    // Menu选择事件
+    // MenuChọn sự kiện
     handleSelect(key, keyPath) {
       this.currentIndex = key;
       const route = this.routers.find(item => item.path === key);
       if (this.ishttp(key)) {
-        // http(s):// 路径新窗口打开
+        // http(s):// Đường dẫn cửa sổ mới mở ra
         window.open(key, "_blank");
       } else if (!route || !route.children) {
-        // 没有子路由路径内部打开
+        // Không có đường dẫn con nào được mở nội bộ
         const routeMenu = this.childrenMenus.find(item => item.path === key);
         if (routeMenu && routeMenu.query) {
           let query = JSON.parse(routeMenu.query);
@@ -140,12 +140,12 @@ export default {
         }
         this.$store.dispatch('app/toggleSideBarHide', true);
       } else {
-        // Hiển thị左侧联动Menu
+        // Hiển thịLiên kết tráiMenu
         this.activeRoutes(key);
         this.$store.dispatch('app/toggleSideBarHide', false);
       }
     },
-    // 当前激活的路由
+    // Tuyến đường hiện đang hoạt động
     activeRoutes(key) {
       var routes = [];
       if (this.childrenMenus && this.childrenMenus.length > 0) {

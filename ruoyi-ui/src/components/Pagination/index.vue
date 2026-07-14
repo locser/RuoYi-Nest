@@ -39,7 +39,7 @@ export default {
         return [10, 20, 30, 50]
       }
     },
-    // 移动端页码Nút bấm的数量端默认值5
+    // Số trang di độngNút bấmGiá trị mặc định của bên số lượng5
     pagerCount: {
       type: Number,
       default: document.body.clientWidth < 992 ? 5 : 7

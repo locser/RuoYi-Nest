@@ -4,7 +4,7 @@
       <el-col :span="8">
         <el-card style="height: calc(100vh - 125px)">
           <div slot="header">
-            <span><i class="el-icon-collection"></i> 缓存列表</span>
+            <span><i class="el-icon-collection"></i> danh sách bộ nhớ đệm</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -21,13 +21,13 @@
             style="width: 100%"
           >
             <el-table-column
-              label="序号"
+              label="số seri"
               width="60"
               type="index"
             ></el-table-column>
 
             <el-table-column
-              label="缓存名称"
+              label="tên bộ đệm"
               align="center"
               prop="cacheName"
               :show-overflow-tooltip="true"
@@ -62,7 +62,7 @@
       <el-col :span="8">
         <el-card style="height: calc(100vh - 125px)">
           <div slot="header">
-            <span><i class="el-icon-key"></i> 键名列表</span>
+            <span><i class="el-icon-key"></i> danh sách chìa khóa</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
@@ -79,12 +79,12 @@
             style="width: 100%"
           >
             <el-table-column
-              label="序号"
+              label="số seri"
               width="60"
               type="index"
             ></el-table-column>
             <el-table-column
-              label="缓存键名"
+              label="Tên khóa bộ đệm"
               align="center"
               :show-overflow-tooltip="true"
               :formatter="keyFormatter"
@@ -112,29 +112,29 @@
       <el-col :span="8">
         <el-card :bordered="false" style="height: calc(100vh - 125px)">
           <div slot="header">
-            <span><i class="el-icon-document"></i> 缓存Nội dung</span>
+            <span><i class="el-icon-document"></i> bộ nhớ đệmNội dung</span>
             <el-button
               style="float: right; padding: 3px 0"
               type="text"
               icon="el-icon-refresh-right"
               @click="handleClearCacheAll()"
-              >清理全部</el-button
+              >xóa tất cả</el-button
             >
           </div>
           <el-form :model="cacheForm">
             <el-row :gutter="32">
               <el-col :offset="1" :span="22">
-                <el-form-item label="缓存名称:" prop="cacheName">
+                <el-form-item label="tên bộ đệm:" prop="cacheName">
                   <el-input v-model="cacheForm.cacheName" :readOnly="true" />
                 </el-form-item>
               </el-col>
               <el-col :offset="1" :span="22">
-                <el-form-item label="缓存键名:" prop="cacheKey">
+                <el-form-item label="Tên khóa bộ đệm:" prop="cacheKey">
                   <el-input v-model="cacheForm.cacheKey" :readOnly="true" />
                 </el-form-item>
               </el-col>
               <el-col :offset="1" :span="22">
-                <el-form-item label="缓存Nội dung:" prop="cacheValue">
+                <el-form-item label="bộ nhớ đệmNội dung:" prop="cacheValue">
                   <el-input
                     v-model="cacheForm.cacheValue"
                     type="textarea"
@@ -171,7 +171,7 @@ export default {
     this.getCacheNames();
   },
   methods: {
-    /** 查询缓存名称列表 */
+    /** Danh sách tên bộ đệm truy vấn */
     getCacheNames() {
       this.loading = true;
       listCacheName().then(response => {
@@ -179,19 +179,19 @@ export default {
         this.loading = false;
       });
     },
-    /** Làm mới bộ nhớ đệm名称列表 */
+    /** Làm mới bộ nhớ đệmdanh sách tên */
     refreshCacheNames() {
       this.getCacheNames();
-      this.$modal.msgSuccess("Làm mới bộ nhớ đệm列表Thành công");
+      this.$modal.msgSuccess("Làm mới bộ nhớ đệmdanh sáchThành công");
     },
-    /** 清理指定名称缓存 */
+    /** Xóa bộ nhớ cache của tên được chỉ định */
     handleClearCacheName(row) {
       clearCacheName(row.cacheName).then(response => {
-        this.$modal.msgSuccess("清理缓存名称[" + row.cacheName + "]Thành công");
+        this.$modal.msgSuccess("Xóa tên được lưu trong bộ nhớ đệm[" + row.cacheName + "]Thành công");
         this.getCacheKeys();
       });
     },
-    /** 查询缓存键名列表 */
+    /** Truy vấn danh sách khóa bộ đệm */
     getCacheKeys(row) {
       const cacheName = row !== undefined ? row.cacheName : this.nowCacheName;
       if (cacheName === "") {
@@ -204,36 +204,36 @@ export default {
         this.nowCacheName = cacheName;
       });
     },
-    /** Làm mới bộ nhớ đệm键名列表 */
+    /** Làm mới bộ nhớ đệmdanh sách chìa khóa */
     refreshCacheKeys() {
       this.getCacheKeys();
-      this.$modal.msgSuccess("刷新键名列表Thành công");
+      this.$modal.msgSuccess("Làm mới danh sách khóaThành công");
     },
-    /** 清理指定键名缓存 */
+    /** Xóa bộ nhớ đệm của tên khóa được chỉ định */
     handleClearCacheKey(cacheKey) {
       clearCacheKey(cacheKey).then(response => {
-        this.$modal.msgSuccess("清理缓存键名[" + cacheKey + "]Thành công");
+        this.$modal.msgSuccess("Xóa khóa bộ nhớ đệm[" + cacheKey + "]Thành công");
         this.getCacheKeys();
       });
     },
-    /** 列表前缀去除 */
+    /** Xóa tiền tố danh sách */
     nameFormatter(row) {
       return row.cacheName.replace(":", "");
     },
-    /** 键名前缀去除 */
+    /** Xóa tiền tố tên khóa */
     keyFormatter(cacheKey) {
       return cacheKey.replace(this.nowCacheName, "");
     },
-    /** 查询缓存Nội dung详细 */
+    /** Bộ đệm truy vấnNội dungchi tiết */
     handleCacheValue(cacheKey) {
       getCacheValue(this.nowCacheName, cacheKey).then(response => {
         this.cacheForm = response.data;
       });
     },
-    /** 清理全部缓存 */
+    /** Xóa tất cả bộ nhớ đệm */
     handleClearCacheAll() {
       clearCacheAll().then(response => {
-        this.$modal.msgSuccess("清理全部缓存Thành công");
+        this.$modal.msgSuccess("Xóa tất cả bộ nhớ đệmThành công");
       });
     }
   },

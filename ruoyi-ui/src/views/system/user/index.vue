@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--部门数据-->
+      <!--dữ liệu bộ phận-->
       <el-col :span="4" :xs="24">
         <div class="head-container">
           <el-input
@@ -27,7 +27,7 @@
           />
         </div>
       </el-col>
-      <!--用户数据-->
+      <!--Dữ liệu người dùng-->
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
           <el-form-item label="Tên đăng nhập" prop="userName">
@@ -202,7 +202,7 @@
       </el-col>
     </el-row>
 
-    <!-- 添加或Sửa người dùng配置对话框 -->
+    <!-- thêm hoặcSửa người dùngHộp thoại cấu hình -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-row>
@@ -352,58 +352,58 @@ export default {
   components: { Treeselect },
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 用户表格数据
+      // dữ liệu biểu mẫu người dùng
       userList: null,
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // 部门树选项
+      // Tùy chọn cây bộ phận
       deptOptions: undefined,
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
       // Tên phòng ban
       deptName: undefined,
-      // 默认密码
+      // mật khẩu mặc định
       initPassword: undefined,
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // 岗位选项
+      // Lựa chọn công việc
       postOptions: [],
-      // 角色选项
+      // Tùy chọn nhân vật
       roleOptions: [],
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
       defaultProps: {
         children: "children",
         label: "label"
       },
-      // Nhập dữ liệu người dùng参数
+      // Nhập dữ liệu người dùngtham số
       upload: {
-        // CóKhôngHiển thị弹出层（Nhập dữ liệu người dùng）
+        // CóKhôngHiển thịlớp bật lên（Nhập dữ liệu người dùng）
         open: false,
-        // 弹出层标题（Nhập dữ liệu người dùng）
+        // Tiêu đề lớp bật lên（Nhập dữ liệu người dùng）
         title: "",
-        // CóKhông禁用上传
+        // CóKhôngTắt tải lên
         isUploading: false,
         // Cập nhật dữ liệu người dùng đã tồn tại
         updateSupport: 0,
-        // 设置上传的请求头部
+        // Đặt tiêu đề yêu cầu tải lên
         headers: { Authorization: "Bearer " + getToken() },
-        // 上传的地址
+        // Tải lên địa chỉ
         url: import.meta.env.VITE_APP_BASE_API + "/system/user/importData"
       },
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -412,7 +412,7 @@ export default {
         status: undefined,
         deptId: undefined
       },
-      // 列信息
+      // Thông tin cột
       columns: [
         { key: 0, label: `Mã người dùng`, visible: true },
         { key: 1, label: `Tên đăng nhập`, visible: true },
@@ -422,7 +422,7 @@ export default {
         { key: 5, label: `Trạng thái`, visible: true },
         { key: 6, label: `Ngày tạo`, visible: true }
       ],
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         userName: [
           { required: true, message: "Tên đăng nhập không được để trống", trigger: "blur" },
@@ -454,7 +454,7 @@ export default {
     };
   },
   watch: {
-    // 根据名称筛选部门树
+    // Lọc cây bộ phận theo tên
     deptName(val) {
       this.$refs.tree.filter(val);
     }
@@ -467,7 +467,7 @@ export default {
     });
   },
   methods: {
-    /** 查询用户列表 */
+    /** Truy vấn danh sách người dùng */
     getList() {
       this.loading = true;
       listUser(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -477,18 +477,18 @@ export default {
         }
       );
     },
-    /** 查询部门下拉树结构 */
+    /** Cấu trúc cây thả xuống của bộ phận truy vấn */
     getDeptTree() {
       deptTreeSelect().then(response => {
         this.deptOptions = response.data;
       });
     },
-    // 筛选节点
+    // Lọc các nút
     filterNode(value, data) {
       if (!value) return true;
       return data.label.indexOf(value) !== -1;
     },
-    // 节点单击事件
+    // Sự kiện bấm nút
     handleNodeClick(data) {
       this.queryParams.deptId = data.id;
       this.handleQuery();
@@ -509,7 +509,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         userId: undefined,
@@ -540,13 +540,13 @@ export default {
       this.$refs.tree.setCurrentKey(null);
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.userId);
       this.single = selection.length != 1;
       this.multiple = !selection.length;
     },
-    // ThêmThao tác触发
+    // ThêmThao táccò súng
     handleCommand(command, row) {
       switch (command) {
         case "handleResetPwd":
@@ -609,7 +609,7 @@ export default {
       const userId = row.userId;
       this.$router.push("/system/user-auth/role/" + userId);
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -655,11 +655,11 @@ export default {
       this.download('system/user/importTemplate', {
       }, `user_template_${new Date().getTime()}.xlsx`)
     },
-    // 文件上传中处理
+    // Tệp tải lên đang được xử lý
     handleFileUploadProgress(event, file, fileList) {
       this.upload.isUploading = true;
     },
-    // 文件上传Thành công处理
+    // Tải tập tin lênThành côngđối phó với
     handleFileSuccess(response, file, fileList) {
       this.upload.open = false;
       this.upload.isUploading = false;
@@ -667,7 +667,7 @@ export default {
       this.$alert("<div style='overflow: auto;overflow-x: hidden;max-height: 70vh;padding: 10px 20px 0;'>" + response.msg + "</div>", "Kết quả nhập file", { dangerouslyUseHTMLString: true });
       this.getList();
     },
-    // 提交上传文件
+    // Gửi tập tin tải lên
     submitFileForm() {
       this.$refs.upload.submit();
     }

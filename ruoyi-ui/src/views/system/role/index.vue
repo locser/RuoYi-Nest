@@ -155,7 +155,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa vai trò配置对话框 -->
+    <!-- thêm hoặcSửa vai tròHộp thoại cấu hình -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
         <el-form-item label="Tên vai trò" prop="roleName">
@@ -163,7 +163,7 @@
         </el-form-item>
         <el-form-item prop="roleKey">
           <span slot="label">
-            <el-tooltip content="控制器中定义的Key quyền hạn，如：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
+            <el-tooltip content="được xác định trong bộ điều khiểnKey quyền hạn，giống：@PreAuthorize(`@ss.hasRole('admin')`)" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
             Key quyền hạn
@@ -184,8 +184,8 @@
         </el-form-item>
         <el-form-item label="Quyền menu">
           <el-checkbox v-model="menuExpand" @change="handleCheckedTreeExpand($event, 'menu')">Mở rộng/Thu gọn</el-checkbox>
-          <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">全选/全不选</el-checkbox>
-          <el-checkbox v-model="form.menuCheckStrictly" @change="handleCheckedTreeConnect($event, 'menu')">父子联动</el-checkbox>
+          <el-checkbox v-model="menuNodeAll" @change="handleCheckedTreeNodeAll($event, 'menu')">Chọn tất cả/Chọn không có</el-checkbox>
+          <el-checkbox v-model="form.menuCheckStrictly" @change="handleCheckedTreeConnect($event, 'menu')">Gắn kết cha con</el-checkbox>
           <el-tree
             class="tree-border"
             :data="menuOptions"
@@ -193,7 +193,7 @@
             ref="menu"
             node-key="id"
             :check-strictly="!form.menuCheckStrictly"
-            empty-text="加载中，请稍候"
+            empty-text="đang tải，Vui lòng chờ"
             :props="defaultProps"
           ></el-tree>
         </el-form-item>
@@ -207,7 +207,7 @@
       </div>
     </el-dialog>
 
-    <!-- Gán vai tròQuyền dữ liệu对话框 -->
+    <!-- Gán vai tròQuyền dữ liệuhộp thoại -->
     <el-dialog :title="title" :visible.sync="openDataScope" width="500px" append-to-body>
       <el-form :model="form" label-width="80px">
         <el-form-item label="Tên vai trò">
@@ -216,7 +216,7 @@
         <el-form-item label="Key quyền hạn">
           <el-input v-model="form.roleKey" :disabled="true" />
         </el-form-item>
-        <el-form-item label="权限范围">
+        <el-form-item label="Phạm vi thẩm quyền">
           <el-select v-model="form.dataScope" @change="dataScopeSelectChange">
             <el-option
               v-for="item in dataScopeOptions"
@@ -228,8 +228,8 @@
         </el-form-item>
         <el-form-item label="Quyền dữ liệu" v-show="form.dataScope == 2">
           <el-checkbox v-model="deptExpand" @change="handleCheckedTreeExpand($event, 'dept')">Mở rộng/Thu gọn</el-checkbox>
-          <el-checkbox v-model="deptNodeAll" @change="handleCheckedTreeNodeAll($event, 'dept')">全选/全不选</el-checkbox>
-          <el-checkbox v-model="form.deptCheckStrictly" @change="handleCheckedTreeConnect($event, 'dept')">父子联动</el-checkbox>
+          <el-checkbox v-model="deptNodeAll" @change="handleCheckedTreeNodeAll($event, 'dept')">Chọn tất cả/Chọn không có</el-checkbox>
+          <el-checkbox v-model="form.deptCheckStrictly" @change="handleCheckedTreeConnect($event, 'dept')">Gắn kết cha con</el-checkbox>
           <el-tree
             class="tree-border"
             :data="deptOptions"
@@ -238,7 +238,7 @@
             ref="dept"
             node-key="id"
             :check-strictly="!form.deptCheckStrictly"
-            empty-text="加载中，请稍候"
+            empty-text="đang tải，Vui lòng chờ"
             :props="defaultProps"
           ></el-tree>
         </el-form-item>
@@ -260,60 +260,60 @@ export default {
   dicts: ['sys_normal_disable'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 角色表格数据
+      // Dữ liệu bảng vai trò
       roleList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // CóKhôngHiển thị弹出层（Quyền dữ liệu）
+      // CóKhôngHiển thịlớp bật lên（Quyền dữ liệu）
       openDataScope: false,
       menuExpand: false,
       menuNodeAll: false,
       deptExpand: true,
       deptNodeAll: false,
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // Phạm vi dữ liệu选项
+      // Phạm vi dữ liệuTùy chọn
       dataScopeOptions: [
         {
           value: "1",
-          label: "全部Quyền dữ liệu"
+          label: "tất cảQuyền dữ liệu"
         },
         {
           value: "2",
-          label: "自定Quyền dữ liệu"
+          label: "tùy chỉnhQuyền dữ liệu"
         },
         {
           value: "3",
-          label: "本部门Quyền dữ liệu"
+          label: "bộ phận nàyQuyền dữ liệu"
         },
         {
           value: "4",
-          label: "本部门及以下Quyền dữ liệu"
+          label: "Bộ phận này trở xuốngQuyền dữ liệu"
         },
         {
           value: "5",
-          label: "仅本人Quyền dữ liệu"
+          label: "Chỉ có tôiQuyền dữ liệu"
         }
       ],
-      // Menu列表
+      // Menudanh sách
       menuOptions: [],
-      // 部门列表
+      // Danh sách khoa
       deptOptions: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -321,22 +321,22 @@ export default {
         roleKey: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
       defaultProps: {
         children: "children",
         label: "label"
       },
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         roleName: [
-          { required: true, message: "Tên vai trò不能为空", trigger: "blur" }
+          { required: true, message: "Tên vai tròkhông thể trống", trigger: "blur" }
         ],
         roleKey: [
-          { required: true, message: "Key quyền hạn不能为空", trigger: "blur" }
+          { required: true, message: "Key quyền hạnkhông thể trống", trigger: "blur" }
         ],
         roleSort: [
-          { required: true, message: "Thứ tự vai trò不能为空", trigger: "blur" }
+          { required: true, message: "Thứ tự vai tròkhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -345,7 +345,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询角色列表 */
+    /** Danh sách vai trò truy vấn */
     getList() {
       this.loading = true;
       listRole(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -355,38 +355,38 @@ export default {
         }
       );
     },
-    /** 查询Menu树结构 */
+    /** Truy vấnMenucấu trúc cây */
     getMenuTreeselect() {
       menuTreeselect().then(response => {
         this.menuOptions = response.data;
       });
     },
-    // 所有Menu节点数据
+    // tất cảMenuDữ liệu nút
     getMenuAllCheckedKeys() {
-      // 目前被选中的Menu节点
+      // hiện được chọnMenunút
       let checkedKeys = this.$refs.menu.getCheckedKeys();
-      // 半选中的Menu节点
+      // được chọn một nửaMenunút
       let halfCheckedKeys = this.$refs.menu.getHalfCheckedKeys();
       checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys);
       return checkedKeys;
     },
-    // 所有部门节点数据
+    // Tất cả dữ liệu nút bộ phận
     getDeptAllCheckedKeys() {
-      // 目前被选中的部门节点
+      // Nút bộ phận hiện được chọn
       let checkedKeys = this.$refs.dept.getCheckedKeys();
-      // 半选中的部门节点
+      // Nút bộ phận được chọn một nửa
       let halfCheckedKeys = this.$refs.dept.getHalfCheckedKeys();
       checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys);
       return checkedKeys;
     },
-    /** 根据角色ID查询Menu树结构 */
+    /** Theo vai tròIDTruy vấnMenucấu trúc cây */
     getRoleMenuTreeselect(roleId) {
       return roleMenuTreeselect(roleId).then(response => {
         this.menuOptions = response.menus;
         return response;
       });
     },
-    /** 根据角色ID查询部门树结构 */
+    /** Theo vai tròIDCấu trúc cây bộ phận truy vấn */
     getDeptTree(roleId) {
       return deptTreeSelect(roleId).then(response => {
         this.deptOptions = response.depts;
@@ -396,7 +396,7 @@ export default {
     // Trạng thái vai tròSửa
     handleStatusChange(row) {
       let text = row.status === "0" ? "Kích hoạt" : "Hủy kích hoạt";
-      this.$modal.confirm('Bạn có chắc chắn muốn"' + text + '""' + row.roleName + '"角色吗？').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn"' + text + '""' + row.roleName + '"Vai trò?？').then(function() {
         return changeRoleStatus(row.roleId, row.status);
       }).then(() => {
         this.$modal.msgSuccess(text + "Thành công");
@@ -414,7 +414,7 @@ export default {
       this.openDataScope = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       if (this.$refs.menu != undefined) {
         this.$refs.menu.setCheckedKeys([]);
@@ -448,13 +448,13 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.roleId)
       this.single = selection.length!=1
       this.multiple = !selection.length
     },
-    // ThêmThao tác触发
+    // ThêmThao táccò súng
     handleCommand(command, row) {
       switch (command) {
         case "handleDataScope":
@@ -467,7 +467,7 @@ export default {
           break;
       }
     },
-    // 树权限（Mở rộng/Thu gọn）
+    // quyền của cây（Mở rộng/Thu gọn）
     handleCheckedTreeExpand(value, type) {
       if (type == 'menu') {
         let treeList = this.menuOptions;
@@ -481,7 +481,7 @@ export default {
         }
       }
     },
-    // 树权限（全选/全不选）
+    // quyền của cây（Chọn tất cả/Chọn không có）
     handleCheckedTreeNodeAll(value, type) {
       if (type == 'menu') {
         this.$refs.menu.setCheckedNodes(value ? this.menuOptions: []);
@@ -489,7 +489,7 @@ export default {
         this.$refs.dept.setCheckedNodes(value ? this.deptOptions: []);
       }
     },
-    // 树权限（父子联动）
+    // quyền của cây（Gắn kết cha con）
     handleCheckedTreeConnect(value, type) {
       if (type == 'menu') {
         this.form.menuCheckStrictly = value ? true: false;
@@ -525,13 +525,13 @@ export default {
         this.title = "Sửa vai trò";
       });
     },
-    /** 选择角色权限范围触发 */
+    /** Chọn phạm vi quyền của vai trò để kích hoạt */
     dataScopeSelectChange(value) {
       if(value !== '2') {
         this.$refs.dept.setCheckedKeys([]);
       }
     },
-    /** 分配Quyền dữ liệuThao tác */
+    /** phân phátQuyền dữ liệuThao tác */
     handleDataScope(row) {
       this.reset();
       const deptTreeSelect = this.getDeptTree(row.roleId);
@@ -543,7 +543,7 @@ export default {
             this.$refs.dept.setCheckedKeys(res.checkedKeys);
           });
         });
-        this.title = "分配Quyền dữ liệu";
+        this.title = "phân phátQuyền dữ liệu";
       });
     },
     /** Gán người dùngThao tác */
@@ -551,7 +551,7 @@ export default {
       const roleId = row.roleId;
       this.$router.push("/system/role-auth/user/" + roleId);
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -573,7 +573,7 @@ export default {
         }
       });
     },
-    /** 提交Nút bấm（Quyền dữ liệu） */
+    /** nộpNút bấm（Quyền dữ liệu） */
     submitDataScope: function() {
       if (this.form.roleId != undefined) {
         this.form.deptIds = this.getDeptAllCheckedKeys();
@@ -587,7 +587,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const roleIds = row.roleId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã vai trò为"' + roleIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã vai tròvì"' + roleIds + '" không?').then(function() {
         return delRole(roleIds);
       }).then(() => {
         this.getList();

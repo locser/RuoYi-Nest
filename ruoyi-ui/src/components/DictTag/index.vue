@@ -36,7 +36,7 @@ export default {
       default: null,
     },
     value: [Number, String, Array],
-    // 当未找到匹配的数据时，Hiển thịvalue
+    // Khi không tìm thấy dữ liệu phù hợp，Hiển thịvalue
     showValue: {
       type: Boolean,
       default: true,
@@ -48,7 +48,7 @@ export default {
   },
   data() {
     return {
-      unmatchArray: [], // 记录未匹配的项
+      unmatchArray: [], // Đăng nhập các mục chưa từng có
     }
   },
   computed: {
@@ -58,17 +58,17 @@ export default {
     },
     unmatch() {
       this.unmatchArray = []
-      // 没有value不Hiển thị
+      // KHÔNGvalueKHÔNGHiển thị
       if (this.value === null || typeof this.value === 'undefined' || this.value === '' || this.options.length === 0) return false
-      // 传入值为数组
-      let unmatch = false // 添加一个标志来判断CóKhông有未匹配项
+      // Giá trị đầu vào là một mảng
+      let unmatch = false // Thêm cờ để xác địnhCóKhôngKhông có trận đấu nào
       this.values.forEach(item => {
         if (!this.options.some(v => v.value === item)) {
           this.unmatchArray.push(item)
-          unmatch = true // 如果有未匹配项，将标志设置为true
+          unmatch = true // Nếu không có trận đấu，Đặt cờ thànhtrue
         }
       })
-      return unmatch // Quay lại标志的值
+      return unmatch // Quay lạigiá trị cờ
     },
 
   },

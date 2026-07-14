@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h4 class="form-header h4">基本信息</h4>
+    <h4 class="form-header h4">Thông tin cơ bản</h4>
     <el-form ref="form" :model="form" label-width="80px">
       <el-row>
         <el-col :span="8" :offset="2">
@@ -16,9 +16,9 @@
       </el-row>
     </el-form>
 
-    <h4 class="form-header h4">角色信息</h4>
+    <h4 class="form-header h4">thông tin vai trò</h4>
     <el-table v-loading="loading" :row-key="getRowKey" @row-click="clickRow" ref="table" @selection-change="handleSelectionChange" :data="roles.slice((pageNum-1)*pageSize,pageNum*pageSize)">
-      <el-table-column label="序号" type="index" align="center">
+      <el-table-column label="số seri" type="index" align="center">
         <template slot-scope="scope">
           <span>{{(pageNum - 1) * pageSize + scope.$index + 1}}</span>
         </template>
@@ -38,7 +38,7 @@
 
     <el-form label-width="100px">
       <el-form-item style="text-align: center;margin-left:-120px;margin-top:30px;">
-        <el-button type="primary" @click="submitForm()">提交</el-button>
+        <el-button type="primary" @click="submitForm()">nộp</el-button>
         <el-button @click="close()">Quay lại</el-button>
       </el-form-item>
     </el-form>
@@ -52,17 +52,17 @@ export default {
   name: "AuthRole",
   data() {
     return {
-       // 遮罩层
+       // lớp mặt nạ
       loading: true,
-      // 分页信息
+      // Thông tin phân trang
       total: 0,
       pageNum: 1,
       pageSize: 10,
-      // 选中Mã vai trò
+      // đã chọnMã vai trò
       roleIds:[],
-      // 角色信息
+      // thông tin vai trò
       roles: [],
-      // 用户信息
+      // Thông tin người dùng
       form: {}
     };
   },
@@ -86,24 +86,24 @@ export default {
     }
   },
   methods: {
-    /** 单击选中行数据 */
+    /** Bấm để chọn dữ liệu hàng */
     clickRow(row) {
       this.$refs.table.toggleRowSelection(row);
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.roleIds = selection.map((item) => item.roleId);
     },
-    // Lưu选中的数据编号
+    // LưuSố dữ liệu đã chọn
     getRowKey(row) {
       return row.roleId;
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm() {
       const userId = this.form.userId;
       const roleIds = this.roleIds.join(",");
       updateAuthRole({ userId: userId, roleIds: roleIds }).then((response) => {
-        this.$modal.msgSuccess("授权Thành công");
+        this.$modal.msgSuccess("Ủy quyềnThành công");
         this.close();
       });
     },

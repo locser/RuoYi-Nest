@@ -9,12 +9,12 @@
       @close="onClose"
     >
       <div slot="title">
-        选择图标
+        Chọn biểu tượng
         <el-input
           v-model="key"
           size="mini"
           :style="{width: '260px'}"
-          placeholder="Vui lòng nhập图标名称"
+          placeholder="Vui lòng nhậpTên biểu tượng"
           prefix-icon="el-icon-search"
           clearable
         />

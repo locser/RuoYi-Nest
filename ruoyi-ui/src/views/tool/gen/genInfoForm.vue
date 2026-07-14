@@ -3,28 +3,28 @@
     <el-row>
       <el-col :span="12">
         <el-form-item prop="tplCategory">
-          <span slot="label">生成模板</span>
+          <span slot="label">Tạo mẫu</span>
           <el-select v-model="info.tplCategory" @change="tplSelectChange">
-            <el-option label="单表（增删改查）" value="crud" />
-            <el-option label="树表（增删改查）" value="tree" />
-            <el-option label="主子表（增删改查）" value="sub" />
+            <el-option label="Bàn đơn（Thêm, xóa, sửa đổi và kiểm tra）" value="crud" />
+            <el-option label="bàn cây（Thêm, xóa, sửa đổi và kiểm tra）" value="tree" />
+            <el-option label="Bàn chính và bàn con（Thêm, xóa, sửa đổi và kiểm tra）" value="sub" />
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item prop="tplWebType">
-          <span slot="label">前端Loại</span>
+          <span slot="label">giao diện người dùngLoại</span>
           <el-select v-model="info.tplWebType">
-            <el-option label="Vue2 Element UI 模版" value="element-ui" />
-            <el-option label="Vue3 Element Plus 模版" value="element-plus" />
+            <el-option label="Vue2 Element UI giấy nến" value="element-ui" />
+            <el-option label="Vue3 Element Plus giấy nến" value="element-plus" />
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item prop="packageName">
           <span slot="label">
-            生成包路径
-            <el-tooltip content="生成在哪个根模块下，例如 ruoyi-system" placement="top">
+            Tạo đường dẫn gói
+            <el-tooltip content="Nó được tạo theo mô-đun gốc nào?，Ví dụ ruoyi-system" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -35,8 +35,8 @@
       <el-col :span="12">
         <el-form-item prop="moduleName">
           <span slot="label">
-            生成模块名
-            <el-tooltip content="可理解为子系统名，例如 system" placement="top">
+            Tạo tên mô-đun
+            <el-tooltip content="Có thể hiểu là tên hệ thống con，Ví dụ system" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -47,8 +47,8 @@
       <el-col :span="12">
         <el-form-item prop="businessName">
           <span slot="label">
-            生成业务名
-            <el-tooltip content="可理解为功能英文名，例如 user" placement="top">
+            Tạo tên doanh nghiệp
+            <el-tooltip content="Có thể hiểu là tên tiếng Anh của hàm，Ví dụ user" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -59,8 +59,8 @@
       <el-col :span="12">
         <el-form-item prop="functionName">
           <span slot="label">
-            生Thành công能名
-            <el-tooltip content="用作类描述，例如 用户" placement="top">
+            sinhThành côngCó thể đặt tên
+            <el-tooltip content="được sử dụng làm mô tả lớp，Ví dụ người dùng" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -71,13 +71,13 @@
       <el-col :span="12">
         <el-form-item prop="genType">
           <span slot="label">
-            生成代码方式
-            <el-tooltip content="默认为zip压缩包下载，也可以自定义生成路径" placement="top">
+            Cách tạo mã
+            <el-tooltip content="Mặc định làzipTải xuống gói nén，Bạn cũng có thể tùy chỉnh đường dẫn thế hệ" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
-          <el-radio v-model="info.genType" label="0">zip压缩包</el-radio>
-          <el-radio v-model="info.genType" label="1">自定义路径</el-radio>
+          <el-radio v-model="info.genType" label="0">zipGói nén</el-radio>
+          <el-radio v-model="info.genType" label="1">đường dẫn tùy chỉnh</el-radio>
         </el-form-item>
       </el-col>
 
@@ -85,7 +85,7 @@
         <el-form-item>
           <span slot="label">
             Menu cấp trên
-            <el-tooltip content="分配到指定Menu下，例如 系统管理" placement="top">
+            <el-tooltip content="Được giao cho chỉ địnhMenuXuống，Ví dụ Quản lý hệ thống" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -95,7 +95,7 @@
             :options="menus"
             :normalizer="normalizer"
             :show-count="true"
-            placeholder="Vui lòng chọn系统Menu"
+            placeholder="Vui lòng chọnhệ thốngMenu"
           />
         </el-form-item>
       </el-col>
@@ -103,19 +103,19 @@
       <el-col :span="24" v-if="info.genType == '1'">
         <el-form-item prop="genPath">
           <span slot="label">
-            自定义路径
-            <el-tooltip content="填写磁盘绝对路径，若不填写，则生成到当前Web项目下" placement="top">
+            đường dẫn tùy chỉnh
+            <el-tooltip content="Điền đường dẫn tuyệt đối vào đĩa，Nếu không điền vào，sau đó tạo ra hiện tạiWebthuộc dự án" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
           <el-input v-model="info.genPath">
             <el-dropdown slot="append">
               <el-button type="primary">
-                最近路径快速选择
+                Lựa chọn nhanh các tuyến đường gần đây
                 <i class="el-icon-arrow-down el-icon--right"></i>
               </el-button>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item @click.native="info.genPath = '/'">恢复默认的生成基础路径</el-dropdown-item>
+                <el-dropdown-item @click.native="info.genPath = '/'">Khôi phục đường dẫn cơ sở xây dựng mặc định</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-input>
@@ -124,12 +124,12 @@
     </el-row>
 
     <el-row v-show="info.tplCategory == 'tree'">
-      <h4 class="form-header">其他信息</h4>
+      <h4 class="form-header">Thông tin khác</h4>
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            树编码字段
-            <el-tooltip content="树Hiển thị的编码字段名， 如：dept_id" placement="top">
+            trường mã hóa cây
+            <el-tooltip content="CâyHiển thịtên trường được mã hóa， giống：dept_id" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -146,8 +146,8 @@
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            树父编码字段
-            <el-tooltip content="树Hiển thị的父编码字段名， 如：parent_Id" placement="top">
+            trường mã hóa cây gốc
+            <el-tooltip content="CâyHiển thịtên trường được mã hóa gốc， giống：parent_Id" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -164,8 +164,8 @@
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            树名称字段
-            <el-tooltip content="树节点的Hiển thị名称字段名， 如：dept_name" placement="top">
+            trường tên cây
+            <el-tooltip content="nút câyHiển thịTên trường tên， giống：dept_name" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -181,12 +181,12 @@
       </el-col>
     </el-row>
     <el-row v-show="info.tplCategory == 'sub'">
-      <h4 class="form-header">关联信息</h4>
+      <h4 class="form-header">Thông tin liên quan</h4>
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            关联子表的表名
-            <el-tooltip content="关联子表的表名， 如：sys_user" placement="top">
+            Tên bảng của bảng phụ liên quan
+            <el-tooltip content="Tên bảng của bảng phụ liên quan， giống：sys_user" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -203,8 +203,8 @@
       <el-col :span="12">
         <el-form-item>
           <span slot="label">
-            子表关联的外键名
-            <el-tooltip content="子表关联的外键名， 如：user_id" placement="top">
+            Tên khóa ngoại được liên kết với bảng phụ
+            <el-tooltip content="Tên khóa ngoại được liên kết với bảng phụ， giống：user_id" placement="top">
               <i class="el-icon-question"></i>
             </el-tooltip>
           </span>
@@ -247,19 +247,19 @@ export default {
       subColumns: [],
       rules: {
         tplCategory: [
-          { required: true, message: "Vui lòng chọn生成模板", trigger: "blur" }
+          { required: true, message: "Vui lòng chọnTạo mẫu", trigger: "blur" }
         ],
         packageName: [
-          { required: true, message: "Vui lòng nhập生成包路径", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpTạo đường dẫn gói", trigger: "blur" }
         ],
         moduleName: [
-          { required: true, message: "Vui lòng nhập生成模块名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpTạo tên mô-đun", trigger: "blur" }
         ],
         businessName: [
-          { required: true, message: "Vui lòng nhập生成业务名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpTạo tên doanh nghiệp", trigger: "blur" }
         ],
         functionName: [
-          { required: true, message: "Vui lòng nhập生Thành công能名", trigger: "blur" }
+          { required: true, message: "Vui lòng nhậpsinhThành côngCó thể đặt tên", trigger: "blur" }
         ],
       }
     };
@@ -275,7 +275,7 @@ export default {
     }
   },
   methods: {
-    /** 转换Menu数据结构 */
+    /** Chuyển thànhMenucấu trúc dữ liệu */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -286,18 +286,18 @@ export default {
         children: node.children
       };
     },
-    /** 选择子表名触发 */
+    /** Chọn tên bảng phụ để kích hoạt */
     subSelectChange(value) {
       this.info.subTableFkName = '';
     },
-    /** 选择生成模板触发 */
+    /** Chọn Tạo trình kích hoạt mẫu */
     tplSelectChange(value) {
       if(value !== 'sub') {
         this.info.subTableName = '';
         this.info.subTableFkName = '';
       }
     },
-    /** 设置关联外键 */
+    /** Đặt khóa ngoại liên quan */
     setSubTableColumns(value) {
       for (var item in this.tables) {
         const name = this.tables[item].tableName;

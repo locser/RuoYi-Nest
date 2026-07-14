@@ -18,7 +18,7 @@
           label-width="100px"
         >
           <el-col :span="24">
-            <el-form-item label="生成Loại" prop="type">
+            <el-form-item label="phát raLoại" prop="type">
               <el-radio-group v-model="formData.type">
                 <el-radio-button
                   v-for="(item, index) in typeOptions"
@@ -30,8 +30,8 @@
                 </el-radio-button>
               </el-radio-group>
             </el-form-item>
-            <el-form-item v-if="showFileName" label="文件名" prop="fileName">
-              <el-input v-model="formData.fileName" placeholder="Vui lòng nhập文件名" clearable />
+            <el-form-item v-if="showFileName" label="tên tập tin" prop="fileName">
+              <el-input v-model="formData.fileName" placeholder="Vui lòng nhậptên tập tin" clearable />
             </el-form-item>
           </el-col>
         </el-form>
@@ -61,20 +61,20 @@ export default {
       rules: {
         fileName: [{
           required: true,
-          message: 'Vui lòng nhập文件名',
+          message: 'Vui lòng nhậptên tập tin',
           trigger: 'blur'
         }],
         type: [{
           required: true,
-          message: '生成Loại不能为空',
+          message: 'phát raLoạikhông thể trống',
           trigger: 'change'
         }]
       },
       typeOptions: [{
-        label: '页面',
+        label: 'trang',
         value: 'file'
       }, {
-        label: '弹窗',
+        label: 'Cửa sổ bật lên',
         value: 'dialog'
       }]
     }

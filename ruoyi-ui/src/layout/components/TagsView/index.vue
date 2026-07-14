@@ -18,12 +18,12 @@
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
-      <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh-right"></i> 刷新页面</li>
-      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i> Đóng当前</li>
-      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> Đóng其他</li>
-      <li v-if="!isFirstView()" @click="closeLeftTags"><i class="el-icon-back"></i> Đóng左侧</li>
-      <li v-if="!isLastView()" @click="closeRightTags"><i class="el-icon-right"></i> Đóng右侧</li>
-      <li @click="closeAllTags(selectedTag)"><i class="el-icon-circle-close"></i> 全部Đóng</li>
+      <li @click="refreshSelectedTag(selectedTag)"><i class="el-icon-refresh-right"></i> làm mới trang</li>
+      <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)"><i class="el-icon-close"></i> Đónghiện hành</li>
+      <li @click="closeOthersTags"><i class="el-icon-circle-close"></i> Đóngkhác</li>
+      <li v-if="!isFirstView()" @click="closeLeftTags"><i class="el-icon-back"></i> Đóngbên trái</li>
+      <li v-if="!isLastView()" @click="closeRightTags"><i class="el-icon-right"></i> Đóngbên phải</li>
+      <li @click="closeAllTags(selectedTag)"><i class="el-icon-circle-close"></i> tất cảĐóng</li>
     </ul>
   </div>
 </template>

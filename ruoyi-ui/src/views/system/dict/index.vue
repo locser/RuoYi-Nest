@@ -22,7 +22,7 @@
       <el-form-item label="Trạng thái" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="字典Trạng thái"
+          placeholder="từ điểnTrạng thái"
           clearable
           style="width: 240px"
         >
@@ -157,7 +157,7 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa tham số配置对话框 -->
+    <!-- thêm hoặcSửa tham sốHộp thoại cấu hình -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="Tên từ điển" prop="dictName">
@@ -195,27 +195,27 @@ export default {
   dicts: ['sys_normal_disable'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 字典表格数据
+      // dữ liệu bảng từ điển
       typeList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -223,15 +223,15 @@ export default {
         dictType: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         dictName: [
-          { required: true, message: "Tên từ điển不能为空", trigger: "blur" }
+          { required: true, message: "Tên từ điểnkhông thể trống", trigger: "blur" }
         ],
         dictType: [
-          { required: true, message: "Loại từ điển不能为空", trigger: "blur" }
+          { required: true, message: "Loại từ điểnkhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -240,7 +240,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询Loại từ điển列表 */
+    /** Truy vấnLoại từ điểndanh sách */
     getList() {
       this.loading = true;
       listType(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -255,7 +255,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         dictId: undefined,
@@ -281,9 +281,9 @@ export default {
     handleAdd() {
       this.reset();
       this.open = true;
-      this.title = "添加Loại từ điển";
+      this.title = "Thêm vàoLoại từ điển";
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.dictId)
       this.single = selection.length!=1
@@ -299,7 +299,7 @@ export default {
         this.title = "SửaLoại từ điển";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -322,7 +322,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const dictIds = row.dictId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã từ điển为"' + dictIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã từ điểnvì"' + dictIds + '" không?').then(function() {
         return delType(dictIds);
       }).then(() => {
         this.getList();
@@ -338,7 +338,7 @@ export default {
     /** Làm mới bộ nhớ đệmNút bấmThao tác */
     handleRefreshCache() {
       refreshCache().then(() => {
-        this.$modal.msgSuccess("刷新Thành công");
+        this.$modal.msgSuccess("làm cho khỏe lạiThành công");
         this.$store.dispatch('dict/cleanDict');
       });
     }

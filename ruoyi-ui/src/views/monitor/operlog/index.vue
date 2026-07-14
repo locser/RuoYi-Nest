@@ -1,19 +1,19 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="Thao tác地址" prop="operIp">
+      <el-form-item label="Thao tácĐịa chỉ" prop="operIp">
         <el-input
           v-model="queryParams.operIp"
-          placeholder="Vui lòng nhậpThao tác地址"
+          placeholder="Vui lòng nhậpThao tácĐịa chỉ"
           clearable
           style="width: 240px;"
           @keyup.enter.native="handleQuery"
         />
       </el-form-item>
-      <el-form-item label="系统模块" prop="title">
+      <el-form-item label="mô-đun hệ thống" prop="title">
         <el-input
           v-model="queryParams.title"
-          placeholder="Vui lòng nhập系统模块"
+          placeholder="Vui lòng nhậpmô-đun hệ thống"
           clearable
           style="width: 240px;"
           @keyup.enter.native="handleQuery"
@@ -113,29 +113,29 @@
 
     <el-table ref="tables" v-loading="loading" :data="list" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
       <el-table-column type="selection" width="50" align="center" />
-      <el-table-column label="日志编号" align="center" prop="operId" />
-      <el-table-column label="系统模块" align="center" prop="title" :show-overflow-tooltip="true" />
+      <el-table-column label="Số nhật ký" align="center" prop="operId" />
+      <el-table-column label="mô-đun hệ thống" align="center" prop="title" :show-overflow-tooltip="true" />
       <el-table-column label="Thao tácLoại" align="center" prop="businessType">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_oper_type" :value="scope.row.businessType"/>
         </template>
       </el-table-column>
       <el-table-column label="Người thực hiện" align="center" prop="operName" width="110" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']" />
-      <el-table-column label="Thao tác地址" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
+      <el-table-column label="Thao tácĐịa chỉ" align="center" prop="operIp" width="130" :show-overflow-tooltip="true" />
       <el-table-column label="Địa điểm thao tác" align="center" prop="operLocation" :show-overflow-tooltip="true" />
       <el-table-column label="Trạng thái hoạt động" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="Thao tác日期" align="center" prop="operTime" width="160" sortable="custom" :sort-orders="['descending', 'ascending']">
+      <el-table-column label="Thao tácngày" align="center" prop="operTime" width="160" sortable="custom" :sort-orders="['descending', 'ascending']">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.operTime) }}</span>
         </template>
       </el-table-column>
       <el-table-column label="Thời gian tiêu hao" align="center" prop="costTime" width="110" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']">
         <template slot-scope="scope">
-          <span>{{ scope.row.costTime }}毫秒</span>
+          <span>{{ scope.row.costTime }}mili giây</span>
         </template>
       </el-table-column>
       <el-table-column label="Thao tác" align="center" class-name="small-padding fixed-width">
@@ -146,7 +146,7 @@
             icon="el-icon-view"
             @click="handleView(scope.row,scope.index)"
             v-hasPermi="['monitor:operlog:query']"
-          >详细</el-button>
+          >chi tiết</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -159,22 +159,22 @@
       @pagination="getList"
     />
 
-    <!-- Thao tác日志详细 -->
-    <el-dialog title="Thao tác日志详细" :visible.sync="open" width="800px" append-to-body>
+    <!-- Thao tácChi tiết nhật ký -->
+    <el-dialog title="Thao tácChi tiết nhật ký" :visible.sync="open" width="800px" append-to-body>
       <el-form ref="form" :model="form" label-width="100px" size="mini">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="Thao tác模块：">{{ form.title }} / {{ typeFormat(form) }}</el-form-item>
+            <el-form-item label="Thao tácmô-đun：">{{ form.title }} / {{ typeFormat(form) }}</el-form-item>
             <el-form-item
-              label="登录信息："
+              label="Thông tin đăng nhập："
             >{{ form.operName }} / {{ form.operIp }} / {{ form.operLocation }}</el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="请求地址：">{{ form.operUrl }}</el-form-item>
+            <el-form-item label="Địa chỉ yêu cầu：">{{ form.operUrl }}</el-form-item>
             <el-form-item label="Phương thức yêu cầu：">{{ form.requestMethod }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="Thao tác方法：">{{ form.method }}</el-form-item>
+            <el-form-item label="Thao tácphương pháp：">{{ form.method }}</el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="Tham số yêu cầu：">{{ form.operParam }}</el-form-item>
@@ -189,18 +189,18 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="Thời gian tiêu hao：">{{ form.costTime }}毫秒</el-form-item>
+            <el-form-item label="Thời gian tiêu hao：">{{ form.costTime }}mili giây</el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="Thời gian thực hiện：">{{ parseTime(form.operTime) }}</el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="异常信息：" v-if="form.status === 1">{{ form.errorMsg }}</el-form-item>
+            <el-form-item label="Thông tin ngoại lệ：" v-if="form.status === 1">{{ form.errorMsg }}</el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="open = false">关 闭</el-button>
+        <el-button @click="open = false">đóng đóng</el-button>
       </div>
     </el-dialog>
   </div>
@@ -214,27 +214,27 @@ export default {
   dicts: ['sys_oper_type', 'sys_common_status'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 表格数据
+      // dữ liệu dạng bảng
       list: [],
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // 默认Sắp xếp
+      // mặc địnhSắp xếp
       defaultSort: {prop: 'operTime', order: 'descending'},
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -250,7 +250,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询登录日志 */
+    /** Truy vấn nhật ký đăng nhập */
     getList() {
       this.loading = true;
       list(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
@@ -260,7 +260,7 @@ export default {
         }
       );
     },
-    // Thao tác日志Loại字典翻译
+    // Thao tácnhật kýLoạidịch từ điển
     typeFormat(row, column) {
       return this.selectDictLabel(this.dict.type.sys_oper_type, row.businessType);
     },
@@ -276,18 +276,18 @@ export default {
       this.queryParams.pageNum = 1;
       this.$refs.tables.sort(this.defaultSort.prop, this.defaultSort.order)
     },
-    /** 多选框选中数据 */
+    /** Dữ liệu đã chọn trong hộp chọn nhiều lần */
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.operId)
       this.multiple = !selection.length
     },
-    /** Sắp xếp触发事件 */
+    /** Sắp xếpsự kiện kích hoạt */
     handleSortChange(column, prop, order) {
       this.queryParams.orderByColumn = column.prop;
       this.queryParams.isAsc = column.order;
       this.getList();
     },
-    /** 详细Nút bấmThao tác */
+    /** chi tiếtNút bấmThao tác */
     handleView(row) {
       this.open = true;
       this.form = row;
@@ -295,7 +295,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const operIds = row.operId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa日志编号为"' + operIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaSố nhật ký là"' + operIds + '" không?').then(function() {
         return delOperlog(operIds);
       }).then(() => {
         this.getList();
@@ -304,7 +304,7 @@ export default {
     },
     /** Xóa sạchNút bấmThao tác */
     handleClean() {
-      this.$modal.confirm('CóKhông确认Xóa sạch所有Thao tác日志数据项？').then(function() {
+      this.$modal.confirm('CóKhôngxác nhậnXóa sạchtất cảThao tácmục dữ liệu nhật ký？').then(function() {
         return cleanOperlog();
       }).then(() => {
         this.getList();

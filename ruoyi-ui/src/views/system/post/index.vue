@@ -18,7 +18,7 @@
         />
       </el-form-item>
       <el-form-item label="Trạng thái" prop="status">
-        <el-select v-model="queryParams.status" placeholder="岗位Trạng thái" clearable>
+        <el-select v-model="queryParams.status" placeholder="bưu kiệnTrạng thái" clearable>
           <el-option
             v-for="dict in dict.type.sys_normal_disable"
             :key="dict.value"
@@ -123,19 +123,19 @@
       @pagination="getList"
     />
 
-    <!-- 添加或Sửa chức vụ对话框 -->
+    <!-- thêm hoặcSửa chức vụhộp thoại -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="Tên chức vụ" prop="postName">
           <el-input v-model="form.postName" placeholder="Vui lòng nhập tên chức vụ" />
         </el-form-item>
         <el-form-item label="Mã chức vụ" prop="postCode">
-          <el-input v-model="form.postCode" placeholder="Vui lòng nhập编码名称" />
+          <el-input v-model="form.postCode" placeholder="Vui lòng nhậptên mã hóa" />
         </el-form-item>
         <el-form-item label="Thứ tự chức vụ" prop="postSort">
           <el-input-number v-model="form.postSort" controls-position="right" :min="0" />
         </el-form-item>
-        <el-form-item label="岗位Trạng thái" prop="status">
+        <el-form-item label="bưu kiệnTrạng thái" prop="status">
           <el-radio-group v-model="form.status">
             <el-radio
               v-for="dict in dict.type.sys_normal_disable"
@@ -164,25 +164,25 @@ export default {
   dicts: ['sys_normal_disable'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 岗位表格数据
+      // Dữ liệu mẫu công việc
       postList: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -190,18 +190,18 @@ export default {
         postName: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         postName: [
-          { required: true, message: "Tên chức vụ不能为空", trigger: "blur" }
+          { required: true, message: "Tên chức vụkhông thể trống", trigger: "blur" }
         ],
         postCode: [
-          { required: true, message: "Mã chức vụ不能为空", trigger: "blur" }
+          { required: true, message: "Mã chức vụkhông thể trống", trigger: "blur" }
         ],
         postSort: [
-          { required: true, message: "Thứ tự chức vụ不能为空", trigger: "blur" }
+          { required: true, message: "Thứ tự chức vụkhông thể trống", trigger: "blur" }
         ]
       }
     };
@@ -210,7 +210,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询岗位列表 */
+    /** Truy vấn danh sách công việc */
     getList() {
       this.loading = true;
       listPost(this.queryParams).then(response => {
@@ -224,7 +224,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         postId: undefined,
@@ -246,7 +246,7 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
-    // 多选框选中数据
+    // Dữ liệu đã chọn trong hộp chọn nhiều lần
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.postId)
       this.single = selection.length!=1
@@ -268,7 +268,7 @@ export default {
         this.title = "Sửa chức vụ";
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -291,7 +291,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const postIds = row.postId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã chức vụ为"' + postIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaMã chức vụvì"' + postIds + '" không?').then(function() {
         return delPost(postIds);
       }).then(() => {
         this.getList();

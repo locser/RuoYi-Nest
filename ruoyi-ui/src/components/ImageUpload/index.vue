@@ -20,17 +20,17 @@
       <i class="el-icon-plus"></i>
     </el-upload>
 
-    <!-- 上传Gợi ý -->
+    <!-- tải lênGợi ý -->
     <div class="el-upload__tip" slot="tip" v-if="showTip">
-      请上传
-      <template v-if="fileSize"> 大小不超过 <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
-      <template v-if="fileType"> 格式为 <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
-      的文件
+      Vui lòng tải lên
+      <template v-if="fileSize"> Kích thước không vượt quá <b style="color: #f56c6c">{{ fileSize }}MB</b> </template>
+      <template v-if="fileType"> Định dạng là <b style="color: #f56c6c">{{ fileType.join("/") }}</b> </template>
+      tập tin
     </div>
 
     <el-dialog
       :visible.sync="dialogVisible"
-      title="预览"
+      title="Xem trước"
       width="800"
       append-to-body
     >
@@ -49,17 +49,17 @@ import { isExternal } from "@/utils/validate";
 export default {
   props: {
     value: [String, Object, Array],
-    // 图片数量限制
+    // Giới hạn số lượng hình ảnh
     limit: {
       type: Number,
       default: 5,
     },
-    // 大小限制(MB)
+    // giới hạn kích thước(MB)
     fileSize: {
        type: Number,
       default: 5,
     },
-    // 文件Loại, 例如['png', 'jpg', 'jpeg']
+    // tài liệuLoại, Ví dụ['png', 'jpg', 'jpeg']
     fileType: {
       type: Array,
       default: () => ["png", "jpg", "jpeg"],
@@ -78,7 +78,7 @@ export default {
       dialogVisible: false,
       hideUpload: false,
       baseUrl: import.meta.env.VITE_APP_BASE_API,
-      uploadImgUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // 上传的图片服务器地址
+      uploadImgUrl: import.meta.env.VITE_APP_BASE_API + "/common/upload", // Địa chỉ máy chủ hình ảnh đã tải lên
       headers: {
         Authorization: "Bearer " + getToken(),
       },
@@ -89,9 +89,9 @@ export default {
     value: {
       handler(val) {
         if (val) {
-          // 首先将值转为数组
+          // Đầu tiên chuyển đổi giá trị thành một mảng
           const list = Array.isArray(val) ? val : this.value.split(',');
-          // 然后将数组转为对象数组
+          // Sau đó chuyển đổi mảng thành một mảng đối tượng
           this.fileList = list.map(item => {
             if (typeof item === "string") {
               if (item.indexOf(this.baseUrl) === -1 && !isExternal(item)) {
@@ -118,7 +118,7 @@ export default {
     },
   },
   methods: {
-    // 上传前loading加载
+    // Trước khi tải lênloadingtrọng tải
     handleBeforeUpload(file) {
       let isImg = false;
       if (this.fileType.length) {
@@ -136,28 +136,28 @@ export default {
       }
 
       if (!isImg) {
-        this.$modal.msgError(`文件格式不正确，请上传${this.fileType.join("/")}图片格式文件!`);
+        this.$modal.msgError(`Định dạng tệp không chính xác，Vui lòng tải lên${this.fileType.join("/")}Tệp định dạng hình ảnh!`);
         return false;
       }
       if (file.name.includes(',')) {
-        this.$modal.msgError('文件名不正确，不能包含英文逗号!');
+        this.$modal.msgError('Tên tệp không chính xác，Không thể chứa dấu phẩy tiếng Anh!');
         return false;
       }
       if (this.fileSize) {
         const isLt = file.size / 1024 / 1024 < this.fileSize;
         if (!isLt) {
-          this.$modal.msgError(`上传头像图片大小不能超过 ${this.fileSize} MB!`);
+          this.$modal.msgError(`Kích thước ảnh avatar tải lên không được vượt quá ${this.fileSize} MB!`);
           return false;
         }
       }
-      this.$modal.loading("正在上传图片，请稍候...");
+      this.$modal.loading("Đang tải ảnh lên，Vui lòng chờ...");
       this.number++;
     },
-    // 文件个数超出
+    // Số lượng tập tin vượt quá
     handleExceed() {
-      this.$modal.msgError(`上传文件数量不能超过 ${this.limit} 个!`);
+      this.$modal.msgError(`Số lượng tập tin tải lên không thể vượt quá ${this.limit} cá nhân!`);
     },
-    // 上传Thành công回调
+    // tải lênThành cônggọi lại
     handleUploadSuccess(res, file) {
       if (res.code === 200) {
         this.uploadList.push({ name: res.fileName, url: res.fileName });
@@ -170,7 +170,7 @@ export default {
         this.uploadedSuccessfully();
       }
     },
-    // Xóa图片
+    // Xóahình ảnh
     handleDelete(file) {
       const findex = this.fileList.map(f => f.name).indexOf(file.name);
       if (findex > -1) {
@@ -178,12 +178,12 @@ export default {
         this.$emit("input", this.listToString(this.fileList));
       }
     },
-    // 上传Thất bại
+    // tải lênThất bại
     handleUploadError() {
-      this.$modal.msgError("上传图片Thất bại，请重试");
+      this.$modal.msgError("Tải ảnh lênThất bại，Vui lòng thử lại");
       this.$modal.closeLoading();
     },
-    // 上传结束处理
+    // Tải lên quá trình xử lý cuối cùng
     uploadedSuccessfully() {
       if (this.number > 0 && this.uploadList.length === this.number) {
         this.fileList = this.fileList.concat(this.uploadList);
@@ -193,12 +193,12 @@ export default {
         this.$modal.closeLoading();
       }
     },
-    // 预览
+    // Xem trước
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
     },
-    // 对象转成指定字符串分隔
+    // Chuyển đổi đối tượng thành chuỗi đã chỉ định được phân cách
     listToString(list, separator) {
       let strs = "";
       separator = separator || ",";
@@ -213,11 +213,11 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-// .el-upload--picture-card 控制加号部分
+// .el-upload--picture-card Kiểm soát phần cộng
 :deep(.hide .el-upload--picture-card) {  
     display: none;
 }
-// 去掉动画效果
+// Loại bỏ hiệu ứng hoạt hình
 :deep(.el-list-enter-active),
 :deep(.el-list-leave-active) {
     transition: all 0s;

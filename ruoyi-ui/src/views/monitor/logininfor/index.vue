@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="登录地址" prop="ipaddr">
+      <el-form-item label="Địa chỉ đăng nhập" prop="ipaddr">
         <el-input
           v-model="queryParams.ipaddr"
-          placeholder="Vui lòng nhập登录地址"
+          placeholder="Vui lòng nhậpĐịa chỉ đăng nhập"
           clearable
           style="width: 240px;"
           @keyup.enter.native="handleQuery"
@@ -22,7 +22,7 @@
       <el-form-item label="Trạng thái" prop="status">
         <el-select
           v-model="queryParams.status"
-          placeholder="登录Trạng thái"
+          placeholder="Đăng nhậpTrạng thái"
           clearable
           style="width: 240px"
         >
@@ -34,7 +34,7 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="登录时间">
+      <el-form-item label="Thời gian đăng nhập">
         <el-date-picker
           v-model="dateRange"
           style="width: 240px"
@@ -83,7 +83,7 @@
           :disabled="single"
           @click="handleUnlock"
           v-hasPermi="['monitor:logininfor:unlock']"
-        >解锁</el-button>
+        >Mở khóa</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button
@@ -100,19 +100,19 @@
 
     <el-table ref="tables" v-loading="loading" :data="list" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="访问编号" align="center" prop="infoId" />
+      <el-table-column label="số truy cập" align="center" prop="infoId" />
       <el-table-column label="Tên đăng nhập" align="center" prop="userName" :show-overflow-tooltip="true" sortable="custom" :sort-orders="['descending', 'ascending']" />
-      <el-table-column label="登录地址" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
-      <el-table-column label="登录地点" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
-      <el-table-column label="浏览器" align="center" prop="browser" :show-overflow-tooltip="true" />
-      <el-table-column label="Thao tác系统" align="center" prop="os" />
-      <el-table-column label="登录Trạng thái" align="center" prop="status">
+      <el-table-column label="Địa chỉ đăng nhập" align="center" prop="ipaddr" width="130" :show-overflow-tooltip="true" />
+      <el-table-column label="Vị trí đăng nhập" align="center" prop="loginLocation" :show-overflow-tooltip="true" />
+      <el-table-column label="Trình duyệt" align="center" prop="browser" :show-overflow-tooltip="true" />
+      <el-table-column label="Thao táchệ thống" align="center" prop="os" />
+      <el-table-column label="Đăng nhậpTrạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_common_status" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="Thao tác信息" align="center" prop="msg" :show-overflow-tooltip="true" />
-      <el-table-column label="登录日期" align="center" prop="loginTime" sortable="custom" :sort-orders="['descending', 'ascending']" width="180">
+      <el-table-column label="Thao tácthông tin" align="center" prop="msg" :show-overflow-tooltip="true" />
+      <el-table-column label="Ngày đăng nhập" align="center" prop="loginTime" sortable="custom" :sort-orders="['descending', 'ascending']" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.loginTime) }}</span>
         </template>
@@ -137,27 +137,27 @@ export default {
   dicts: ['sys_common_status'],
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // 选中数组
+      // Chọn mảng
       ids: [],
-      // 非单个禁用
+      // Không bị vô hiệu hóa riêng lẻ
       single: true,
-      // 非多个禁用
+      // Không bị vô hiệu hóa nhiều
       multiple: true,
-      // 选择用户名
+      // Chọn tên người dùng
       selectName: "",
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 总条数
+      // Tổng số mặt hàng
       total: 0,
-      // 表格数据
+      // dữ liệu dạng bảng
       list: [],
-      // 日期范围
+      // phạm vi ngày
       dateRange: [],
-      // 默认Sắp xếp
+      // mặc địnhSắp xếp
       defaultSort: {prop: 'loginTime', order: 'descending'},
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         pageNum: 1,
         pageSize: 10,
@@ -171,7 +171,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询登录日志列表 */
+    /** Truy vấn danh sách nhật ký đăng nhập */
     getList() {
       this.loading = true;
       list(this.addDateRange(this.queryParams, this.dateRange)).then(response => {
@@ -193,14 +193,14 @@ export default {
       this.queryParams.pageNum = 1;
       this.$refs.tables.sort(this.defaultSort.prop, this.defaultSort.order)
     },
-    /** 多选框选中数据 */
+    /** Dữ liệu đã chọn trong hộp chọn nhiều lần */
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.infoId)
       this.single = selection.length!=1
       this.multiple = !selection.length
       this.selectName = selection.map(item => item.userName);
     },
-    /** Sắp xếp触发事件 */
+    /** Sắp xếpsự kiện kích hoạt */
     handleSortChange(column, prop, order) {
       this.queryParams.orderByColumn = column.prop;
       this.queryParams.isAsc = column.order;
@@ -209,7 +209,7 @@ export default {
     /** XóaNút bấmThao tác */
     handleDelete(row) {
       const infoIds = row.infoId || this.ids;
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa访问编号为"' + infoIds + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaSố truy cập là"' + infoIds + '" không?').then(function() {
         return delLogininfor(infoIds);
       }).then(() => {
         this.getList();
@@ -218,20 +218,20 @@ export default {
     },
     /** Xóa sạchNút bấmThao tác */
     handleClean() {
-      this.$modal.confirm('CóKhông确认Xóa sạch所有登录日志数据项？').then(function() {
+      this.$modal.confirm('CóKhôngxác nhậnXóa sạchTất cả các mục dữ liệu nhật ký đăng nhập？').then(function() {
         return cleanLogininfor();
       }).then(() => {
         this.getList();
         this.$modal.msgSuccess("Xóa sạch thành công");
       }).catch(() => {});
     },
-    /** 解锁Nút bấmThao tác */
+    /** Mở khóaNút bấmThao tác */
     handleUnlock() {
       const username = this.selectName;
-      this.$modal.confirm('CóKhông确认解锁用户"' + username + '"数据项?').then(function() {
+      this.$modal.confirm('CóKhôngXác nhận để mở khóa người dùng"' + username + '"mục dữ liệu?').then(function() {
         return unlockLogininfor(username);
       }).then(() => {
-        this.$modal.msgSuccess("用户" + username + "解锁Thành công");
+        this.$modal.msgSuccess("người dùng" + username + "Mở khóaThành công");
       }).catch(() => {});
     },
     /** Xuất fileNút bấmThao tác */

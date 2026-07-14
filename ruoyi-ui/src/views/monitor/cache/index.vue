@@ -3,38 +3,38 @@
     <el-row>
       <el-col :span="24" class="card-box">
         <el-card>
-          <div slot="header"><span><i class="el-icon-monitor"></i> 基本信息</span></div>
+          <div slot="header"><span><i class="el-icon-monitor"></i> Thông tin cơ bản</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <table cellspacing="0" style="width: 100%">
               <tbody>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">Redis版本</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">RedisPhiên bản</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.redis_version }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">运行模式</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.redis_mode == "standalone" ? "单机" : "集群" }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">端口</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">chế độ hoạt động</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.redis_mode == "standalone" ? "Độc lập" : "cụm" }}</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">hải cảng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.tcp_port }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">客户端数</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Số lượng khách hàng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.connected_clients }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">运行时间(天)</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">thời gian chạy(bầu trời)</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.uptime_in_days }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">使用内存</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Sử dụng bộ nhớ</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.used_memory_human }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">使用CPU</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">sử dụngCPU</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ parseFloat(cache.info.used_cpu_user_children).toFixed(2) }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">内存配置</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Cấu hình bộ nhớ</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.maxmemory_human }}</div></td>
                 </tr>
                 <tr>
-                  <td class="el-table__cell is-leaf"><div class="cell">AOFCóKhông开启</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">AOFCóKhôngbật lên</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.aof_enabled == "0" ? "Không" : "Có" }}</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell">RDBCóKhôngThành công</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.rdb_last_bgsave_status }}</div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">Key数量</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">KeySố lượng</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.dbSize">{{ cache.dbSize }} </div></td>
-                  <td class="el-table__cell is-leaf"><div class="cell">网络入口/出口</div></td>
+                  <td class="el-table__cell is-leaf"><div class="cell">Cổng thông tin mạng/ra</div></td>
                   <td class="el-table__cell is-leaf"><div class="cell" v-if="cache.info">{{ cache.info.instantaneous_input_kbps }}kps/{{cache.info.instantaneous_output_kbps}}kps</div></td>
                 </tr>
               </tbody>
@@ -45,7 +45,7 @@
 
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header"><span><i class="el-icon-pie-chart"></i> 命令统计</span></div>
+          <div slot="header"><span><i class="el-icon-pie-chart"></i> Thống kê lệnh</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="commandstats" style="height: 420px" />
           </div>
@@ -54,7 +54,7 @@
 
       <el-col :span="12" class="card-box">
         <el-card>
-          <div slot="header"><span><i class="el-icon-odometer"></i> 内存信息</span></div>
+          <div slot="header"><span><i class="el-icon-odometer"></i> thông tin bộ nhớ</span></div>
           <div class="el-table el-table--enable-row-hover el-table--medium">
             <div ref="usedmemory" style="height: 420px" />
           </div>
@@ -72,11 +72,11 @@ export default {
   name: "Cache",
   data() {
     return {
-      // 统计命令信息
+      // Thông tin lệnh thống kê
       commandstats: null,
-      // 使用内存
+      // Sử dụng bộ nhớ
       usedmemory: null,
-      // cache信息
+      // cachethông tin
       cache: []
     }
   },
@@ -85,7 +85,7 @@ export default {
     this.openLoading();
   },
   methods: {
-    /** 查缓存询信息 */
+    /** Truy vấn thông tin bộ đệm */
     getList() {
       getCache().then((response) => {
         this.cache = response.data;
@@ -99,7 +99,7 @@ export default {
           },
           series: [
             {
-              name: "命令",
+              name: "Đặt hàng",
               type: "pie",
               roseType: "radius",
               radius: [15, 95],
@@ -117,7 +117,7 @@ export default {
           },
           series: [
             {
-              name: "峰值",
+              name: "đỉnh cao",
               type: "gauge",
               min: 0,
               max: 1000,
@@ -127,7 +127,7 @@ export default {
               data: [
                 {
                   value: parseFloat(this.cache.info.used_memory_human),
-                  name: "内存消耗",
+                  name: "tiêu thụ bộ nhớ",
                 }
               ]
             }
@@ -139,9 +139,9 @@ export default {
         });
       });
     },
-    // 打开加载层
+    // Mở lớp tải
     openLoading() {
-      this.$modal.loading("正在加载缓存监控数据，请稍候！");
+      this.$modal.loading("Đang tải dữ liệu giám sát bộ đệm，Vui lòng chờ！");
     }
   }
 };

@@ -4,10 +4,10 @@
       <el-tooltip class="item" effect="dark" :content="showSearch ? 'ẨnTìm kiếm' : 'Hiển thịTìm kiếm'" placement="top" v-if="search">
         <el-button size="mini" circle icon="el-icon-search" @click="toggleSearch()" />
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="刷新" placement="top">
+      <el-tooltip class="item" effect="dark" content="làm cho khỏe lại" placement="top">
         <el-button size="mini" circle icon="el-icon-refresh" @click="refresh()" />
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="显隐列" placement="top" v-if="columns">
+      <el-tooltip class="item" effect="dark" content="Hiển thị và ẩn cột" placement="top" v-if="columns">
         <el-button size="mini" circle icon="el-icon-menu" @click="showColumn()" v-if="showColumnsType == 'transfer'"/>
         <el-dropdown trigger="click" :hide-on-click="false" style="padding-left: 12px" v-if="showColumnsType == 'checkbox'">
           <el-button size="mini" circle icon="el-icon-menu" />
@@ -36,35 +36,35 @@ export default {
   name: "RightToolbar",
   data() {
     return {
-      // 显隐数据
+      // Dữ liệu rõ ràng
       value: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "Hiển thị/Ẩn",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
     };
   },
   props: {
-    /* CóKhôngHiển thị检索条件 */
+    /* CóKhôngHiển thịĐiều kiện tìm kiếm */
     showSearch: {
       type: Boolean,
       default: true,
     },
-    /* 显隐列信息 */
+    /* Hiển thị và ẩn thông tin cột */
     columns: {
       type: Array,
     },
-    /* CóKhôngHiển thị检索图标 */
+    /* CóKhôngHiển thịBiểu tượng tìm kiếm */
     search: {
       type: Boolean,
       default: true,
     },
-    /* 显隐列Loại（transfer穿梭框、checkbox复选框） */
+    /* Hiển thị và ẩn cộtLoại（transferhộp đưa đón、checkboxhộp kiểm） */
     showColumnsType: {
       type: String,
       default: "checkbox",
     },
-    /* 右外边距 */
+    /* lề phải */
     gutter: {
       type: Number,
       default: 10,
@@ -81,7 +81,7 @@ export default {
   },
   created() {
     if (this.showColumnsType == 'transfer') {
-      // 显隐列初始默认Ẩn列
+      // Mặc định ban đầu cho các cột hiển thị và ẩnẨnDanh sách
       for (let item in this.columns) {
         if (this.columns[item].visible === false) {
           this.value.push(parseInt(item));
@@ -94,22 +94,22 @@ export default {
     toggleSearch() {
       this.$emit("update:showSearch", !this.showSearch);
     },
-    // 刷新
+    // làm cho khỏe lại
     refresh() {
       this.$emit("queryTable");
     },
-    // 右侧列表元素变化
+    // Những thay đổi trong các thành phần danh sách ở bên phải
     dataChange(data) {
       for (let item in this.columns) {
         const key = this.columns[item].key;
         this.columns[item].visible = !data.includes(key);
       }
     },
-    // 打开显隐列dialog
+    // Mở cột hiển thịdialog
     showColumn() {
       this.open = true;
     },
-    // 勾选
+    // Kiểm tra
     checkboxChange(event, label) {
       this.columns.filter(item => item.label == label)[0].visible = event;
     }

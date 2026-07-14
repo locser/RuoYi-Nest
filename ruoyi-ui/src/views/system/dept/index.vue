@@ -96,13 +96,13 @@
       </el-table-column>
     </el-table>
 
-    <!-- 添加或Sửa phòng ban对话框 -->
+    <!-- thêm hoặcSửa phòng banhộp thoại -->
     <el-dialog :title="title" :visible.sync="open" width="600px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-row>
           <el-col :span="24" v-if="form.parentId !== 0">
             <el-form-item label="Phòng ban cấp trên" prop="parentId">
-              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="选择Phòng ban cấp trên" />
+              <treeselect v-model="form.parentId" :options="deptOptions" :normalizer="normalizer" placeholder="chọnPhòng ban cấp trên" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -168,51 +168,51 @@ export default {
   components: { Treeselect },
   data() {
     return {
-      // 遮罩层
+      // lớp mặt nạ
       loading: true,
-      // Hiển thịTìm kiếm条件
+      // Hiển thịTìm kiếmtình trạng
       showSearch: true,
-      // 表格树数据
+      // dữ liệu cây bảng
       deptList: [],
-      // 部门树选项
+      // Tùy chọn cây bộ phận
       deptOptions: [],
-      // 弹出层标题
+      // Tiêu đề lớp bật lên
       title: "",
-      // CóKhôngHiển thị弹出层
+      // CóKhôngHiển thịlớp bật lên
       open: false,
-      // CóKhôngMở rộng，默认Mở rộng tất cả
+      // CóKhôngMở rộng，mặc địnhMở rộng tất cả
       isExpandAll: true,
-      // 重新渲染表格Trạng thái
+      // Kết xuất lại bảngTrạng thái
       refreshTable: true,
-      // 查询参数
+      // tham số truy vấn
       queryParams: {
         deptName: undefined,
         status: undefined
       },
-      // 表单参数
+      // thông số biểu mẫu
       form: {},
-      // 表单校验
+      // xác nhận mẫu
       rules: {
         parentId: [
-          { required: true, message: "Phòng ban cấp trên不能为空", trigger: "blur" }
+          { required: true, message: "Phòng ban cấp trênkhông thể trống", trigger: "blur" }
         ],
         deptName: [
-          { required: true, message: "Tên phòng ban不能为空", trigger: "blur" }
+          { required: true, message: "Tên phòng bankhông thể trống", trigger: "blur" }
         ],
         orderNum: [
-          { required: true, message: "Thứ tự hiển thị不能为空", trigger: "blur" }
+          { required: true, message: "Thứ tự hiển thịkhông thể trống", trigger: "blur" }
         ],
         email: [
           {
             type: "email",
-            message: "Vui lòng nhập正确的Email地址",
+            message: "Vui lòng nhậpChính xácEmailĐịa chỉ",
             trigger: ["blur", "change"]
           }
         ],
         phone: [
           {
             pattern: /^1[3|4|5|6|7|8|9][0-9]\d{8}$/,
-            message: "Vui lòng nhập正确的Số điện thoại",
+            message: "Vui lòng nhậpChính xácSố điện thoại",
             trigger: "blur"
           }
         ]
@@ -223,7 +223,7 @@ export default {
     this.getList();
   },
   methods: {
-    /** 查询部门列表 */
+    /** Truy vấn danh sách bộ phận */
     getList() {
       this.loading = true;
       listDept(this.queryParams).then(response => {
@@ -231,7 +231,7 @@ export default {
         this.loading = false;
       });
     },
-    /** 转换部门数据结构 */
+    /** Chuyển đổi cấu trúc dữ liệu bộ phận */
     normalizer(node) {
       if (node.children && !node.children.length) {
         delete node.children;
@@ -247,7 +247,7 @@ export default {
       this.open = false;
       this.reset();
     },
-    // 表单Đặt lại
+    // hình thứcĐặt lại
     reset() {
       this.form = {
         deptId: undefined,
@@ -306,7 +306,7 @@ export default {
         });
       });
     },
-    /** 提交Nút bấm */
+    /** nộpNút bấm */
     submitForm: function() {
       this.$refs["form"].validate(valid => {
         if (valid) {
@@ -328,7 +328,7 @@ export default {
     },
     /** XóaNút bấmThao tác */
     handleDelete(row) {
-      this.$modal.confirm('Bạn có chắc chắn muốn xóa名称为"' + row.deptName + '" không?').then(function() {
+      this.$modal.confirm('Bạn có chắc chắn muốn xóaTên là"' + row.deptName + '" không?').then(function() {
         return delDept(row.deptId);
       }).then(() => {
         this.getList();

@@ -9,7 +9,7 @@
       <el-scrollbar class="left-scrollbar">
         <div class="components-list">
           <div class="components-title">
-            <svg-icon icon-class="component" />输入型组件
+            <svg-icon icon-class="component" />thành phần đầu vào
           </div>
           <draggable
             class="components-draggable"
@@ -31,7 +31,7 @@
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component" />选择型组件
+            <svg-icon icon-class="component" />Thành phần chọn lọc
           </div>
           <draggable
             class="components-draggable"
@@ -55,7 +55,7 @@
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component" /> 布局型组件
+            <svg-icon icon-class="component" /> thành phần bố trí
           </div>
           <draggable
             class="components-draggable" :list="layoutComponents"
@@ -79,10 +79,10 @@
     <div class="center-board">
       <div class="action-bar">
         <el-button icon="el-icon-download" type="text" @click="download">
-          Xuất filevue文件
+          Xuất filevuetài liệu
         </el-button>
         <el-button class="copy-btn-main" icon="el-icon-document-copy" type="text" @click="copy">
-          复制代码
+          Sao chép mã
         </el-button>
         <el-button class="delete-btn" icon="el-icon-delete" type="text" @click="empty">
           Xóa sạch
@@ -111,7 +111,7 @@
               />
             </draggable>
             <div v-show="!drawingList.length" class="empty-info">
-              从左侧拖入或点选组件进行表单设计
+              Kéo hoặc nhấp vào các thành phần từ bên trái để thiết kế biểu mẫu
             </div>
           </el-form>
         </el-row>
@@ -127,7 +127,7 @@
 
     <code-type-dialog
       :visible.sync="dialogVisible"
-      title="选择生成Loại"
+      title="Chọn tạoLoại"
       :show-file-name="showFileName"
       @confirm="generate"
     />
@@ -183,7 +183,7 @@ export default {
     }
   },
   created() {
-    // 防止 firefox 下 拖拽 会新打卡一个选项卡
+    // ngăn chặn firefox Xuống lôi kéo Sẽ kiểm tra trong một tab mới
     document.body.ondrop = event => {
       event.preventDefault()
       event.stopPropagation()
@@ -214,14 +214,14 @@ export default {
         const codeStr = this.generateCode()
         this.$notify({
           title: 'Thành công',
-          message: '代码已复制到剪切板，可粘贴。',
+          message: 'Đã sao chép mã vào bảng nhớ tạm，Có thể dán。',
           type: 'success'
         })
         return codeStr
       }
     })
     clipboard.on('error', e => {
-      this.$message.error('代码复制Thất bại')
+      this.$message.error('sao chép mãThất bại')
     })
   },
   methods: {
@@ -244,7 +244,7 @@ export default {
       const clone = JSON.parse(JSON.stringify(origin))
       clone.formId = ++this.idGlobal
       clone.span = formConf.span
-      clone.renderKey = +new Date() // 改变renderKey后可以实现强制更新组件
+      clone.renderKey = +new Date() // Thay đổirenderKeySau đó bạn có thể buộc cập nhật các thành phần
       if (!clone.layout) clone.layout = 'colFormItem'
       if (clone.layout === 'colFormItem') {
         clone.vModel = `field${this.idGlobal}`
@@ -282,7 +282,7 @@ export default {
       document.getElementById('copyNode').click()
     },
     empty() {
-      this.$confirm('Xác nhận要Xóa sạch所有组件吗？', 'Gợi ý', { type: 'warning' }).then(
+      this.$confirm('Xác nhậnmuốnXóa sạchTất cả các thành phần?？', 'Gợi ý', { type: 'warning' }).then(
         () => {
           this.drawingList = []
         }
