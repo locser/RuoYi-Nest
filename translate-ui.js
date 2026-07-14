@@ -5,6 +5,11 @@ const path = require('path');
 // Sắp xếp các cụm từ dài lên trước để tránh việc dịch các từ con trước làm hỏng ngữ nghĩa.
 const dict = {
   // Cảnh báo & Xác nhận
+  "显示排序": "Thứ tự hiển thị",
+  "Hiển thị排序": "Thứ tự hiển thị",
+  "岗位排序": "Thứ tự chức vụ",
+  "字典排序": "Thứ tự từ điển",
+  "排序": "Sắp xếp",
   "是否确认删除": "Bạn có chắc chắn muốn xóa",
   "的数据项？": " không?",
   "的数据项": " không?",
@@ -94,6 +99,13 @@ const dict = {
   "选择日期": "Chọn ngày",
   "请选择": "Vui lòng chọn",
   "请输入": "Vui lòng nhập",
+
+  // Cây thư mục (Tree Actions)
+  "展开/折叠": "Mở rộng/Thu gọn",
+  "全部展开": "Mở rộng tất cả",
+  "全部折叠": "Thu gọn tất cả",
+  "展开": "Mở rộng",
+  "折叠": "Thu gọn",
 
   // Quản lý vai trò (Role)
   "角色名称": "Tên vai trò",

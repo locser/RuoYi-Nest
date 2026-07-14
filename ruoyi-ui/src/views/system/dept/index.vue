@@ -43,7 +43,7 @@
           icon="el-icon-sort"
           size="mini"
           @click="toggleExpandAll"
-        >展开/折叠</el-button>
+        >Mở rộng/Thu gọn</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -57,7 +57,7 @@
       :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
     >
       <el-table-column prop="deptName" label="Tên phòng ban" width="260"></el-table-column>
-      <el-table-column prop="orderNum" label="排序" width="200"></el-table-column>
+      <el-table-column prop="orderNum" label="Sắp xếp" width="200"></el-table-column>
       <el-table-column prop="status" label="Trạng thái" width="100">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
@@ -113,7 +113,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="Hiển thị排序" prop="orderNum">
+            <el-form-item label="Thứ tự hiển thị" prop="orderNum">
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
@@ -180,7 +180,7 @@ export default {
       title: "",
       // CóKhôngHiển thị弹出层
       open: false,
-      // CóKhông展开，默认全部展开
+      // CóKhôngMở rộng，默认Mở rộng tất cả
       isExpandAll: true,
       // 重新渲染表格Trạng thái
       refreshTable: true,
@@ -200,7 +200,7 @@ export default {
           { required: true, message: "Tên phòng ban不能为空", trigger: "blur" }
         ],
         orderNum: [
-          { required: true, message: "Hiển thị排序不能为空", trigger: "blur" }
+          { required: true, message: "Thứ tự hiển thị不能为空", trigger: "blur" }
         ],
         email: [
           {
@@ -282,7 +282,7 @@ export default {
         this.deptOptions = this.handleTree(response.data, "deptId");
       });
     },
-    /** 展开/折叠Thao tác */
+    /** Mở rộng/Thu gọnThao tác */
     toggleExpandAll() {
       this.refreshTable = false;
       this.isExpandAll = !this.isExpandAll;

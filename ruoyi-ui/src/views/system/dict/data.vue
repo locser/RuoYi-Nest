@@ -100,7 +100,7 @@
         </template>
       </el-table-column>
       <el-table-column label="Giá trị từ điển" align="center" prop="dictValue" />
-      <el-table-column label="字典排序" align="center" prop="dictSort" />
+      <el-table-column label="Thứ tự từ điển" align="center" prop="dictSort" />
       <el-table-column label="Trạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
@@ -155,7 +155,7 @@
         <el-form-item label="Thuộc tính CSS" prop="cssClass">
           <el-input v-model="form.cssClass" placeholder="Vui lòng nhậpThuộc tính CSS" />
         </el-form-item>
-        <el-form-item label="Hiển thị排序" prop="dictSort">
+        <el-form-item label="Thứ tự hiển thị" prop="dictSort">
           <el-input-number v-model="form.dictSort" controls-position="right" :min="0" />
         </el-form-item>
         <el-form-item label="Class hiển thị" prop="listClass">

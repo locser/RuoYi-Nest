@@ -84,7 +84,7 @@
       <el-table-column label="Mã chức vụ" align="center" prop="postId" />
       <el-table-column label="Mã chức vụ" align="center" prop="postCode" />
       <el-table-column label="Tên chức vụ" align="center" prop="postName" />
-      <el-table-column label="岗位排序" align="center" prop="postSort" />
+      <el-table-column label="Thứ tự chức vụ" align="center" prop="postSort" />
       <el-table-column label="Trạng thái" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>

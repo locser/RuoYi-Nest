@@ -43,7 +43,7 @@
           icon="el-icon-sort"
           size="mini"
           @click="toggleExpandAll"
-        >展开/折叠</el-button>
+        >Mở rộng/Thu gọn</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
@@ -62,7 +62,7 @@
           <svg-icon :icon-class="scope.row.icon" />
         </template>
       </el-table-column>
-      <el-table-column prop="orderNum" label="排序" width="60"></el-table-column>
+      <el-table-column prop="orderNum" label="Sắp xếp" width="60"></el-table-column>
       <el-table-column prop="perms" label="Key quyền hạn" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="component" label="Đường dẫn component" :show-overflow-tooltip="true"></el-table-column>
       <el-table-column prop="status" label="Trạng thái" width="80">
@@ -153,7 +153,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="Hiển thị排序" prop="orderNum">
+            <el-form-item label="Thứ tự hiển thị" prop="orderNum">
               <el-input-number v-model="form.orderNum" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
@@ -297,7 +297,7 @@ export default {
       title: "",
       // CóKhôngHiển thị弹出层
       open: false,
-      // CóKhông展开，默认全部折叠
+      // CóKhôngMở rộng，默认Thu gọn tất cả
       isExpandAll: false,
       // 重新渲染表格Trạng thái
       refreshTable: true,
@@ -400,7 +400,7 @@ export default {
       this.open = true;
       this.title = "Thêm menu";
     },
-    /** 展开/折叠Thao tác */
+    /** Mở rộng/Thu gọnThao tác */
     toggleExpandAll() {
       this.refreshTable = false;
       this.isExpandAll = !this.isExpandAll;
