@@ -1,0 +1,71 @@
+# RuoYi-Nest full Docker stack: MySQL + Redis + backend NestJS
+# Chạy trên macOS:  docker compose up -d --build
+# Log backend:      docker compose logs -f backend
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: ruoyi-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ry_vue
+      TZ: Asia/Shanghai
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_general_ci
+      --default-authentication-plugin=mysql_native_password
+    ports:
+      - "3306:3306"          # bỏ dòng này nếu không cần truy cập MySQL từ ngoài
+    volumes:
+      - mysql-data:/var/lib/mysql
+      # Tự động import schema + seed vào ry_vue ở lần khởi động ĐẦU TIÊN
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: ruoyi-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"          # bỏ nếu không cần truy cập Redis từ ngoài
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ruoyi-nest:latest
+    container_name: ruoyi-nest
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      PORT: 3000
+      TZ: Asia/Shanghai
+    ports:
+      - "3000:3000"          # FE (Windows) gọi vào http://<mac-ip>:3000
+    volumes:
+      # Đè config trỏ tới service name mysql/redis (KHÔNG sửa source gốc)
+      - ./docker/config/application-druid.yml:/app/dist/ruoyi-admin/resources/application-druid.yml:ro
+      - ./docker/config/application.yml:/app/dist/ruoyi-admin/resources/application.yml:ro
+      # Giữ lại file upload
+      - uploads:/home/ruoyi/uploadPath
+
+volumes:
+  mysql-data:
+  redis-data:
+  uploads:
